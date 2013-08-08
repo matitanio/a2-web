@@ -27,7 +27,11 @@ class UrlMappings {
 				controller(matches:/^((?!(api|mobile|web)).*)$/)
 		  	}
 		}
-		
+
+		"/notificacion/$edificio/$habitacion/$sensor/$numeroSensor/$valores"{
+			controller = 'notificacion'
+			action = 'index'
+		}
 		/* 
 		 * System Pages without controller 
 		 */

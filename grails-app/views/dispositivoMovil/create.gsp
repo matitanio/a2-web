@@ -1,21 +1,21 @@
-<%@ page import="arduito.Usuario" %>
+<%@ page import="arduito.DispositivoMovil" %>
 <!doctype html>
 <html>
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="layout" content="kickstart" />
-	<g:set var="entityName" value="${message(code: 'usuario.label', default: 'Usuario')}" />
-	<title>Usuario</title>
+	<g:set var="entityName" value="${message(code: 'dispositivoMovil.label', default: 'DispositivoMovil')}" />
+	<title>Dispositivo Movil</title>
 </head>
 
 <body>
 
-<section id="create-usuario" class="first">
+<section id="create-dispositivoMovil" class="first">
 
-	<g:hasErrors bean="${usuarioInstance}">
+	<g:hasErrors bean="${dispositivoMovilInstance}">
 	<div class="alert alert-error">
-		<g:renderErrors bean="${usuarioInstance}" as="list" />
+		<g:renderErrors bean="${dispositivoMovilInstance}" as="list" />
 	</div>
 	</g:hasErrors>
 	

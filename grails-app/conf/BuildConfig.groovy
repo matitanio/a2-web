@@ -30,7 +30,7 @@ grails.project.dependency.resolution = {
 
         mavenLocal()
         mavenCentral()
-
+		mavenRepo "https://github.com/slorber/gcm-server-repository/raw/master/releases/"
         // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
         //mavenRepo "http://snapshots.repository.codehaus.org"
         //mavenRepo "http://repository.codehaus.org"
@@ -63,7 +63,10 @@ grails.project.dependency.resolution = {
 		compile ':lesscss-resources:1.3.0.3'
 		compile ":spring-security-core:1.2.7.3"
 		compile ":fixtures:1.2"
-		
+		compile ":activemq:0.4.1"
+		compile ":jms:1.2"
+		compile ":android-gcm:0.2"
+		compile ":webxml:1.4.1"
 		
     }
 }

@@ -102,3 +102,19 @@ grails.plugins.springsecurity.roleHierarchy = '''
 '''
 grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/home/home'
 grails.config.defaults.locations = [KickstartResources]
+
+
+//CONFIGURACION JMS
+jms {
+	containers {
+		arduino {
+			concurrentConsumers = 5
+			connectionFactoryBean = 'jmsConnectionFactory'
+		}
+	}
+}
+
+//investigar si se puede modificar dinamicamente
+//grails.plugins.springsecurity.ipRestrictions = [
+//	'/notificacion/**': '123.234.345.456',
+// ]

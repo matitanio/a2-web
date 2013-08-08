@@ -1,27 +1,27 @@
-<%@ page import="arduito.Sensor" %>
+<%@ page import="arduito.DispositivoMovil" %>
 <!doctype html>
 <html>
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="layout" content="kickstart" />
-	<g:set var="entityName" value="${message(code: 'sensor.label', default: 'Sensor')}" />
-	<title>Sensor</title>
+	<g:set var="entityName" value="${message(code: 'dispositivoMovil.label', default: 'DispositivoMovil')}" />
+	<title>Dispositivo Movil</title>
 </head>
 
 <body>
 
-<section id="edit-sensor" class="first">
+<section id="edit-dispositivoMovil" class="first">
 
-	<g:hasErrors bean="${sensorInstance}">
+	<g:hasErrors bean="${dispositivoMovilInstance}">
 	<div class="alert alert-error">
-		<g:renderErrors bean="${sensorInstance}" as="list" />
+		<g:renderErrors bean="${dispositivoMovilInstance}" as="list" />
 	</div>
 	</g:hasErrors>
 
 	<g:form method="post" class="form-horizontal" >
-		<g:hiddenField name="id" value="${sensorInstance?.id}" />
-		<g:hiddenField name="version" value="${sensorInstance?.version}" />
+		<g:hiddenField name="id" value="${dispositivoMovilInstance?.id}" />
+		<g:hiddenField name="version" value="${dispositivoMovilInstance?.version}" />
 		<fieldset class="form">
 			<g:render template="form"/>
 		</fieldset>

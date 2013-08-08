@@ -55,6 +55,13 @@
 			</g:link>
 		</li>
 	</sec:ifAllGranted>
+	<sec:ifAllGranted roles="ROLE_ADMIN">
+		<li class="controller${params.controller == 'dispositivoMovil' ? " active" : ""}">
+			<g:link controller="dispositivoMovil" action="index">
+				Dispositivos
+			</g:link>
+		</li>
+	</sec:ifAllGranted>
 	  	 	
 	</ul>
 </div>
