@@ -8,11 +8,12 @@
 	<g:set var="entityName" value="${message(code: 'sensor.label', default: 'Sensor')}" />
 	<title>Sensor</title>
 </head>
-
 <body>
-	
 <section id="list-sensor" class="first">
-
+<g:if test="${sensorInstanceList.size() == 0}">
+	<div class="sin-datos"> no hay sensores </div>
+</g:if>
+<g:else>
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -38,6 +39,7 @@
 	<div class="pagination">
 		<bs:paginate total="${sensorInstanceTotal}" />
 	</div>
+</g:else>
 </section>
 
 </body>

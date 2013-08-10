@@ -1,6 +1,8 @@
 package arduito
 
-class Usuario {
+import java.io.Serializable;
+
+class Usuario implements Serializable{
 
 	transient static springSecurityService
 

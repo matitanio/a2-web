@@ -50,8 +50,25 @@
 	<g:else>
 		<g:render template="/layouts/content_grid"/>														
 	</g:else>
+
+	<!-- Enable to overwrite Footer by individual page -->
+	<g:if test="${ pageProperty(name:'page.footer') }">
+	    <g:pageProperty name="page.footer" />
+	</g:if>
+	<g:else>
+		<g:render template="/layouts/footer"/>														
+	</g:else>
+
+	<!-- Enable to insert additional components (e.g., modals, javascript, etc.) by any individual page -->
+	<g:if test="${ pageProperty(name:'page.include.bottom') }">
+   		<g:pageProperty name="page.include.bottom" />
+	</g:if>
+	<g:else>
+		<!-- Insert a modal dialog for registering (for an open site registering is possible on any page) -->
+		<g:render template="/_common/modals/registerDialog" model="[item: item]"/>
+	</g:else>
+	
 	<!-- Included Javascript files and other resources -->
-	<g:render template="/layouts/logged-footer"/>
 	<r:layoutResources />
 </body>
 

@@ -12,7 +12,10 @@
 <body>
 	
 <section id="list-edificio" class="first">
-
+<g:if test="${edificioInstanceList.size() == 0}">
+	<div class="sin-datos"> no hay Edificios </div>
+</g:if>
+<g:else>
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -42,6 +45,7 @@
 	<div class="pagination">
 		<bs:paginate total="${edificioInstanceTotal}" />
 	</div>
+</g:else>
 </section>
 
 </body>

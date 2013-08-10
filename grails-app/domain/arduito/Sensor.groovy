@@ -1,6 +1,8 @@
 package arduito
 
-class Sensor {
+import java.io.Serializable;
+
+class Sensor implements Serializable {
 
 	
 	String tipo

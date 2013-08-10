@@ -1,6 +1,6 @@
 package arduito
 
-class Cuenta {
+class Cuenta implements Serializable {
 	
 	Usuario owner
 	String nombre

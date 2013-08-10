@@ -1,6 +1,8 @@
 package arduito
 
-class Edificio {
+import java.io.Serializable;
+
+class Edificio implements Serializable{
 	
 	transient static def springSecurityService
 	
@@ -48,5 +50,9 @@ class Edificio {
 		todos
 	}
 	
+	String toString(){
+		
+		nombre + ' - ' + direccion
+	}
 	
 }

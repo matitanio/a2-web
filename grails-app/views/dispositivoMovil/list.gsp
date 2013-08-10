@@ -12,7 +12,10 @@
 <body>
 	
 <section id="list-dispositivoMovil" class="first">
-
+<g:if test="${dispositivoMovilInstanceList.size() == 0}">
+	<div class="sin-datos"> no hay Dispositivos </div>
+</g:if>
+<g:else>
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -38,6 +41,7 @@
 	<div class="pagination">
 		<bs:paginate total="${dispositivoMovilInstanceTotal}" />
 	</div>
+</g:else>
 </section>
 
 </body>

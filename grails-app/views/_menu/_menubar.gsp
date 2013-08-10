@@ -56,6 +56,13 @@
 		</li>
 	</sec:ifAllGranted>
 	<sec:ifAllGranted roles="ROLE_ADMIN">
+		<li class="controller${params.controller == 'habitacion' ? " active" : ""}">
+			<g:link controller="habitacion" action="list">
+				Habitaciones
+			</g:link>
+		</li>
+	</sec:ifAllGranted>
+	<sec:ifAllGranted roles="ROLE_ADMIN">
 		<li class="controller${params.controller == 'dispositivoMovil' ? " active" : ""}">
 			<g:link controller="dispositivoMovil" action="index">
 				Dispositivos

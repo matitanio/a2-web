@@ -32,6 +32,10 @@ class UrlMappings {
 			controller = 'notificacion'
 			action = 'index'
 		}
+		"/api/accesos/$action?/$id?"(controller: "accesosApi")
+		"/api/edificios/$action?/$id?"(controller: "edificiosApi")
+		"/api/sensores/$action?/$id?"(controller: "sensoresApi")
+		
 		/* 
 		 * System Pages without controller 
 		 */

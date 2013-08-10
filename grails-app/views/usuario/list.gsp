@@ -12,7 +12,10 @@
 <body>
 	
 <section id="list-usuario" class="first">
-
+<g:if test="${usuarioInstanceList.size() == 0}">
+	<div class="sin-datos"> no hay Usuarios </div>
+</g:if>
+<g:else>
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -50,6 +53,7 @@
 	<div class="pagination">
 		<bs:paginate total="${usuarioInstanceTotal}" />
 	</div>
+</g:else>
 </section>
 
 </body>

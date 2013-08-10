@@ -2,7 +2,7 @@
 
 <head>
 	<title>Bienvenido a Arduito</title>
-	<meta name="layout" content="kickstart" />
+	<meta name="layout" content="not-logged-layout" />
 </head>
 
 <body>

@@ -12,7 +12,10 @@
 <body>
 	
 <section id="list-cuenta" class="first">
-
+<g:if test="${cuentaInstanceList.size() == 0}">
+	<div class="sin-datos"> no hay cuenta </div>
+</g:if>
+<g:else>
 	<table class="table table-bordered">
 		<thead>
 			<tr>
@@ -38,8 +41,8 @@
 	<div class="pagination">
 		<bs:paginate total="${cuentaInstanceTotal}" />
 	</div>
+</g:else>
 </section>
-
 </body>
 
 </html>
