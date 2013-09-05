@@ -12,7 +12,7 @@
 	
 <section id="list-cuenta" class="first">
 <g:if test="${habitacionInstanceList.size() == 0}">
-	<div class="sin-datos"> no hay Habitaciones </div>
+	<div class="alert alert-info"> no hay Habitaciones </div>
 </g:if>
 <g:else>
 	<table class="table table-bordered">

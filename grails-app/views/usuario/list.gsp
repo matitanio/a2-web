@@ -13,7 +13,7 @@
 	
 <section id="list-usuario" class="first">
 <g:if test="${usuarioInstanceList.size() == 0}">
-	<div class="sin-datos"> no hay Usuarios </div>
+	<div class="alert alert-info"> no hay Usuarios </div>
 </g:if>
 <g:else>
 	<table class="table table-bordered">

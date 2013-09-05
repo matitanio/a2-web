@@ -9,6 +9,7 @@ class NotificacionController {
 	def index = {
 		
 		
-		//pone un mensaje en la cola y le contesta a arduino
+		sendJMSMessage("arduino.queue", params)
+		render 'ok'
 	}
 }

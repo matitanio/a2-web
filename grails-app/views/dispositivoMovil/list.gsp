@@ -13,7 +13,7 @@
 	
 <section id="list-dispositivoMovil" class="first">
 <g:if test="${dispositivoMovilInstanceList.size() == 0}">
-	<div class="sin-datos"> no hay Dispositivos </div>
+	<div class="alert alert-info"> no hay Dispositivos </div>
 </g:if>
 <g:else>
 	<table class="table table-bordered">

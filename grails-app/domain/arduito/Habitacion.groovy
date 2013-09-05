@@ -14,10 +14,14 @@ class Habitacion {
 	
 	
 	static constraints = {
+//		
+//		ipHabitacion validator: {
+//			InetAddressValidator.isValid(it)
+//		}
+		sensores nullable:true
+		usuariosConAcceso nullable:true
+		camaras nullable:true
 		
-		ipHabitacion validator: {
-			InetAddressValidator.isValid(it)
-		}
 	}
 	
 

@@ -11,7 +11,7 @@
 <body>
 <section id="list-sensor" class="first">
 <g:if test="${sensorInstanceList.size() == 0}">
-	<div class="sin-datos"> no hay sensores </div>
+	<div class="alert alert-info"> no hay sensores </div>
 </g:if>
 <g:else>
 	<table class="table table-bordered">
@@ -21,7 +21,8 @@
 				<g:sortableColumn property="tipo" title="${message(code: 'sensor.tipo.label', default: 'Tipo')}" />
 			
 				<g:sortableColumn property="descripcion" title="${message(code: 'sensor.descripcion.label', default: 'Descripcion')}" />
-			
+				
+				<td>Valores Referencia</td>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,6 +32,8 @@
 				<td><g:link action="show" id="${sensorInstance.id}">${fieldValue(bean: sensorInstance, field: "tipo")}</g:link></td>
 			
 				<td>${fieldValue(bean: sensorInstance, field: "descripcion")}</td>
+				
+				<td>${'De :' + sensorInstance.valorMinimo + ' ' + sensorInstance.unidades + ' a: ' + sensorInstance.valorMaximo + ' ' + sensorInstance.unidades}</td>
 			
 			</tr>
 		</g:each>

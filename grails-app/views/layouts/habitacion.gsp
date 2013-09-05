@@ -30,8 +30,6 @@
 	<![endif]-->
 
 	<%-- For Javascript see end of body --%>
-</head>
-
 <body>
 	<g:render template="/_menu/navbar"/>														
 
@@ -42,7 +40,15 @@
 	<g:else>
 		<g:render template="/layouts/header"/>														
 	</g:else>
-	<g:render template="/layouts/menu"/>														
+	<g:render template="/layouts/menu"/>
+	<ul class="breadcrumb">
+	  <li class="active"><a href="#">Inicio</a></li>
+	  <li><a href="#">Plano</a></li>
+	  <li><a href="#">Sensores</a></li>
+	  <li><a href="#">Acesso</a></li>
+	  <li><a href="#">Camara sensores</a></li>
+	  <li><a href="#">Notificaciones</a></li>
+	</ul>														
 	<g:layoutBody/>
 	<r:layoutResources />
 </body>

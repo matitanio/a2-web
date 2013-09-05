@@ -1,8 +1,11 @@
 package arduito
 
+import grails.plugins.springsecurity.Secured
+
 import org.codehaus.groovy.grails.validation.routines.InetAddressValidator
 
 
+@Secured(["ROLE_ARDUITO","IS_AUTHENTICATED_FULLY"])
 class HabitacionController {
 
 	def springSecurityService
@@ -32,6 +35,25 @@ class HabitacionController {
 			}.to("paso2")
 		}
 		paso2{
+			
+			on('agregarSensor'){Paso2Command paso2Command ->
+				
+				def sensores = flow.sensores
+				if(!sensores){
+					sensores = []
+					flow.sensores  = sensores
+				}
+				if(paso2Command.validate()){
+					
+					sensores << [tipo:paso2Command.tipo,min:paso2Command.min,max:paso2Command.max]
+					println sensores
+					success()
+				}else{
+					flow.paso2Command = paso2Command
+					error()
+				}
+				 
+			}.to('paso2')
 			
 		}
 		paso3{
@@ -64,5 +86,18 @@ class Paso1Command implements Serializable{
 			println 'holaaaaaaa' + value
 			if(!InetAddressValidator.getInstance().isValid(value)) return['ipNovalida']
 		}
+	}
+}	
+	
+class Paso2Command implements Serializable{
+	
+	Long tipo
+	Long valorMaximo
+	String valorMinimo
+	
+	static constraints = {
+		tipo nullable:false
+		valorMaximo nullable:false
+		valorMinimo nullable:false
 	}
 }
