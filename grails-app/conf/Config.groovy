@@ -105,14 +105,14 @@ grails.config.defaults.locations = [KickstartResources]
 
 
 //CONFIGURACION JMS
-jms {
-	containers {
-		arduino {
-			concurrentConsumers = 5
-			connectionFactoryBean = 'jmsConnectionFactory'
-		}
-	}
-}
+//jms {
+//	containers {
+//		arduino {
+//			concurrentConsumers = 5
+//			connectionFactoryBean = 'jmsConnectionFactory'
+//		}
+//	}
+//}
 
 //investigar si se puede modificar dinamicamente
 //grails.plugins.springsecurity.ipRestrictions = [

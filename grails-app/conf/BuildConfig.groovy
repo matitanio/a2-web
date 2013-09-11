@@ -64,8 +64,8 @@ grails.project.dependency.resolution = {
 		compile ':lesscss-resources:1.3.0.3'
 		compile ":spring-security-core:1.2.7.3"
 		compile ":fixtures:1.2"
-		compile ":activemq:0.4.1"
-		compile ":jms:1.2"
+//		compile ":activemq:0.4.1"
+//		compile ":jms:1.2"
 		compile ":android-gcm:0.2"
 		compile ":webxml:1.4.1"
 		
