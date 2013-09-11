@@ -21,7 +21,7 @@
 			
 				<th>id</th>
 			
-				<g:sortableColumn property="ip" title="ip" />
+				<g:sortableColumn property="ipHabitacion" title="ip" />
 			
 			</tr>
 		</thead>
@@ -31,7 +31,7 @@
 			
 <%--				<td><g:link action="show" id="${cuentaInstance.id}">${fieldValue(bean: cuentaInstance, field: "owner")}</g:link></td>--%>
 				<td>${habitacionInstance.id}</td>
-				<td>${habitacionInstance.ip}</td>
+				<td>${habitacionInstance.ipHabitacion}</td>
 			
 			</tr>
 		</g:each>

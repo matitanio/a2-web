@@ -39,26 +39,29 @@
 		
 	</div>
 	<div class="span4"></div>
-	<div class="span4">
-	${sensores}
-		<g:if test="${!sensores}">
-			<div class="alert alert-info"> Agregar Sensores para contunuar </div>
-		</g:if>
-		<g:else>
-			<ul>
-				<g:each in="${sensores}" var="sensor">
-				<li> ${sensor.tipo + ' ' + sensor.min + ' ' +sensor.max}</li>
-				</g:each>
-			</ul>
-		</g:else>
 
-	</div>
 </div>
 <div class="form-actions">
    	<g:submitButton class="btn btn-primary" name="siguiente" value="Siguiente" />
    	<g:link class="btn btn-danger" role="button" name="cancelar" controller="home">Cancelar</g:link>
 </div>
 </g:form>
+	<div class="span4">
+		<g:if test="${!sensores}">
+			<div class="alert alert-info"> Agregar Sensores para contunuar </div>
+		</g:if>
+		<g:else>
+			<ul>
+				<g:each in="${sensores}" var="sensor">
+				<g:form>
+				<g:hiddenField name="uuid" value="${sensor.uuid}" />
+				<li> ${sensor.nombre +' : '+sensor.tipo + ' ' + sensor.min + ' ' +sensor.max} <g:submitButton class="btn btn-primary" name="eliminarSensor" value="eliminar" /></li>
+				</g:form>
+				</g:each>
+			</ul>
+		</g:else>
+
+	</div>
 </body>
 
 </html>
