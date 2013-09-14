@@ -7,6 +7,7 @@ class SensorHabitacion {
 	Integer numeroSensor
 	Float valorMinimo
 	Float valorMaximo
+	Float valorActual
 	
 	Float coordenadaX
 	Float coordenadaY
@@ -21,6 +22,9 @@ class SensorHabitacion {
 //	static mappedBy		= []	// specifies which property should be used in a mapping 
 	
 	static constraints = {
+		valorActual nullable:true
+		sensor lazy: false
+		habitacion lazy:false
     }
 	
 	

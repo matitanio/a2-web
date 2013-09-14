@@ -16,6 +16,7 @@ class NotificacionController {
 		
 		
 		//sendJMSMessage("arduino.queue", params)
+		println params
 		onMessage(params)
 		render 'ok'
 	}

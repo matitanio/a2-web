@@ -15,4 +15,22 @@ class SensoresApiController {
 		
 		render lista as JSON
 	}
+	
+	
+	def todos(){
+		
+//		JSON.use('deep')
+		def sensores = SensorHabitacion.list()
+		
+		def sensoresADevolver = [sensores:[]]
+		sensores.each{
+			
+			sensoresADevolver.sensores << [id:it.id,habitacion:it.habitacion.id,valorActual:it.valorActual,
+				valorMaximo:it.valorMaximo,valorMinimo:it.valorMinimo,nombreSensor:it.sensor.tipo]
+			
+		}
+		
+		render sensoresADevolver as JSON
+		
+	}
 }

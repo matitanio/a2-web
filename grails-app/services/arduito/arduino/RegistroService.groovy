@@ -12,7 +12,8 @@ class RegistroService {
 
     def registrarMedicion(sensor,fecha,valorMedido) {
 
-		
+		sensor.valorActual = valorMedido
+		sensor.save(flush:true)
 		def registro = new RegistroSensor(fechaCreacion:fecha,sensor:sensor,valorRegistrado:valorMedido)
 		registro.save(flush:true)
     }
