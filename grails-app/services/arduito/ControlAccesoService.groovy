@@ -1,5 +1,7 @@
 package arduito
 
+import arduito.arduino.RegistroService
+
 /**
  * ControlAccesoService
  * A service class encapsulates the core business logic of a Grails application
@@ -14,7 +16,8 @@ class ControlAccesoService {
 		def habitacion = Habitacion.get(habitacionId as Long)
 		def acceso = TarjetaAcceso.findByAcceso(nroTarjeta) 
 	
-		habitacion.tarjetasConAcceso.contains(acceso)?'si':'no'	
-		
+		def resultado = habitacion.tarjetasConAcceso.contains(acceso)	
+		sendJMSMessage("registro.queue", [tipo:'registro-acceso',habitacion:habitacion?.id,tarjeta:acceso?.id,resultado:resultado,fecha:new Date().format(RegistroService.formatoFecha)])
+		resultado?'si':'no'
     }
 }

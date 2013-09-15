@@ -111,6 +111,10 @@ grails.config.defaults.locations = [KickstartResources]
 				concurrentConsumers = 5
 				connectionFactoryBean = 'jmsConnectionFactory'
 			}
+			registro{
+				concurrentConsumers = 5
+				connectionFactoryBean = 'jmsConnectionFactory'
+			}
 		}
 	}
 

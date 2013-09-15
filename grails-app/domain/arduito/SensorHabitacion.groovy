@@ -45,9 +45,8 @@ class Warning{
 	String comparador
 	
 	def validar(valorMedido){
-		println comparador + ' - comparador'
-		def comparador = ComparadoresWarning.comparadores[comparador]
 		
+		def comparador = ComparadoresWarning.comparadores[comparador]
 		def resultado =comparador(valorMedido,valorWarning)
 		
 		resultado
