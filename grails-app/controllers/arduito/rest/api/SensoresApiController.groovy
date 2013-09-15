@@ -12,7 +12,7 @@ class SensoresApiController {
 		
 		def sensor = SensorHabitacion.get(id)
 		
-		def sensoresADformateadosevolver = sensorService.buscarLosUltimosRegistros(sensor,10)
+		def formateados = sensorService.buscarLosUltimosRegistros(sensor,10)
 		render formateados as JSON
 	}
 	
