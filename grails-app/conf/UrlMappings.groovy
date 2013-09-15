@@ -32,6 +32,11 @@ class UrlMappings {
 			controller = 'notificacion'
 			action = 'index'
 		}
+		
+		"/validar/acceso/$habitacion/$tarjeta"{
+			controller = 'notificacion'
+			action = 'controAcceso'
+		}
 		"/api/accesos/$action?/$id?"(controller: "accesosApi")
 		"/api/edificios/$action?/$id?"(controller: "edificiosApi")
 		"/api/sensores/$action?/$id?"(controller: "sensoresApi")

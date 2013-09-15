@@ -6,7 +6,7 @@ class Habitacion {
 	
 	
 	static belongsTo = [edificio:Edificio]
-	static hasMany = [sensores:SensorHabitacion,usuariosConAcceso:Usuario,camaras:CamaraIp]
+	static hasMany = [sensores:SensorHabitacion,tarjetasConAcceso:TarjetaAcceso,camaras:CamaraIp]
 	
 	String piso
 	String numero
@@ -20,7 +20,7 @@ class Habitacion {
 //			InetAddressValidator.isValid(it)
 //		}
 		sensores nullable:true
-		usuariosConAcceso nullable:true
+		tarjetasConAcceso nullable:true
 		camaras nullable:true
 		rfeed nullable:true
 		

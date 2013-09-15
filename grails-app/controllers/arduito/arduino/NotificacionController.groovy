@@ -11,10 +11,21 @@ import arduito.SensorHabitacion
 class NotificacionController {
 
 	def registroService
+	def controlAccesoService
 	
 	def index = {
 		
 		sendJMSMessage("arduino.queue", params)
 		render 'ok'
+	}
+	
+	
+	def controAcceso(){
+		
+		def habitacion = params.habitacion
+		def tarjeta = params.tarjeta
+		
+		render controlAccesoService.validarAcceso(habitacion, tarjeta)
+		
 	}
 }

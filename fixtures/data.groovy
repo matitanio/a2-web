@@ -4,8 +4,11 @@ import arduito.Habitacion
 import arduito.Perfil
 import arduito.Sensor
 import arduito.SensorHabitacion
+import arduito.TarjetaAcceso
 import arduito.Usuario
 import arduito.UsuarioPerfil
+import arduito.Warning
+import arduito.arduino.ComparadoresWarning;
 
 
 pre{
@@ -48,17 +51,22 @@ fixture{
 	
 	def cuenta = Cuenta.findByNombre('cuenta2')
 	edificio(Edificio,owner:cuenta,direccion:'aaa',nombre:'aaaa')
-	habitacion(Habitacion,piso:'1',numero:'1',urlPlano:'aa',ipHabitacion:'192.168.0.1',edificio:edificio)
+	
+	tarjetaAcceso1(TarjetaAcceso,acceso:'1234')
+	tarjetaAcceso2(TarjetaAcceso,acceso:'2222')
+	habitacion(Habitacion,piso:'1',numero:'1',urlPlano:'aa',ipHabitacion:'192.168.0.1',edificio:edificio,tarjetasConAcceso:[tarjetaAcceso1,tarjetaAcceso2])
 	habitacion2(Habitacion,piso:'1',numero:'2',urlPlano:'aa',ipHabitacion:'192.168.0.2',edificio:edificio)
 	
 	sensorTemperatura(Sensor,tipo:'temperatura',unidades:'¼',descripcion:'aa',valorMaximo:'40',valorMinimo:'10')
 	sensorHumedad(Sensor,tipo:'humedad',unidades:'%',descripcion:'aa',valorMaximo:'40',valorMinimo:'10')
 	sensorGas(Sensor,tipo:'gas',unidades:'ppm',descripcion:'aa',valorMaximo:'40',valorMinimo:'10')
-	
-	sensorHabitacion(SensorHabitacion,sensor:sensorTemperatura,numeroSensor:'1',valorActual:20,valorMinimo:5,valorMaximo:38,coordenadaX:120,coordenadaY:130,habitacion:habitacion)
+	sensorHabitacion(SensorHabitacion,sensor:sensorTemperatura,numeroSensor:'1',valorActual:20,valorMinimo:5,valorMaximo:38,coordenadaX:120,coordenadaY:130,habitacion:habitacion,warning:new Warning(valorWarning:15,comparador:ComparadoresWarning.GT))
 	sensorHabitacion1(SensorHabitacion,sensor:sensorHumedad,numeroSensor:'1',valorActual:60,valorMinimo:40,valorMaximo:80,coordenadaX:120,coordenadaY:130,habitacion:habitacion)
 	sensorHabitacion2(SensorHabitacion,sensor:sensorGas,numeroSensor:'1',valorActual:150,valorMinimo:0,valorMaximo:300,coordenadaX:120,coordenadaY:130,habitacion:habitacion)
 	sensorHabitacion3(SensorHabitacion,sensor:sensorTemperatura,numeroSensor:'1',valorActual:15,valorMinimo:10,valorMaximo:20,coordenadaX:120,coordenadaY:130,habitacion:habitacion2)
 	sensorHabitacion4(SensorHabitacion,sensor:sensorHumedad,numeroSensor:'1',valorActual:60,valorMinimo:10,valorMaximo:80,coordenadaX:120,coordenadaY:130,habitacion:habitacion2)
 	sensorHabitacion5(SensorHabitacion,sensor:sensorGas,numeroSensor:'1',valorActual:200,valorMinimo:0,valorMaximo:300,coordenadaX:120,coordenadaY:130,habitacion:habitacion2)
+	
+	
+	
 }

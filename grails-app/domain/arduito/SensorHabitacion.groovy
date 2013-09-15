@@ -1,12 +1,16 @@
 package arduito
 
+import arduito.arduino.ComparadoresWarning
+
 class SensorHabitacion {
 
 	
 	Sensor sensor
 	Integer numeroSensor
+	
 	Float valorMinimo
 	Float valorMaximo
+	Warning warning
 	Float valorActual
 	
 	Float coordenadaX
@@ -23,9 +27,29 @@ class SensorHabitacion {
 	
 	static constraints = {
 		valorActual nullable:true
-		sensor lazy: false
-		habitacion lazy:false
+		warning nullable:true
     }
 	
+	static embedded = ['warning']
 	
+	def validar(valorMedido){
+		(valorMedido > valorMinimo && valorMedido < valorMaximo)
+	}
+	
+	
+}
+
+class Warning{
+	
+ 	Integer valorWarning
+	String comparador
+	
+	def validar(valorMedido){
+		println comparador + ' - comparador'
+		def comparador = ComparadoresWarning.comparadores[comparador]
+		
+		def resultado =comparador(valorMedido,valorWarning)
+		
+		resultado
+	} 
 }
