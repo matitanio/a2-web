@@ -6,22 +6,32 @@ package arduito
  */
 class SensorService {
 
-	static transactional = true
+	static transactional = false
 
-	def buscarTodosLosSensores() {
+	def buscarTodosLosSensores(pin) {
 
-		def sensores = SensorHabitacion.list()
-		formatearUnSensor(sensores)
+		def criteria = SensorHabitacion.createCriteria()
+		def sensores = criteria.list{
+			createAlias('notificables','n')
+			eq('n.pin',pin)
+		}
+		formatearSensores(sensores)
 	}
 
-	private formatearUnSensor(sensores){
+	private formatearSensores(sensores){
 
 		def sensoresADevolver = [sensores:[]]
 		sensores.each{sensor ->
-			sensoresADevolver.sensores << [id:sensor.id,habitacion:sensor.habitacion.sensor,valorActual:sensor.valorActual,
+			def habitacion = sensor.habitacion
+			sensoresADevolver.sensores << [id:sensor.id,habitacion:formatHabitacion(habitacion),valorActual:sensor.valorActual,
 				valorMaximo:sensor.valorMaximo,valorMinimo:sensor.valorMinimo,nombreSensor:sensor.sensor.tipo]
 		}
 		sensoresADevolver
+	}
+	
+	private formatHabitacion(habitacion){
+		
+		[id:habitacion.id,direccion:habitacion.edificio.direccion,numero:habitacion.numero,piso:habitacion.piso]
 	}
 
 	def buscarLosUltimosRegistros(sensor,cantidadRegistros){

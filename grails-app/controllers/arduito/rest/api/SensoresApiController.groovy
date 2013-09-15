@@ -8,7 +8,7 @@ class SensoresApiController {
 
 	def sensorService
 	
-	@TienePermisos(componente='Sensor')
+	@TienePermisos(componente=ComponentesValidables.SENSOR)
 	def sensor(Long id){
 		
 		def sensor = SensorHabitacion.get(id)
@@ -19,8 +19,8 @@ class SensoresApiController {
 	
 	
 	def todos(){
-		//pin
-		def sensoresADevolver = sensorService.buscarTodosLosSensores()
+		
+		def sensoresADevolver = sensorService.buscarTodosLosSensores(params.pin)
 		render sensoresADevolver as JSON
 		
 	}
