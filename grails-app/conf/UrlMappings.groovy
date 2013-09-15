@@ -37,9 +37,9 @@ class UrlMappings {
 			controller = 'notificacion'
 			action = 'controAcceso'
 		}
-		"/api/accesos/$action?/$id?"(controller: "accesosApi")
-		"/api/edificios/$action?/$id?"(controller: "edificiosApi")
-		"/api/sensores/$action?/$id?"(controller: "sensoresApi")
+		"/api/$pin/accesos/$action?/$id?"(controller: "accesosApi")
+		"/api/$pin/edificios/$action?/$id?"(controller: "edificiosApi")
+		"/api/$pin/sensores/$action?/$id?"(controller: "sensoresApi")
 		
 		/* 
 		 * System Pages without controller 

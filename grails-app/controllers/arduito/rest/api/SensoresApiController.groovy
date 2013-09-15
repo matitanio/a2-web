@@ -1,13 +1,14 @@
 package arduito.rest.api
 
 import grails.converters.JSON
-import arduito.RegistroSensor
 import arduito.SensorHabitacion
+import arduito.annotations.TienePermisos
 
 class SensoresApiController {
 
 	def sensorService
 	
+	@TienePermisos(componente='Sensor')
 	def sensor(Long id){
 		
 		def sensor = SensorHabitacion.get(id)
@@ -18,7 +19,7 @@ class SensoresApiController {
 	
 	
 	def todos(){
-		
+		//pin
 		def sensoresADevolver = sensorService.buscarTodosLosSensores()
 		render sensoresADevolver as JSON
 		
