@@ -1,6 +1,7 @@
 package filters.api
 
 import arduito.annotations.TienePermisos
+import arduito.rest.api.AccesosApiController
 import arduito.rest.api.SensoresApiController
 
 /**
@@ -14,7 +15,6 @@ class RestFilters {
 		restApi(uri:'/api/**') {
 			before = {
 
-				println 'hola'
 				if(esLLamadaValida(controllerName,actionName,params)){
 					return true
 				}else{
@@ -33,9 +33,14 @@ class RestFilters {
 		
 		def resultado = true
 		def controllerClass = controllerClasses[controllerName]
-		def metodo = controllerClass.methods.find{ it =~ /.*$actionName/ }
+		def metodo 
+		if(controllerClass){
+			metodo = controllerClass.methods.find{ it =~ /.*$actionName/ }
+		}else{
+			resultado = false
+		}
 		
-		if(metodo.isAnnotationPresent(TienePermisos.class)){
+		if(metodo && metodo.isAnnotationPresent(TienePermisos.class)){
 			def componente = metodo.getAnnotation(TienePermisos.class).componente()
 			resultado = validadorPermisosService.validar(componente,params.id,params.pin)
 			
@@ -44,6 +49,7 @@ class RestFilters {
 	}
 
 	def controllerClasses = [
-		sensoresApi:SensoresApiController.class
+		sensoresApi:SensoresApiController.class,
+		accesosApi:AccesosApiController.class
 	]
 }

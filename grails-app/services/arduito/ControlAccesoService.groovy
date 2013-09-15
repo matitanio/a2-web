@@ -15,8 +15,8 @@ class ControlAccesoService {
 		
 		def habitacion = Habitacion.get(habitacionId as Long)
 		def acceso = TarjetaAcceso.findByAcceso(nroTarjeta) 
-	
-		def resultado = habitacion.tarjetasConAcceso.contains(acceso)	
+		def rfeed = habitacion.rfeed
+		def resultado = rfeed.tarjetasConAcceso.contains(acceso)	
 		sendJMSMessage("registro.queue", [tipo:'registro-acceso',habitacion:habitacion?.id,tarjeta:acceso?.id,resultado:resultado,fecha:new Date().format(RegistroService.formatoFecha)])
 		resultado?'si':'no'
     }

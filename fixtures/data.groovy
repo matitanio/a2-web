@@ -2,6 +2,7 @@ import arduito.Cuenta
 import arduito.DispositivoMovil
 import arduito.Edificio
 import arduito.Habitacion
+import arduito.LectorRfeed;
 import arduito.Perfil
 import arduito.Sensor
 import arduito.SensorHabitacion
@@ -51,13 +52,18 @@ pre{
 fixture{
 	
 	def cuenta = Cuenta.findByNombre('cuenta2')
+	
 	edificio(Edificio,owner:cuenta,direccion:'aaa',nombre:'aaaa')
 	dispositivoMovil1(DispositivoMovil,numero:'5411138314736',pin:'1234')
 	dispositivoMovil2(DispositivoMovil,numero:'5411138314736',pin:'2345')
 	dispositivoMovil3(DispositivoMovil,numero:'5411138314736',pin:'4567')
+	
 	tarjetaAcceso1(TarjetaAcceso,acceso:'1234')
 	tarjetaAcceso2(TarjetaAcceso,acceso:'2222')
-	habitacion(Habitacion,piso:'1',numero:'1',urlPlano:'aa',ipHabitacion:'192.168.0.1',edificio:edificio,tarjetasConAcceso:[tarjetaAcceso1,tarjetaAcceso2])
+	rfeed(LectorRfeed,notificables:[dispositivoMovil1],tarjetasConAcceso:[tarjetaAcceso1,tarjetaAcceso2])
+	
+	habitacion(Habitacion,piso:'1',numero:'1',urlPlano:'aa',ipHabitacion:'192.168.0.1',edificio:edificio,
+				rfeed:rfeed)
 	habitacion2(Habitacion,piso:'1',numero:'2',urlPlano:'aa',ipHabitacion:'192.168.0.2',edificio:edificio)
 	
 	sensorTemperatura(Sensor,tipo:'temperatura',unidades:'¼',descripcion:'aa',valorMaximo:'40',valorMinimo:'10')
