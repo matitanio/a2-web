@@ -7,11 +7,12 @@ class Habitacion {
 	
 	static belongsTo = [edificio:Edificio]
 	static hasMany = [sensores:SensorHabitacion,usuariosConAcceso:Usuario,camaras:CamaraIp]
+	
 	String piso
 	String numero
 	String urlPlano
 	String ipHabitacion
-	
+	LectorRfeed rfeed
 	
 	static constraints = {
 //		
@@ -21,6 +22,7 @@ class Habitacion {
 		sensores nullable:true
 		usuariosConAcceso nullable:true
 		camaras nullable:true
+		rfeed nullable:true
 		
 	}
 	

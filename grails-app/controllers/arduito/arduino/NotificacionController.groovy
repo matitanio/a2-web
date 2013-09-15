@@ -14,30 +14,7 @@ class NotificacionController {
 	
 	def index = {
 		
-		
-		//sendJMSMessage("arduino.queue", params)
-		println params
-		onMessage(params)
+		sendJMSMessage("arduino.queue", params)
 		render 'ok'
-	}
-	
-	void onMessage(msg){
-		
-		//sensorService.sensorActivado(msg.sensor)
-		
-		//identificar el sensor
-		def sensor = buscarSensor(msg)
-		registroService.registrarMedicion(sensor, new Date(), msg.valores)
-		//validar
-		
-	}
-	
-	private buscarSensor(msg){
-		
-		def habitacion = Habitacion.get(msg.habitacion.toLong())
-		def sensor = Sensor.get(msg.sensor.toLong())
-		
-		SensorHabitacion.findByHabitacionAndSensorAndNumeroSensor(habitacion,sensor,msg.numeroSensor)
-		
 	}
 }

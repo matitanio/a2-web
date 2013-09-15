@@ -22,6 +22,7 @@ class ArduinoMessagingService {
 		//sensorService.sensorActivado(msg.sensor)
 		
 		//identificar el sensor
+		println msg
 		def sensor = buscarSensor(msg)
 		registroService.registrarMedicion(sensor, new Date(), msg.valores)
 		//validar

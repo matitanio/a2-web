@@ -6,30 +6,20 @@ import arduito.SensorHabitacion
 
 class SensoresApiController {
 
-	
+	def sensorService
 	
 	def sensor(Long id){
 		
 		def sensor = SensorHabitacion.get(id)
-		def lista = RegistroSensor.findAllBySensor(sensor)
 		
-		render lista as JSON
+		def sensoresADformateadosevolver = sensorService.buscarLosUltimosRegistros(sensor,10)
+		render formateados as JSON
 	}
 	
 	
 	def todos(){
 		
-//		JSON.use('deep')
-		def sensores = SensorHabitacion.list()
-		
-		def sensoresADevolver = [sensores:[]]
-		sensores.each{
-			
-			sensoresADevolver.sensores << [id:it.id,habitacion:it.habitacion.id,valorActual:it.valorActual,
-				valorMaximo:it.valorMaximo,valorMinimo:it.valorMinimo,nombreSensor:it.sensor.tipo]
-			
-		}
-		
+		def sensoresADevolver = sensorService.buscarTodosLosSensores()
 		render sensoresADevolver as JSON
 		
 	}
