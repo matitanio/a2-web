@@ -58,7 +58,7 @@ fixture{
 	dispositivoMovil2(DispositivoMovil,numero:'5411138314736',pin:'2345')
 	dispositivoMovil3(DispositivoMovil,numero:'5411138314736',pin:'4567')
 	
-	tarjetaAcceso1(TarjetaAcceso,acceso:'1234')
+	tarjetaAcceso1(TarjetaAcceso,acceso:'56CFC1B4EC')
 	tarjetaAcceso2(TarjetaAcceso,acceso:'2222')
 	rfeed(LectorRfeed,notificables:[dispositivoMovil1],tarjetasConAcceso:[tarjetaAcceso1,tarjetaAcceso2])
 	
