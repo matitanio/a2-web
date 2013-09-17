@@ -66,7 +66,7 @@ fixture{
 				rfeed:rfeed)
 	habitacion2(Habitacion,piso:'1',numero:'2',urlPlano:'aa',ipHabitacion:'192.168.0.2',edificio:edificio)
 	
-	sensorTemperatura(Sensor,tipo:'temperatura',unidades:'¼',descripcion:'aa',valorMaximo:'40',valorMinimo:'10')
+	sensorTemperatura(Sensor,tipo:'temperatura',unidades:'grados',descripcion:'aa',valorMaximo:'40',valorMinimo:'10')
 	sensorHumedad(Sensor,tipo:'humedad',unidades:'%',descripcion:'aa',valorMaximo:'40',valorMinimo:'10')
 	sensorGas(Sensor,tipo:'gas',unidades:'ppm',descripcion:'aa',valorMaximo:'40',valorMinimo:'10')
 	sensorHabitacion(SensorHabitacion,sensor:sensorTemperatura,numeroSensor:'1',valorActual:20,valorMinimo:5,valorMaximo:38,coordenadaX:120,coordenadaY:130,habitacion:habitacion,

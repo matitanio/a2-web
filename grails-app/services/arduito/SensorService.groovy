@@ -24,7 +24,7 @@ class SensorService {
 		sensores.each{sensor ->
 			def habitacion = sensor.habitacion
 			sensoresADevolver.sensores << [id:sensor.id,habitacion:formatHabitacion(habitacion),valorActual:sensor.valorActual,
-				valorMaximo:sensor.valorMaximo,valorMinimo:sensor.valorMinimo,nombreSensor:sensor.sensor.tipo]
+				valorMaximo:sensor.valorMaximo,valorMinimo:sensor.valorMinimo,nombreSensor:sensor.sensor.tipo, unidad:sensor.sensor.unidades]
 		}
 		sensoresADevolver
 	}
