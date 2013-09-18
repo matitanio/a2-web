@@ -22,7 +22,7 @@ class Sensor implements Serializable {
 	
 	String toString(){
 		
-		tipo + ':' + valorMinimo + ' ' + unidades + '-' + valorMaximo + ' ' + unidades
+		tipo
 	}
 	
 	

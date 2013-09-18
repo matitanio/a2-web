@@ -1,5 +1,6 @@
 package arduito
 
+import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 
 import org.codehaus.groovy.grails.validation.routines.InetAddressValidator
@@ -24,10 +25,15 @@ class HabitacionController {
 			on("siguiente") {Paso1Command paso1Command ->
 				flow.paso1Command = paso1Command
 				if(paso1Command.validate()){
+					def sensoresValores = [:]
+					Sensor.list().collect{
+						sensoresValores.put(it.id, [valorMaximo:it.valorMaximo,valorMinimo:it.valorMinimo])
+					}
+					
+					flow.sensoresValores = sensoresValores
 					success()
 				}
 				else{
-					println paso1Command.errors
 					error()
 				}
 			}.to("paso2")

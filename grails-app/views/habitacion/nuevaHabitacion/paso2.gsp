@@ -28,7 +28,7 @@
 			<div class="control-group fieldcontain ${hasErrors(bean: paso2Command, field: 'valorMaximo', 'error')}" required>
 				<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Valor máximo" /></label>
 				<div class="controls">
-					<g:textField name="valorMaximo" value="${paso2Command?.valorMaximo }"/>
+					<g:textField name="valorMaximo" id="valorMaximo" value="${paso2Command?.valorMaximo }"/>
 				</div>
 				<span class="help-inline">${hasErrors(bean: paso2Command, field: 'valorMaximo', 'error')}</span>
 			</div>
@@ -69,6 +69,23 @@
 		</g:else>
 
 	</div>
+	<g:each in="${sensoresValores}" var="sensor">
+		<g:hiddenField name="sensor_${sensor.key}" id="sensor_${sensor.key}"
+		value="${sensor.value.valorMaximo}:${sensor.value.valorMinimo}"/>
+	</g:each>
+<script type="text/javascript">
+$(function() {
+
+		
+	$('#tipo').on('change',function(){
+		var sensor = $('#tipo').val()
+		var valores = $('#sensor_'+sensor).val().split(':')
+		$('#valorMaximo').val(valores[0]);
+		$('#valorMinimo').val(valores[1]);
+		});
+	
+});
+</script>
 </body>
 
 </html>
