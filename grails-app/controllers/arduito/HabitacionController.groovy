@@ -62,6 +62,7 @@ class HabitacionController {
 				flow.sensores.remove(sensor)
 			}.to('paso2')
 			on("siguiente"){success()}.to('paso3')
+			on('atras').to('paso1')
 		}
 		paso3{
 
@@ -89,15 +90,18 @@ class HabitacionController {
 				flow.camaras.remove(params.ip)
 			}.to('paso3')
 			on('siguiente').to('paso4')
+			on('atras').to('paso2')
 		}
 		paso4{
 			
 			on('siguiente').to('paso5')
+			on('atras').to('paso3')
 		}
 		
 		paso5{
 			
 			on('siguiente').to('paso5')
+			on('atras').to('paso4')
 		}
 	}
 

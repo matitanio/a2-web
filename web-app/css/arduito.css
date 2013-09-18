@@ -1,0 +1,10 @@
+.main-flow{
+			height: 200px
+}
+
+#sensores,#camaras {
+		 	position:relative;
+			 top: -320px;
+		 	 left: 700px;
+		 	 width: 400px
+		}

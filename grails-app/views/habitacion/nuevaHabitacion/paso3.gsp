@@ -5,11 +5,17 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="layout" content="habitacion" />
 	<title>Nueva Habitacion</title>
+	<style>
+		#agregar{
+			position:relative;
+			left: 179px;
+		}
+	</style>
 </head>
 
 <body>
 <g:form  class="form-horizontal">
-<div class="row">
+<div class="row main-flow">
 	<div class="span4">
 		<fieldset class="form">
 			
@@ -21,28 +27,26 @@
 				<span class="help-inline">${ipError}</span>
 			</div>
 		</fieldset>
-		<g:submitButton class="btn btn-primary" name="agregarCamara" value="Agregar" />
+		<g:submitButton class="btn btn-primary" name="agregarCamara" value="Agregar" id="agregar"/>
 		
 	</div>
 	<div class="span4"></div>
 </div>
 <div class="form-actions">
    	<g:submitButton class="btn btn-primary" name="siguiente" value="Siguiente" />
+   	<g:submitButton class="btn btn-primary" name="atras" value="Atras" />
    	<g:link class="btn btn-danger" role="button" name="cancelar" controller="home">Cancelar</g:link>
 </div>
 </g:form>
 
-<div class="span4">
+<div id="camaras">
 		<g:if test="${!camaras}">
-			<div class="alert alert-info"> Camaras </div>
+			<div class="alert alert-info" style="text-align: center"> Agregar camaras para continuar</div>
 		</g:if>
 		<g:else>
 			<ul>
 				<g:each in="${camaras}" var="camara" >
-				<g:form>
-				<g:hiddenField name="ip" value="${camara}" />
-				<li> ${camara} <g:submitButton class="btn btn-primary" name="eliminarCamara" value="eliminar" /></li>
-				</g:form>
+					<li> ${camara}<g:link event="eliminarCamara" params="[ip:camara]"><i class="icon-remove"></i></g:link></li>
 				</g:each>
 			</ul>
 		</g:else>

@@ -5,11 +5,17 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="layout" content="habitacion" />
 	<title>Nueva Habitacion</title>
+	<style>
+	#agregar{
+			position:relative;
+			left: 179px;
+		}
+	</style>
 </head>
 
 <body>
 <g:form  class="form-horizontal">
-<div class="row">
+<div class="row main-flow">
 	<div class="span4">
 		<fieldset class="form">
 			<div class="control-group fieldcontain" required>
@@ -35,7 +41,7 @@
 			</div>
 			
 		</fieldset>
-		<g:submitButton class="btn btn-primary" name="agregarSensor" value="Agregar" />
+		<g:submitButton class="btn btn-primary" name="agregarSensor" value="Agregar" id="agregar"/>
 		
 	</div>
 	<div class="span4"></div>
@@ -43,19 +49,20 @@
 </div>
 <div class="form-actions">
    	<g:submitButton class="btn btn-primary" name="siguiente" value="Siguiente" />
+   	<g:submitButton class="btn btn-primary" name="atras" value="Atras" />
    	<g:link class="btn btn-danger" role="button" name="cancelar" controller="home">Cancelar</g:link>
 </div>
 </g:form>
-	<div class="span4">
+	<div id='sensores'>
 		<g:if test="${!sensores}">
-			<div class="alert alert-info"> Agregar Sensores para contunuar </div>
+			<div class="alert alert-info" style="text-align: center"> Agregar Sensores para contunuar </div>
 		</g:if>
 		<g:else>
 			<ul>
 				<g:each in="${sensores}" var="sensor">
 				<g:form>
-				<g:hiddenField name="uuid" value="${sensor.uuid}" />
-				<li> ${sensor.nombre +' : '+sensor.tipo + ' ' + sensor.min + ' ' +sensor.max} <g:submitButton class="btn btn-primary" name="eliminarSensor" value="eliminar" /></li>
+				<li> ${sensor.nombre +' : '+sensor.tipo + ' ' + sensor.min + ' ' +sensor.max}
+				<g:link event="eliminarSensor" params="[uuid:sensor.uuid]"><i class="icon-remove"></i></g:link>
 				</g:form>
 				</g:each>
 			</ul>
