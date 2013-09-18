@@ -1,4 +1,5 @@
 <%@ page import="arduito.Edificio" %>
+<%@ page import="arduito.Cuenta" %>
 <!doctype html>
 <html>
 <head>
@@ -28,7 +29,8 @@
 				</div>
 			</div>
 			<div id="edificios-div">
-				<g:render template="edificios" model='[edificios:[]]'/>
+				<g:set  var="edificios" value="${((paso1Command?.cuenta)?(Edificio.findAllByOwner(Cuenta.get(paso1Command?.cuenta as Long))):[])}"/>
+				<g:render template="edificios" model='[edificios:edificios,edificio:paso1Command?.edificio]'/>
 			</div>
 			<div class="control-group fieldcontain  ${hasErrors(bean: paso1Command, field: 'ip', 'error')}">
 				<label for="ip" class="control-label">Ip</label>
