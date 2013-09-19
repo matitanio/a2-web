@@ -26,8 +26,11 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "create-drop"
-            url = "jdbc:h2:mem:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
+            dbCreate = "update"
+            url = "jdbc:mysql://localhost:3306/a2_web"
+			driverClassName = "com.mysql.jdbc.Driver"
+			username = "root"
+			password = "root"
             pooled = true
 //            properties {
 //               maxActive = -1

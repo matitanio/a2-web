@@ -2,10 +2,13 @@ class BootStrap {
 
 
 	def fixtureLoader
-
+	def grailsApplication
+	
 	def init = { servletContext ->
 
-		fixtureLoader.load("data")
+		if (grailsApplication.config.usarFixture) {
+			fixtureLoader.load("data")
+		}
 	}
 	def destroy = {
 	}
