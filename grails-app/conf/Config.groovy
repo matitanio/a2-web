@@ -102,7 +102,7 @@ grails.plugins.springsecurity.roleHierarchy = '''
 '''
 grails.plugins.springsecurity.successHandler.defaultTargetUrl = '/home/home'
 grails.config.defaults.locations = [KickstartResources]
-
+grails.plugins.activemq.tempUsage="100 mb"
 
 //CONFIGURACION JMS
 	jms {
