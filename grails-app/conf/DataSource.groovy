@@ -29,7 +29,6 @@ environments {
             dbCreate = "create-drop"
             url = "jdbc:h2:mem:prodDb;MVCC=TRUE;LOCK_TIMEOUT=10000"
             pooled = true
-			grails.dbconsole.enabled = true
 //            properties {
 //               maxActive = -1
 //               minEvictableIdleTimeMillis=1800000
