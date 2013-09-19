@@ -44,7 +44,6 @@ grails.views.gsp.sitemesh.preprocess = true
 // scaffolding templates configuration
 grails.scaffolding.templates.domainSuffix = 'Instance'
 
-usarFixture=true
 
 // Set to false to use the new Grails 1.2 JSONBuilder in the render method
 grails.json.legacy.builder = false
@@ -63,9 +62,11 @@ grails.hibernate.cache.queries = false
 
 environments {
     development {
+		usarFixture=true
         grails.logging.jul.usebridge = true
     }
     production {
+		usarFixture=false
         grails.logging.jul.usebridge = false
 		grails.dbconsole.enabled = true
 		grails.dbconsole.urlRoot = '/admin/dbconsole'
