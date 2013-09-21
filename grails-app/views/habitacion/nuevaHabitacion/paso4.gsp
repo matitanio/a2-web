@@ -8,10 +8,20 @@
 </head>
 
 <body>
-<g:form  class="form-horizontal">
+<g:form  class="form-horizontal" enctype="multipart/form-data">
 <div class="row main-flow">
 	<div class="span4">
-		aca va el mapa
+		<fieldset class="form">
+			
+			<div class="control-group fieldcontain ${ipError?'error':''}" required>
+				<label for="cuenta" class="control-label">Selecciona el plano de tu habitacion</label>
+				<span class="help-inline">${ipError}</span>
+			</div>
+			<div class="control-group fieldcontain ${ipError?'error':''}" required>
+					<input type="file" name="file"  id="file"/>
+					<span class="help-inline">${message}</span>
+			</div>
+		</fieldset>
 	</div>
 	<div class="span4"></div>
 </div>

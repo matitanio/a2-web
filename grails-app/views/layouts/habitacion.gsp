@@ -43,12 +43,14 @@
 	</g:else>
 	<g:render template="/layouts/menu"/>
 	<ul class="breadcrumb">
+	<g:form>
 	  <li class="active"><a href="#">Inicio</a></li>
 	  <li><a href="#">Plano</a></li>
-	  <li><a href="#">Sensores</a></li>
+	  <li><g:link  event="sensores">Sensores</g:link></li>
 	  <li><a href="#">Acesso</a></li>
 	  <li><a href="#">Camara sensores</a></li>
 	  <li><a href="#">Notificaciones</a></li>
+	</g:form>
 	</ul>														
 	<g:layoutBody/>
 	<r:layoutResources />

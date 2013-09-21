@@ -43,6 +43,7 @@ grails.project.dependency.resolution = {
 
 		runtime 'mysql:mysql-connector-java:5.1.22'
 		compile "org.grails:grails-webflow:$grailsVersion"
+		compile 'org.imgscalr:imgscalr-lib:4.2'
     }
 
     plugins {

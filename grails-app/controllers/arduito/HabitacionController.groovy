@@ -1,16 +1,21 @@
 package arduito
 
-import grails.converters.JSON
 import grails.plugins.springsecurity.Secured
 
+import java.awt.image.BufferedImage
+
+import javax.imageio.ImageIO
+
 import org.codehaus.groovy.grails.validation.routines.InetAddressValidator
+import org.imgscalr.Scalr
 
 
 @Secured(["ROLE_ARDUITO","IS_AUTHENTICATED_FULLY"])
 class HabitacionController {
 
 	def springSecurityService
-
+	def grailsApplication
+	
 	def create(){
 		redirect(action:'nuevaHabitacion')
 	}
@@ -50,7 +55,7 @@ class HabitacionController {
 				if(paso2Command.validate()){
 					def uuid = UUID.randomUUID()
 					def sensor = Sensor.get(paso2Command.tipo.toLong())
-					sensores << [tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,uuid:uuid,nombre:sensor.descripcion]
+					sensores << [tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,uuid:uuid,nombre:sensor.tipo]
 					println sensores
 					success()
 				}else{
@@ -87,7 +92,7 @@ class HabitacionController {
 					error()
 				}else{
 						flow.camaras << params.ip
-						sucsess()
+						success()
 				}
 			}.to('paso3')
 
@@ -100,7 +105,35 @@ class HabitacionController {
 		}
 		paso4{
 			
-			on('siguiente').to('paso5')
+			on('siguiente'){
+				
+				def file = request.getFile('file')
+				
+				def validTypes = [
+					'image/jpeg',
+					'image/gif',
+					'image/png'
+				]
+				if(!validTypes.contains(file.contentType)){
+					
+					flash.message = 'No es un tipo de imagen valido'
+					error()
+				}else{
+				
+					def nombreArchivo = '/' + new Date().time
+					def base = 'tmp/habitacion'
+					def urlRelativa =  base + nombreArchivo
+					//@negrada
+					def imageIn = ImageIO.read(file.inputStream);
+					BufferedImage scaledImage = Scalr.resize(imageIn, 600,600);
+					def absoluta = grailsApplication.parentContext.getResource(base).file.toString() + nombreArchivo
+					ImageIO.write(scaledImage, "jpg", new File(absoluta))
+					flow.urlPlanoAbsoluta = absoluta
+					flow.urlPlanoRelativa = urlRelativa
+					success()
+				}
+					
+			}.to('paso5')
 			on('atras').to('paso3')
 		}
 		
@@ -108,9 +141,9 @@ class HabitacionController {
 			
 			on('siguiente').to('paso5')
 			on('atras').to('paso4')
+			on('sensores').to('paso2')
 		}
 	}
-
 
 	def edificiosPorCuenta(Long id){
 
