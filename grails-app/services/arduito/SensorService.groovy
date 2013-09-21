@@ -7,6 +7,8 @@ package arduito
 class SensorService {
 
 	static transactional = false
+	def notificacionService
+	def grailsApplication
 
 	def buscarTodosLosSensores(pin) {
 
@@ -62,14 +64,29 @@ class SensorService {
 
 		def warning = sensor.warning 
 		if(warning && warning.validar(valorMedido)){
-			println 'warning'
+			def mensaje = [mensaje:"Se activo el Warning para el sensor: $sensor"]
+			notificarSensor(sensor,mensaje)
 		}
 	}
 
 	private validarRangoMedicion(sensor,valorMedido){
 
 		if(!sensor.validar(valorMedido)){
-			println 'fuera de rango'
+			def mensaje = [mensaje:"Se activo el sensor: $sensor"]
+			notificarSensor(sensor,mensaje)
 		}
 	}
+	
+	private notificarSensor(sensor,mensaje){
+		
+		sensor.notificables.each{dispositivo->
+			if(dispositivo.estado == Estado.VERIFICADO){
+				notificacionService.notificar(mensaje,dispositivo.key)
+			}else{
+				log.error('El dispositov [' + dispositivo + '] no ha sido verificado aun')
+			}
+		}
+		
+	}
+	
 }

@@ -118,9 +118,7 @@ class DispositivoMovilController {
 	
 	def verificar(Long id){
 		
-		def dispositivo = DispositivoMovil.get(id)
-		dispositivo.estado = Estado.VERIFICANDO
-		dispositivo.save()
+		dispositivoMovilService.enviarCodigoRegistro(id)
 		redirect(action: "show", id: params.id)
 	}
 }

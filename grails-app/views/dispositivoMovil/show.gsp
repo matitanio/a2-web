@@ -23,14 +23,6 @@
 				<td valign="top" class="value"><g:link controller="usuario" action="show" id="${dispositivoMovilInstance?.owner?.id}">${dispositivoMovilInstance?.owner?.encodeAsHTML()}</g:link></td>
 				
 			</tr>
-		
-			<tr class="prop">
-				<td valign="top" class="name"><g:message code="dispositivoMovil.numero.label" default="Numero" /></td>
-				
-				<td valign="top" class="value">${fieldValue(bean: dispositivoMovilInstance, field: "numero")}</td>
-				
-			</tr>
-			
 			<tr class="prop">
 				<td valign="top" class="name">Estado</td>
 				
@@ -54,8 +46,8 @@
 <h3>Verificar dispositivo</h3>  
 </div>  
 <div class="modal-body">  
-<h4>Se enviara un mail al usuario con un codigo</h4>  
-<p>El usuario debera ingresar ese codigo en la aplicacion movil mas bla bla y algun dibujito</p>                
+<h4>Se enviara un mail al usuario con el codigo de registro ${dispositivoMovilInstance.codigoRegistro}</h4>  
+<p>El usuario debera ingresar este codigo y su nombre de usuario para completar el proceso de verificacion</p>                
 </div>  
 <div class="modal-footer">  
 <g:link action="verificar" params='[id:dispositivoMovilInstance.id]' class="btn btn-success">Verificar</g:link>  

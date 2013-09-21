@@ -27,23 +27,34 @@ pre{
 	
 	
 	def perfilUser = new Perfil(authority:'ROLE_USER').save(flush:true)
-	def usuarioUser = new Usuario(username:'user',password:'1234',email:'c@a.com').save(flush:true)
+	def usuarioUser1 = new Usuario(username:'user1',password:'1234',email:'u1@a.com').save(flush:true)
 	
-	UsuarioPerfil.create(usuarioUser, perfilUser,true)
+	UsuarioPerfil.create(usuarioUser1, perfilUser,true)
 	
-	def cuenta = new Cuenta(nombre:'cuenta1',owner:usuarioUser).save(flush:true)
+	
+	def usuarioUser2 = new Usuario(username:'user2',password:'1234',email:'u2@a.com').save(flush:true)
+	UsuarioPerfil.create(usuarioUser2, perfilUser,true)
+	
+	def usuarioUser3 = new Usuario(username:'user3',password:'1234',email:'u3@a.com').save(flush:true)
+	UsuarioPerfil.create(usuarioUser3, perfilUser,true)
+	
+	def cuenta = new Cuenta(nombre:'cuenta1',owner:usuarioAdmin).save(flush:true)
 	
 	usuarioAdmin.cuenta = cuenta
-	usuarioUser.cuenta = cuenta
+	usuarioUser1.cuenta = cuenta
+	usuarioUser2.cuenta = cuenta
+	usuarioUser3.cuenta = cuenta
 	
-	usuarioUser.save(flush:true)
+	usuarioUser1.save(flush:true)
+	usuarioUser2.save(flush:true)
+	usuarioUser3.save(flush:true)
 	usuarioAdmin.save(flush:true)
 	
 	
 	def usuarioAdmin2 = new Usuario(username:'admin2',password:'1234',email:'d@a.com').save(flush:true)
 	UsuarioPerfil.create(usuarioAdmin2, perfilAdmin,true)
 	
-	def cuenta2 = new Cuenta(nombre:'cuenta2',owner:usuarioUser).save(flush:true)
+	def cuenta2 = new Cuenta(nombre:'cuenta2',owner:usuarioUser1).save(flush:true)
 	
 	usuarioAdmin2.cuenta = cuenta2
 	
@@ -52,11 +63,13 @@ pre{
 fixture{
 	
 	def cuenta = Cuenta.findByNombre('cuenta2')
-	
+	def usuario1 = Usuario.findByUsername('user1')
+	def usuario2 = Usuario.findByUsername('user2')
+	def usuario3 = Usuario.findByUsername('user3')
 	edificio(Edificio,owner:cuenta,direccion:'aaa',nombre:'aaaa')
-	dispositivoMovil1(DispositivoMovil,numero:'5411138314736',pin:'1234')
-	dispositivoMovil2(DispositivoMovil,numero:'5411138314736',pin:'2345')
-	dispositivoMovil3(DispositivoMovil,numero:'5411138314736',pin:'4567')
+	dispositivoMovil1(DispositivoMovil,owner:usuario1)
+	dispositivoMovil2(DispositivoMovil,owner:usuario2)
+	dispositivoMovil3(DispositivoMovil,owner:usuario3)
 	
 	tarjetaAcceso1(TarjetaAcceso,acceso:'56CFC1B4EC')
 	tarjetaAcceso2(TarjetaAcceso,acceso:'2222')

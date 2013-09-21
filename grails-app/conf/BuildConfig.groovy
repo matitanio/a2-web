@@ -70,6 +70,8 @@ grails.project.dependency.resolution = {
 		compile ":android-gcm:0.2"
 		compile ":webxml:1.4.1"
 		
+		compile ":android-gcm:0.2"
+		
 		compile ':webflow:2.0.0', {
 			exclude 'grails-webflow'
 		  }

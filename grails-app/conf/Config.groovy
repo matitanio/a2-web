@@ -128,3 +128,8 @@ grails.plugins.activemq.port=7892
 //grails.plugins.springsecurity.ipRestrictions = [
 //	'/notificacion/**': '123.234.345.456',
 // ]
+	
+android.gcm.api.key = 'AIzaSyDILXxw_Pcyrr9QLd0LsO5acFqHHjdriSs'
+android.gcm.time.to.live=1419200
+android.gcm.delay.'while'.idle=false
+android.gcm.retries=3

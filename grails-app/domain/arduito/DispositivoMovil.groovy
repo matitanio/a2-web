@@ -3,15 +3,17 @@ package arduito
 class DispositivoMovil {
 
 	
-	String numero
 	String pin
+	String key
+	String codigoRegistro
 	Usuario owner
 	
 	Estado estado = Estado.SIN_VERIFICAR
 	static constraints = {
-		pin unique:true
+		pin unique:true,nullable:true
+		codigoRegistro nullable:true
+		key nullable:true
 		owner nullable:true
-		numero blank:false,nullable:false
 	}
 }
 

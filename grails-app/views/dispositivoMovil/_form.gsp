@@ -25,11 +25,3 @@
 				<g:set var="usuarios" value="${Usuario.findAllByCuenta(Usuario.get(sec.loggedInUserInfo(field: 'id').toLong()).cuenta)}" />
 				<g:render template="usuarios" model='[usuarios:usuarios]'/>
 			</g:else>
-			<div class="control-group fieldcontain ${hasErrors(bean: dispositivoMovilInstance, field: 'numero', 'error')} required">
-				<label for="numero" class="control-label"><g:message code="dispositivoMovil.numero.label" default="Numero" /><span class="required-indicator">*</span></label>
-				<div class="controls">
-					<g:field type="number" name="numero" required="" value="${dispositivoMovilInstance.numero}"/>
-					<span class="help-inline">${hasErrors(bean: dispositivoMovilInstance, field: 'numero', 'error')}</span>
-				</div>
-			</div>
-

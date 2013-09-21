@@ -9,10 +9,8 @@
   <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 </head>
 <style>
-  #draggable { width: 50px; height: 50px; background: red; 
+  #draggable { width: 50px; height: 50px; background: red;
   				}
-  .informable{
-  }
 </style>
 <body>
   <script>
@@ -46,7 +44,7 @@
 	<div class="span4">
 		<h4>Sensores</h4>
 		<g:each in="${sensores}" var="unSensor">
-		<div class="draggable" style="width: 10px; height: 10px;">
+		<div class="draggable" style="position:relative; top:10px; width: 10px; height: 10px;">
 			<strong>.</strong>${unSensor.nombre}
 			<span style="position:absolute; display:none; width: 100px; height: auto; background:white">min:${unSensor.min} - max:${unSensor.max}</span>
 			<g:hiddenField name="${unSensor.uuid}" value="-1:-1"/>

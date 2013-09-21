@@ -41,6 +41,10 @@ class UrlMappings {
 		"/api/$pin/edificios/$action?/$id?"(controller: "edificiosApi")
 		"/api/$pin/sensores/$action?/$id?"(controller: "sensoresApi")
 		
+		
+		"/registro/$pin/$gcmKey?"(controller: "androidDispositivo",action:'registrar')
+		"/validar/$pinValidacion/$usaurio?"(controller: "androidDispositivo",action:'validar')
+		
 		/* 
 		 * System Pages without controller 
 		 */
