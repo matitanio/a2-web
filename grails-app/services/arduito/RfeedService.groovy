@@ -56,7 +56,7 @@ class RfeedService {
 			
 		}
 		
-		accesosFormateados
+		[accesos:accesosFormateados]
 	}
 	
 	private buscarAcceosValidosDelDia(habitacion){
