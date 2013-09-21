@@ -48,9 +48,7 @@
 
 </div>
 <div class="form-actions">
-   	<g:submitButton class="btn btn-primary" name="siguiente" value="Siguiente" />
-   	<g:submitButton class="btn btn-primary" name="atras" value="Atras" />
-   	<g:link class="btn btn-danger" role="button" name="cancelar" controller="home">Cancelar</g:link>
+	<g:render template="nuevaHabitacion/formActions"/>
 </div>
 </g:form>
 	<div id='sensores'>

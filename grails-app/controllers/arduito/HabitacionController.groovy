@@ -26,6 +26,9 @@ class HabitacionController {
 	}
 
 	def nuevaHabitacionFlow = {
+		onStart{
+			flow.resumen = false
+		}
 		paso1{
 			on("siguiente") {Paso1Command paso1Command ->
 				flow.paso1Command = paso1Command
@@ -74,6 +77,7 @@ class HabitacionController {
 			}.to('paso2')
 			on("siguiente"){success()}.to('paso3')
 			on('atras').to('paso1')
+			on('resumen').to('paso7')
 		}
 		paso3{
 
@@ -91,7 +95,8 @@ class HabitacionController {
 					flash.ipError = 'Debe ser una ip valida'
 					error()
 				}else{
-						flow.camaras << params.ip
+						def uuid = UUID.randomUUID()
+						flow.camaras << [ip:params.ip,uuid:uuid]
 						success()
 				}
 			}.to('paso3')
@@ -102,6 +107,7 @@ class HabitacionController {
 			}.to('paso3')
 			on('siguiente').to('paso4')
 			on('atras').to('paso2')
+			on('resumen').to('paso7')
 		}
 		paso4{
 			
@@ -135,14 +141,64 @@ class HabitacionController {
 					
 			}.to('paso5')
 			on('atras').to('paso3')
+			on('resumen').to('paso7')
 		}
 		
 		paso5{
 			
-			on('siguiente').to('paso5')
+			on('siguiente'){
+				
+				def cantidadSensoressUbicados = agregarPosicionSensores(flow)
+				def cantidadCamarasUbicados = agregarPosicionCamara(flow)
+			}.to('paso6')
 			on('atras').to('paso4')
-			on('sensores').to('paso2')
+			on('resumen').to('paso7')
+			
 		}
+		paso6{
+			on('siguiente'){
+				flow.resumen = true
+			}.to('paso7')
+			on('resumen').to('paso7')
+			
+		}
+		paso7{
+			on('atras').to('paso6')
+			on('sensores').to('paso2')
+			on('camaras').to('paso3')
+			on('plano').to('paso5')
+			on('notificaciones').to('paso6')
+			
+		}	
+		
+	}
+	
+	
+	def agregarPosicionSensores(flow){
+		
+		int validadorCantidadSensores = recorrerListaUbicables(flow.sensores)
+		
+		validadorCantidadSensores
+	}
+	
+	def agregarPosicionCamara(flow){
+		
+		int validadorCantidadCamaras = recorrerListaUbicables(flow.camaras)
+		validadorCantidadCamaras
+	}
+	
+	def recorrerListaUbicables(lista){
+		def validador = 0
+		
+		lista.each{
+			def ubicacion = it.uuid.toString()
+			if(ubicacion != '-1:-1'){
+				it.ubicacion = params[ubicacion]
+				validador++
+			} 
+		}
+		
+		validador
 	}
 
 	def edificiosPorCuenta(Long id){

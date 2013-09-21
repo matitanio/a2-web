@@ -28,7 +28,6 @@
         	var pos = ui.draggable.offset(), dPos = $(this).offset();
         	var posicion = (pos.top - dPos.top)+':'+(pos.left - dPos.left)
         	ui.draggable.children('input:last').val(posicion)
-        	alert(ui.draggable.children('input:last').val());
         }
     });
 
@@ -50,7 +49,7 @@
 		<div class="draggable" style="width: 10px; height: 10px;">
 			<strong>.</strong>${unSensor.nombre}
 			<span style="position:absolute; display:none; width: 100px; height: auto; background:white">min:${unSensor.min} - max:${unSensor.max}</span>
-			<g:hiddenField name="${unSensor.uuid}"/>
+			<g:hiddenField name="${unSensor.uuid}" value="-1:-1"/>
 		</div>
 		</g:each>
 		
@@ -58,16 +57,14 @@
 		<g:each in="${camaras}" var="unaCamara" status="i">
 		<div class="draggable" style="width: 40px; height: 40px;">
 			<strong>.</strong><img src="http://grails.org/wikiImage/description-693/webcam_icon.jpg" height="30" width="30"/>
-			<span style="position:absolute; display:none; width: 100px; height: auto; background:white">ip-${unaCamara}</span>
-			<g:hiddenField name="camara_${unaCamara}"/>
+			<span style="position:absolute; display:none; width: 100px; height: auto; background:white">ip-${unaCamara.ip}</span>
+			<g:hiddenField name="${unaCamara.uuid}" value="-1:-1"/>
 		</div>
 		</g:each>
 	</div>
 </div>
 <div class="form-actions">
-   	<g:submitButton class="btn btn-primary" name="siguiente" value="Siguiente" />
-   	<g:submitButton class="btn btn-primary" name="atras" value="Atras" />
-   	<g:link class="btn btn-danger" role="button" name="cancelar" controller="home">Cancelar</g:link>
+   	<g:render template="nuevaHabitacion/formActions"/>
 </div>
 </g:form>
 
