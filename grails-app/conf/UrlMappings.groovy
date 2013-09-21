@@ -43,7 +43,7 @@ class UrlMappings {
 		
 		
 		"/registro/$pin/$gcmKey?"(controller: "androidDispositivo",action:'registrar')
-		"/validar/$pinValidacion/$usaurio?"(controller: "androidDispositivo",action:'validar')
+		"/validar/$pinValidacion/$usuario"(controller: "androidDispositivo",action:'validar')
 		
 		/* 
 		 * System Pages without controller 

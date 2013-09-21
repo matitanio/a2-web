@@ -133,3 +133,17 @@ android.gcm.api.key = 'AIzaSyDILXxw_Pcyrr9QLd0LsO5acFqHHjdriSs'
 android.gcm.time.to.live=1419200
 android.gcm.delay.'while'.idle=false
 android.gcm.retries=3
+
+
+grails {
+	mail {
+	  host = "smtp.gmail.com"
+	  port = 465
+	  username = "arduito@gmail.com"
+	  password = System.env.EMAIL_PASSWORD
+	  props = ["mail.smtp.auth":"true",
+			   "mail.smtp.socketFactory.port":"465",
+			   "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+			   "mail.smtp.socketFactory.fallback":"false"]
+	}
+ }

@@ -61,6 +61,7 @@ grails.project.dependency.resolution = {
 //        runtime ":database-migration:1.3.2"
 
         compile ':cache:1.0.1'
+		compile ":mail:1.0.1"
 		compile ':kickstart-with-bootstrap:0.8.9'
 		compile ':lesscss-resources:1.3.0.3'
 		compile ":spring-security-core:1.2.7.3"

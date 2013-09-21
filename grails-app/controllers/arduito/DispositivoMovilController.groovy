@@ -116,9 +116,9 @@ class DispositivoMovilController {
 		render view:'_usuarios',model:[usuarios:usuarios]
 	}
 	
-	def verificar(Long id){
+	def verificar(){
 		
-		dispositivoMovilService.enviarCodigoRegistro(id)
-		redirect(action: "show", id: params.id)
+		dispositivoMovilService.enviarCodigoRegistro(params.long('dispositivo-id'))
+		redirect(action: "list")
 	}
 }

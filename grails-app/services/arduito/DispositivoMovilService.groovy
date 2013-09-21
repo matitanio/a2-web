@@ -19,8 +19,10 @@ class DispositivoMovilService {
 		
 		def cuenta = springSecurityService.currentUser.cuenta
 		def criterio = {
-			createAlias('owner', 'o')
-			eq('o.cuenta',cuenta)
+			if(cuenta){
+				createAlias('owner', 'o')
+				eq('o.cuenta',cuenta)
+			}
 		}
 		
 		criterio
@@ -58,8 +60,14 @@ class DispositivoMovilService {
 		def dispositivo = DispositivoMovil.get(idDispositivo)
 		dispositivo.estado = Estado.VERIFICANDO
 		def codigoRegistro = new Date().time
+		println System.env.EMAIL_PASSWORD
+		sendMail {
+			to dispositivo.owner.email
+			subject "Codigo de registro para arduito movil"
+			body "Hola tu codigo de registro es ${codigoRegistro}"
+		}
 		println codigoRegistro
-		
+		dispositivo.pin = null
 		dispositivo.codigoRegistro = codigoRegistro
 		dispositivo.save()
 	}

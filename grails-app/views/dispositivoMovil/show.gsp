@@ -46,8 +46,9 @@
 <h3>Verificar dispositivo</h3>  
 </div>  
 <div class="modal-body">  
-<h4>Se enviara un mail al usuario con el codigo de registro ${dispositivoMovilInstance.codigoRegistro}</h4>  
-<p>El usuario debera ingresar este codigo y su nombre de usuario para completar el proceso de verificacion</p>                
+<h4>Se enviara un mail al usuario con un codigo de registro</h4>  
+<p>El usuario debera ingresar este codigo y su nombre de usuario para completar el proceso de verificacion</p>
+<p>Si re-verifica un dispostivo que ya fue verificado el usuario deberá volver a introducir el pin y su nombre de usuario en la aplicacion movil</p>                
 </div>  
 <div class="modal-footer">  
 <g:link action="verificar" params='[id:dispositivoMovilInstance.id]' class="btn btn-success">Verificar</g:link>  
