@@ -1,7 +1,7 @@
 package arduito
 
-import arduito.Habitacion
-import arduito.RegistroAcceso
+import grails.gorm.DetachedCriteria
+
 
 /**
  * RfeedService
@@ -42,6 +42,7 @@ class RfeedService {
 			createAlias('rfeed','rf')
 			createAlias('rf.notificables','n')
 			eq('n.pin',pin)
+			isNotNull('rfeed')
 		}
 		formatearAccesos(habitacionesConAcceso)
 	}
@@ -49,11 +50,45 @@ class RfeedService {
 	private formatearAccesos(habitacionesConAcceso){
 		
 		def accesosFormateados = []
-		habitacionesConAcceso.each{unHabitacion ->
-			accesosFormateados << [habitacion:formatHabitacion(unHabitacion)] 
+		habitacionesConAcceso.each{unaHabitacion ->
+			accesosFormateados << [id_lector:unaHabitacion.rfeed.id,cant_accesos_validos_hoy:buscarAcceosValidosDelDia(unaHabitacion),
+					,cant_accesos_no_validos_hoy:buscarAcceosNoValidosDelDia(unaHabitacion),habitacion:formatHabitacion(unaHabitacion)] 
 			
 		}
 		
 		accesosFormateados
+	}
+	
+	private buscarAcceosValidosDelDia(habitacion){
+		def hoy = new Date()
+		hoy.clearTime()
+		def criteria = crearCriteraComunAccesos(habitacion,hoy).build{
+			eq('resultado',true)
+		}
+		
+		criteria.count()
+	}
+	
+	
+	private buscarAcceosNoValidosDelDia(habitacion){
+		def hoy = new Date()
+		hoy.clearTime()
+		
+		def criteria = crearCriteraComunAccesos(habitacion,hoy).build{
+			or{
+				eq('resultado',false)
+				isNull('tarjeta')
+			}
+		}
+		criteria.count()
+	}
+	
+	private crearCriteraComunAccesos(habitacion,hoy){
+		
+		
+		new DetachedCriteria(RegistroAcceso).build{
+			eq('habitacion',habitacion)
+			ge('fecha',hoy)
+		}
 	}
 }
