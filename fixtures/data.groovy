@@ -27,12 +27,12 @@ pre{
 	
 	
 	def perfilUser = new Perfil(authority:'ROLE_USER').save(flush:true)
-	def usuarioUser1 = new Usuario(username:'user1',password:'1234',email:'u1@a.com').save(flush:true)
+	def usuarioUser1 = new Usuario(username:'user1',password:'1234',email:'mgon.uat@gmail.com').save(flush:true)
 	
 	UsuarioPerfil.create(usuarioUser1, perfilUser,true)
 	
 	
-	def usuarioUser2 = new Usuario(username:'user2',password:'1234',email:'u2@a.com').save(flush:true)
+	def usuarioUser2 = new Usuario(username:'user2',password:'1234',email:'ptamburro@gmail.com').save(flush:true)
 	UsuarioPerfil.create(usuarioUser2, perfilUser,true)
 	
 	def usuarioUser3 = new Usuario(username:'user3',password:'1234',email:'u3@a.com').save(flush:true)

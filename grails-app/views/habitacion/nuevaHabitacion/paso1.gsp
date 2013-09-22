@@ -40,13 +40,24 @@
 					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'ip', 'error')}</span>
 				</div>
 			</div>
-		</div>
+			<div class="control-group fieldcontain  ${hasErrors(bean: paso1Command, field: 'rfid', 'error')}">
+				<label for="rfid" class="control-label">Rfid</label>
+				<div class="controls">
+					<bs:checkBox name="rfid" id="rfid" 
+					value="${paso1Command?.rfid}"/>
+					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'rfid', 'error')}</span>
+				</div>
+			</div>
 		</fieldset>
+		</div>
 		<div class="span4"></div>
 	</div>
 			<div class="form-actions">
 				
 			    	<g:submitButton class="btn btn-primary" name="siguiente" value="Siguiente" />
+			    	<g:if test="${resumen}">
+						<g:submitButton class="btn btn-primary" name="resumen" value="Resumen" />
+					</g:if>
 			    	<g:link class="btn btn-danger" role="button" name="cancelar" controller="home">Cancelar</g:link>
 				
 			</div>

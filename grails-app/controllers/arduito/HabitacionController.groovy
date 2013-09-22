@@ -45,6 +45,7 @@ class HabitacionController {
 					error()
 				}
 			}.to("paso2")
+			on('resumen').to('paso7')
 		}
 		paso2{
 
@@ -114,30 +115,33 @@ class HabitacionController {
 			on('siguiente'){
 				
 				def file = request.getFile('file')
-				
-				def validTypes = [
-					'image/jpeg',
-					'image/gif',
-					'image/png'
-				]
-				if(!validTypes.contains(file.contentType)){
-					
-					flash.message = 'No es un tipo de imagen valido'
-					error()
-				}else{
-				
-					def nombreArchivo = '/' + new Date().time
-					def base = 'tmp/habitacion'
-					def urlRelativa =  base + nombreArchivo
-					//@negrada
-					def imageIn = ImageIO.read(file.inputStream);
-					BufferedImage scaledImage = Scalr.resize(imageIn, 600,600);
-					def absoluta = grailsApplication.parentContext.getResource(base).file.toString() + nombreArchivo
-					ImageIO.write(scaledImage, "jpg", new File(absoluta))
-					flow.urlPlanoAbsoluta = absoluta
-					flow.urlPlanoRelativa = urlRelativa
+				if(flow.resumen && file.bytes.size() == 0){
 					success()
-				}
+				}else{
+					def validTypes = [
+						'image/jpeg',
+						'image/gif',
+						'image/png'
+					]
+					if(!validTypes.contains(file.contentType)){
+						
+						flash.message = 'No es un tipo de imagen valido'
+						error()
+					}else{
+					
+						def nombreArchivo = '/' + new Date().time
+						def base = 'tmp/habitacion'
+						def urlRelativa =  base + nombreArchivo
+						//@negrada
+						def imageIn = ImageIO.read(file.inputStream);
+						BufferedImage scaledImage = Scalr.resize(imageIn, 600,600);
+						def absoluta = grailsApplication.parentContext.getResource(base).file.toString() + nombreArchivo
+						ImageIO.write(scaledImage, "jpg", new File(absoluta))
+						flow.urlPlanoAbsoluta = absoluta
+						flow.urlPlanoRelativa = urlRelativa
+						success()
+					}
+			}
 					
 			}.to('paso5')
 			on('atras').to('paso3')
@@ -150,9 +154,13 @@ class HabitacionController {
 				
 				def cantidadSensoressUbicados = agregarPosicionSensores(flow)
 				def cantidadCamarasUbicados = agregarPosicionCamara(flow)
+				flow.ubicacion=true
 			}.to('paso6')
 			on('atras').to('paso4')
-			on('resumen').to('paso7')
+			on('resumen'){
+				def cantidadSensoressUbicados = agregarPosicionSensores(flow)
+				def cantidadCamarasUbicados = agregarPosicionCamara(flow)
+			}.to('paso7')
 			
 		}
 		paso6{
@@ -164,6 +172,7 @@ class HabitacionController {
 		}
 		paso7{
 			on('atras').to('paso6')
+			on('general').to('paso1')
 			on('sensores').to('paso2')
 			on('camaras').to('paso3')
 			on('plano').to('paso5')
@@ -215,6 +224,7 @@ class Paso1Command implements Serializable{
 	Long cuenta
 	Long edificio
 	String ip
+	Boolean rfid
 
 	static constraints = {
 		cuenta nullable:false

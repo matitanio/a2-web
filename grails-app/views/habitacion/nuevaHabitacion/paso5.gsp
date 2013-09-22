@@ -38,10 +38,28 @@
 <g:form class="form-horizontal" >
 <div class="row">
 	<div class="span8">
-		<div id="droppable" style='width: 600px; height: 600px;  border: 1px solid black; background-image: url("/a2-web/${urlPlanoRelativa}");background-size: 100% 100%;'>
+		<div id="droppable" style='position:relative; width: 600px; height: 600px;  border: 1px solid black; background-image: url("/a2-web/${urlPlanoRelativa}");background-size: 100% 100%;'>
+			<g:if test="${ubicacion}">
+				<g:each in="${sensores}" var="unSensor">
+				<div class="draggable" style='position:relative; top:${unSensor.ubicacion.split(':')[0]}px; left:${unSensor.ubicacion.split(':')[1]}px; width: 10px; height: 10px;'>
+					<strong>.</strong>${unSensor.nombre}
+					<span style="position:absolute; display:none; width: 100px; height: auto; background:white">min:${unSensor.min} - max:${unSensor.max}</span>
+					<g:hiddenField name="${unSensor.uuid}" value="${ubicacion?unSensor.ubicacion:'-1:-1'}"/>
+				</div>
+				</g:each>
+
+				<g:each in="${camaras}" var="unaCamara" status="i">
+				<div class="draggable" style='width: 40px; height: 40px; top:${unaCamara.ubicacion.split(':')[0]}px; left:${unaCamara.ubicacion.split(':')[1]}px;'>
+					<strong>.</strong><img src="http://grails.org/wikiImage/description-693/webcam_icon.jpg" height="30" width="30"/>
+					<span style="position:absolute; display:none; width: 100px; height: auto; background:white">ip-${unaCamara.ip}</span>
+					<g:hiddenField name="${unaCamara.uuid}" value="${ubicacion?unaCamara.ubicacion:'-1:-1'}"/>
+				</div>
+				</g:each>
+			</g:if>
 		</div>
 	</div>
 	<div class="span4">
+	<g:if test="${!ubicacion}">
 		<h4>Sensores</h4>
 		<g:each in="${sensores}" var="unSensor">
 		<div class="draggable" style="position:relative; top:10px; width: 10px; height: 10px;">
@@ -50,7 +68,6 @@
 			<g:hiddenField name="${unSensor.uuid}" value="-1:-1"/>
 		</div>
 		</g:each>
-		
 		<h4>Camaras</h4>
 		<g:each in="${camaras}" var="unaCamara" status="i">
 		<div class="draggable" style="width: 40px; height: 40px;">
@@ -59,6 +76,7 @@
 			<g:hiddenField name="${unaCamara.uuid}" value="-1:-1"/>
 		</div>
 		</g:each>
+		</g:if>
 	</div>
 </div>
 <div class="form-actions">

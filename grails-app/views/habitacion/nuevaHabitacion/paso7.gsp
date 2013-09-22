@@ -1,4 +1,5 @@
 <%@ page import="arduito.Edificio" %>
+<%@ page import="arduito.Cuenta" %>
 <!doctype html>
 <html>
 <head>
@@ -23,20 +24,29 @@
 <div class="row">
 	<div class="span4">
 		<g:link event="sensores"><h4>sensores</h4></g:link>
+		<ul>
 		<g:each in="${sensores}" var="${unSensor}">
-				${unSensor}
+				<li>${unSensor.nombre} (${unSensor.max} - ${unSensor.min})</li>  
 		</g:each>
+		</ul>
 	</div>
 	<div class="span4">
 		<g:link event="camaras"><h4>camaras</h4></g:link>
-		<g:each in="${camaras}" var="${unaCamara}">
-				${unaCamara}
+		<ul>
+		<g:each in="${camaras}" var="${unaCamara}" status="i">
+			<li>Camara ${i+1} con ip:${unaCamara.ip}</li>
 		</g:each>
+		</ul>
 	</div>
 </div>
 <div class="row">
 	<div class="span4">
-		tiene rfeed - ir a rfeed
+		<g:link event="general"><h4>General</h4></g:link>
+		<ul>
+			<li>Cuenta: ${Cuenta.get(paso1Command.cuenta)}</li>
+			<li>Edificio: ${Edificio.get(paso1Command.edificio)}</li>
+			<li>Rfid: ${paso1Command.rfid?'si':'no'}</li>
+		</ul>
 	</div>
 	<div class="span4">
 		notificacbles - <g:link event="notificaciones"><h4>cambiar</h4></g:link>
