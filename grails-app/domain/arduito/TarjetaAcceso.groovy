@@ -1,10 +1,12 @@
 package arduito
 
+import java.io.Serializable;
+
 /**
  * TarjetaAcceso
  * A domain class describes the data object and it's mapping to the database
  */
-class TarjetaAcceso {
+class TarjetaAcceso implements Serializable{
 
 	/* Default (injected) attributes of GORM */
 //	Long	id

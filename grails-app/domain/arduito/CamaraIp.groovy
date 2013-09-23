@@ -1,11 +1,14 @@
 package arduito
 
+import java.io.Serializable;
+
 import org.codehaus.groovy.grails.validation.routines.InetAddressValidator
 
-class CamaraIp {
+class CamaraIp implements Serializable {
 
 	String ip
 	
+	static hasMany		= [notificables:DispositivoMovil]
 	static belongsTo = Habitacion
 
 	    static mapping = {

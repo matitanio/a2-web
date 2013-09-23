@@ -2,7 +2,7 @@ package arduito
 
 import org.codehaus.groovy.grails.validation.routines.InetAddressValidator
 
-class Habitacion {
+class Habitacion implements Serializable {
 	
 	
 	static belongsTo = [edificio:Edificio]

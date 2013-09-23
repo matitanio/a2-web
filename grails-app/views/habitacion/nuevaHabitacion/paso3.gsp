@@ -45,7 +45,7 @@
 			<h4>Camaras agregadas</h4>
 			<ul>
 				<g:each in="${camaras}" var="camara" >
-					<li> ${camara.ip}<g:link event="eliminarCamara" params="[ip:camara]"><i class="icon-remove"></i></g:link></li>
+					<li> ${camara.ip}<g:link event="eliminarCamara" params="[ip:camara.ip]"><i class="icon-remove"></i></g:link></li>
 				</g:each>
 			</ul>
 		</g:else>

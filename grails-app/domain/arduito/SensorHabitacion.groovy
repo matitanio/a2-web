@@ -1,8 +1,10 @@
 package arduito
 
+import java.io.Serializable;
+
 import arduito.arduino.ComparadoresWarning
 
-class SensorHabitacion {
+class SensorHabitacion implements Serializable {
 
 	
 	Sensor sensor

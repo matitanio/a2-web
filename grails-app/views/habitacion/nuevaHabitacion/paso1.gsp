@@ -37,7 +37,23 @@
 				<div class="controls">
 					<g:textField name="ip" id="ip" 
 					value="${paso1Command?.ip}"/>
-					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'ip', 'error')}</span>
+					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'piso', 'error')}</span>
+				</div>
+			</div>
+			<div class="control-group fieldcontain  ${hasErrors(bean: paso1Command, field: 'piso', 'error')}">
+				<label for="piso" class="control-label">Piso</label>
+				<div class="controls">
+					<g:textField name="piso" id="piso" 
+					value="${paso1Command?.piso}"/>
+					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'piso', 'error')}</span>
+				</div>
+			</div>
+			<div class="control-group fieldcontain  ${hasErrors(bean: paso1Command, field: 'numero', 'error')}">
+				<label for="numero" class="control-label">Numero</label>
+				<div class="controls">
+					<g:textField name="numero" id="numero" 
+					value="${paso1Command?.numero}"/>
+					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'numero', 'error')}</span>
 				</div>
 			</div>
 			<div class="control-group fieldcontain  ${hasErrors(bean: paso1Command, field: 'rfid', 'error')}">

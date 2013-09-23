@@ -53,7 +53,7 @@
 	</div>
 </div>
 <div class="form-actions">
-   	<g:submitButton class="btn btn-primary" name="siguiente" value="Terminar" />
+   	<g:submitButton class="btn btn-primary" name="terminar" value="Terminar" />
    	<g:submitButton class="btn btn-primary" name="atras" value="Atras" />
    	<g:link class="btn btn-danger" role="button" name="cancelar" controller="home">Cancelar</g:link>
 </div>
