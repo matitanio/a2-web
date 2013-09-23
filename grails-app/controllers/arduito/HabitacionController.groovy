@@ -59,7 +59,8 @@ class HabitacionController {
 				if(paso2Command.validate()){
 					def uuid = UUID.randomUUID()
 					def sensor = Sensor.get(paso2Command.tipo.toLong())
-					sensores << [tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,uuid:uuid,nombre:sensor.tipo]
+					sensores << [tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,
+								uuid:uuid,nombre:sensor.tipo,notificables:[]]
 					println sensores
 					success()
 				}else{
@@ -97,7 +98,7 @@ class HabitacionController {
 					error()
 				}else{
 						def uuid = UUID.randomUUID()
-						flow.camaras << [ip:params.ip,uuid:uuid]
+						flow.camaras << [ip:params.ip,uuid:uuid,notificables:[]]
 						success()
 				}
 			}.to('paso3')
@@ -151,7 +152,12 @@ class HabitacionController {
 		paso5{
 			
 			on('siguiente'){
-				
+				flow.rfid = [notificables:[]]
+				flow.dispositivos = DispositivoMovil.createCriteria().list{
+					owner{
+						eq('cuenta',Cuenta.get(flow.paso1Command.cuenta))
+					}
+				}
 				def cantidadSensoressUbicados = agregarPosicionSensores(flow)
 				def cantidadCamarasUbicados = agregarPosicionCamara(flow)
 				flow.ubicacion=true
@@ -166,8 +172,42 @@ class HabitacionController {
 		paso6{
 			on('siguiente'){
 				flow.resumen = true
+				flow.sensores.each{
+					
+					it.notificables = params.list("dispositivos-${it.uuid}")
+				}
+				
+				flow.camaras.each{
+					
+					it.notificables = params.list("dispositivos-${it.uuid}")
+				}
+				
+				flow.rfid.notificables = params.list("dispositivos-rfid")
+				
 			}.to('paso7')
 			on('resumen').to('paso7')
+			on('atras'){
+				
+				flow.sensores.each{
+					
+					it.notificables = params.list("dispositivos-${it.uuid}")
+				}
+				
+				flow.camaras.each{
+					
+					it.notificables = params.list("dispositivos-${it.uuid}")
+				}
+				
+				flow.rfid.notificables = params.list("dispositivos-rfid")
+			}.to('paso5')
+			on('agregarNotificableSensor'){
+			
+				def sensorId = params['sensor-uuid']
+				def sensor = flow.sensores.find{
+					it.uuid = sensorId
+				} 	
+				sensor.notificables = params.list('notificables')
+			}.to('paso6')
 			
 		}
 		paso7{

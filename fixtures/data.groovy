@@ -54,7 +54,7 @@ pre{
 	def usuarioAdmin2 = new Usuario(username:'admin2',password:'1234',email:'d@a.com').save(flush:true)
 	UsuarioPerfil.create(usuarioAdmin2, perfilAdmin,true)
 	
-	def cuenta2 = new Cuenta(nombre:'cuenta2',owner:usuarioUser1).save(flush:true)
+	def cuenta2 = new Cuenta(nombre:'cuenta2',owner:usuarioAdmin2).save(flush:true)
 	
 	usuarioAdmin2.cuenta = cuenta2
 	
@@ -62,7 +62,7 @@ pre{
 
 fixture{
 	
-	def cuenta = Cuenta.findByNombre('cuenta2')
+	def cuenta = Cuenta.findByNombre('cuenta1')
 	def usuario1 = Usuario.findByUsername('user1')
 	def usuario2 = Usuario.findByUsername('user2')
 	def usuario3 = Usuario.findByUsername('user3')

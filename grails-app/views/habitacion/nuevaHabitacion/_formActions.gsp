@@ -1,4 +1,4 @@
-<g:submitButton class="btn btn-primary" name="siguiente" value="Siguiente" />
+<g:submitButton class="btn btn-primary" name="siguiente" value="Siguiente" id="btn-siguiente" />
 <g:if test="${resumen}">
 	<g:submitButton class="btn btn-primary" name="resumen" value="Resumen" />
 </g:if>

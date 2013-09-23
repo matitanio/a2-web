@@ -1,6 +1,6 @@
 package arduito
 
-class DispositivoMovil {
+class DispositivoMovil implements Serializable {
 
 	
 	String pin

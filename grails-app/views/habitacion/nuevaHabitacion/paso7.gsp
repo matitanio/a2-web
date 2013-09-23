@@ -49,7 +49,7 @@
 		</ul>
 	</div>
 	<div class="span4">
-		notificacbles - <g:link event="notificaciones"><h4>cambiar</h4></g:link>
+		<g:link event="notificaciones"><h4>Notificaciones</h4></g:link>
 	</div>
 </div>
 <div class="form-actions">
