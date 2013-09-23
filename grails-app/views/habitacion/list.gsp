@@ -22,16 +22,39 @@
 				<th>id</th>
 			
 				<g:sortableColumn property="ipHabitacion" title="ip" />
-			
+				<th>Instalacion</th>
 			</tr>
 		</thead>
 		<tbody>
 		<g:each in="${habitacionInstanceList}" status="i" var="habitacionInstance">
 			<tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
 			
-<%--				<td><g:link action="show" id="${cuentaInstance.id}">${fieldValue(bean: cuentaInstance, field: "owner")}</g:link></td>--%>
 				<td>${habitacionInstance.id}</td>
 				<td>${habitacionInstance.ipHabitacion}</td>
+				<td><a data-toggle="modal" href="#hoja${habitacionInstance.id}-modal" class="btn btn-primary btn-small verificador">Ver Hoja Instalacion</a>
+				
+					<div id="hoja${habitacionInstance.id}-modal" class="modal hide fade in" style="display: none; ">  
+						<div class="modal-header">  
+							<a class="close" data-dismiss="modal">×</a>
+							<H4>Hoja Instalacion </H4>  
+						</div>  
+						<div class="modal-body">  
+						        
+						        ip: ${habitacionInstance.ipHabitacion}
+						        sensores:
+						        <g:each in="${habitacionInstance.sensores}" var="unSensor">
+						        
+						        	tipo: ${unSensor.sensor.tipo}
+						        	id para notificaicon: ${unSensor.id}
+						        	numero: ${unSensor.numeroSensor}
+						        	<br>
+						        </g:each>
+						</div>  
+						<div class="modal-footer">
+							<a href="#" class="btn" data-dismiss="modal">Cerrar</a>
+						</div>  
+					</div>
+				</td>
 			
 			</tr>
 		</g:each>
@@ -42,7 +65,6 @@
 	</div>
 </g:else>
 </section>
-
 </body>
 
 </html>

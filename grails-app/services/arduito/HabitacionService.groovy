@@ -6,7 +6,7 @@ package arduito
  */
 class HabitacionService {
 
-	static transactional = false
+	static transactional = true
 
 	def crear(parametros) {
 
@@ -19,12 +19,7 @@ class HabitacionService {
 		agregarSensores(habitacion,parametros.sensores)
 		agregarCamaras(habitacion,parametros.camaras)
 		agregarRfid(habitacion,parametros)
-		
-		Habitacion.withTransaction {
-			
-			habitacion.save(flush:true)
-			println habitacion.errors
-		}
+		habitacion.save(flush:true)
 	}
 
 	private agregarSensores(habitacion,sensores){
@@ -38,6 +33,7 @@ class HabitacionService {
 			sensorHabitacion.valorMaximo = unSensor.max as Float
 			sensorHabitacion.valorMinimo = unSensor.min as Float
 			agregarNotificables(sensorHabitacion,unSensor.notificables)
+			habitacion.addToSensores(sensorHabitacion)
 		}
 	}
 
@@ -60,6 +56,7 @@ class HabitacionService {
 
 		def camara = new CamaraIp(ip:unaCamara.ip)
 		agregarNotificables(camara,unaCamara.notificables)
+		habitacion.addToCamaras(camara)
 	}
 
 	private agregarRfid(habitacion,parametros){

@@ -71,7 +71,7 @@
 </section>
 <script>
 $(document).ready(function(){
-	   $(".verificador").click(function(){ // Click to only happen on announce links
+	   $(".verificador").click(function(){ 
 	     $("#dispositivo-id").val($(this).data('id'));
 	   });
 	});

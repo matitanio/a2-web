@@ -18,7 +18,7 @@ class CamaraIp implements Serializable {
 	static constraints = {
 		
 		ip validator: {
-			InetAddressValidator.isValid(it)
+			true
 		}
 	}
 }
