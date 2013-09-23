@@ -26,7 +26,7 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = "update"
+            dbCreate = "create"
             url = "jdbc:mysql://localhost:3306/a2_web"
 			driverClassName = "com.mysql.jdbc.Driver"
 			username = "root"
