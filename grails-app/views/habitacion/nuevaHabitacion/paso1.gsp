@@ -11,9 +11,8 @@
 <body>
 
 <g:form  class="form-horizontal">
-<div class="row main-flow">
+<div class="row">
 	<div class="span4">
-		<fieldset class="form">
 			<div class="control-group fieldcontain ${hasErrors(bean: paso1Command, field: 'cuenta', 'error')}" required>
 				<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Cuenta" /></label>
 				<div class="controls">
@@ -40,6 +39,9 @@
 					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'piso', 'error')}</span>
 				</div>
 			</div>
+		</div>
+		<div class="span2"></div>
+		<div class="span4">
 			<div class="control-group fieldcontain  ${hasErrors(bean: paso1Command, field: 'piso', 'error')}">
 				<label for="piso" class="control-label">Piso</label>
 				<div class="controls">
@@ -64,9 +66,9 @@
 					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'rfid', 'error')}</span>
 				</div>
 			</div>
-		</fieldset>
+		
 		</div>
-		<div class="span4"></div>
+		
 	</div>
 			<div class="form-actions">
 				

@@ -16,16 +16,14 @@
 	<link rel="stylesheet" href="${resource(dir: 'css', file: 'jquery.multiselect.css')}" type="text/css">
 	<link rel="stylesheet" href="${resource(dir: 'css', file: 'multiselect.css')}" type="text/css">
 	<link rel="stylesheet" href="${resource(dir: 'css/smoothness', file: 'jquery-ui-1.10.3.custom.css')}" type="text/css">
-	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-  	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
 	<g:javascript src="jquery-ui-1.10.3.custom.js" />
 	<g:javascript src="jquery.multiselect.js" />
 </head>
 
 <body>
 <g:form  class="form-horizontal">
-<div class="row main-flow">
-	<div class="span4">
+<div class="row">
+	<div class="span4  offset2">
 		<fieldset class="form">
 			<h4>Sensores</h4>
 			<g:each in="${sensores}" var="unSensor" status="i">
@@ -121,6 +119,6 @@ $(document).ready(function(){
 	});
 
 	
-</script>
+</script><
 </body>
 </html>

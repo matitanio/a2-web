@@ -15,7 +15,7 @@
 
 <body>
 <g:form  class="form-horizontal">
-<div class="row main-flow">
+<div class="row">
 	<div class="span4">
 		<fieldset class="form">
 			<div class="control-group fieldcontain" required>

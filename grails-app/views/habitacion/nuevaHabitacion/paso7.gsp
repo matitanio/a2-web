@@ -17,20 +17,12 @@
 <body>
 <g:form  class="form-horizontal">
 <div class="row">	
-	<div class="span8">
-		<g:link event="plano"><h4>modificar ubicacion</h4></g:link>
+	<div class="span8  offset2">
+		
 	</div>
 </div>
-<div class="row">
-	<div class="span4">
-		<g:link event="sensores"><h4>sensores</h4></g:link>
-		<ul>
-		<g:each in="${sensores}" var="${unSensor}">
-				<li>${unSensor.nombre} (${unSensor.max} - ${unSensor.min})</li>  
-		</g:each>
-		</ul>
-	</div>
-	<div class="span4">
+<div class="row main-flow">
+	<div class="span4 offset2">
 		<g:link event="camaras"><h4>camaras</h4></g:link>
 		<ul>
 		<g:each in="${camaras}" var="${unaCamara}" status="i">
@@ -38,9 +30,17 @@
 		</g:each>
 		</ul>
 	</div>
+	<div class="span4  ">
+		<g:link event="sensores"><h4>sensores</h4></g:link>
+		<ul>
+		<g:each in="${sensores}" var="${unSensor}">
+				<li>${unSensor.nombre} (${unSensor.max} - ${unSensor.min})</li>  
+		</g:each>
+		</ul>
+	</div>
 </div>
 <div class="row">
-	<div class="span4">
+	<div class="span4 offset2">
 		<g:link event="general"><h4>General</h4></g:link>
 		<ul>
 			<li>Cuenta: ${Cuenta.get(paso1Command.cuenta)}</li>
@@ -49,7 +49,8 @@
 		</ul>
 	</div>
 	<div class="span4">
-		<g:link event="notificaciones"><h4>Notificaciones</h4></g:link>
+		<g:link event="notificaciones"><h4>Modificar notificaciones</h4></g:link>
+		<g:link event="plano"><h4>Modificar ubicacion</h4></g:link>
 	</div>
 </div>
 <div class="form-actions">

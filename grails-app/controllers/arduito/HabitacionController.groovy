@@ -32,7 +32,7 @@ class HabitacionController {
 			on("siguiente") {Paso1Command paso1Command ->
 				return doStep('doPaso1',delegate,[flow:flow,paso1Command:paso1Command])
 			}.to("paso2")
-			on('resumen'){
+			on('resumen'){Paso1Command paso1Command ->
 				return doStep('doPaso1',delegate,[flow:flow,paso1Command:paso1Command])
 			}.to('paso7')
 		}
@@ -221,7 +221,7 @@ class HabitacionController {
 
 		def flow = parameters.flow
 		def file = request.getFile('file')
-		if(flow.resumen && file.bytes.size() == 0){
+		if(flow.imagen && file.bytes.size() == 0){
 			success()
 		}else{
 			def validTypes = [
@@ -245,6 +245,7 @@ class HabitacionController {
 				ImageIO.write(scaledImage, "jpg", new File(absoluta))
 				flow.urlPlanoAbsoluta = absoluta
 				flow.urlPlanoRelativa = urlRelativa
+				flow.imagen=true
 				success()
 			}
 		}

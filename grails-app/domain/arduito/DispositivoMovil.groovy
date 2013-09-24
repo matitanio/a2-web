@@ -6,7 +6,7 @@ class DispositivoMovil implements Serializable {
 	String pin
 	String key
 	String codigoRegistro
-	Usuario owner
+	static belongsTo = [owner:Usuario]
 	
 	Estado estado = Estado.SIN_VERIFICAR
 	static constraints = {

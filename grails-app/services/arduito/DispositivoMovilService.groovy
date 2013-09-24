@@ -60,7 +60,6 @@ class DispositivoMovilService {
 		def dispositivo = DispositivoMovil.get(idDispositivo)
 		dispositivo.estado = Estado.VERIFICANDO
 		def codigoRegistro = new Date().time
-		println System.env.EMAIL_PASSWORD
 		sendMail {
 			to dispositivo.owner.email
 			subject "Codigo de registro para arduito movil"

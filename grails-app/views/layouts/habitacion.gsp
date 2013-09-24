@@ -42,16 +42,20 @@
 		<g:render template="/layouts/header"/>														
 	</g:else>
 	<g:render template="/layouts/menu"/>
-	<ul class="breadcrumb">
-	<g:form>
-	  <li class="active"><a href="#">Inicio</a></li>
-	  <li><a href="#">Plano</a></li>
-	  <li><g:link  event="sensores">Sensores</g:link></li>
-	  <li><a href="#">Acesso</a></li>
-	  <li><a href="#">Camara sensores</a></li>
-	  <li><a href="#">Notificaciones</a></li>
-	</g:form>
-	</ul>														
+	<div class="row">
+	<div class="span12 pagination-centered offset1">
+		<ul class="breadcrumb">
+		<g:form>
+		  <li class="active"><a href="#">Inicio</a></li>
+		  <li><a href="#">Plano</a></li>
+		  <li><g:link  event="sensores">Sensores</g:link></li>
+		  <li><a href="#">Acesso</a></li>
+		  <li><a href="#">Camara sensores</a></li>
+		  <li><a href="#">Notificaciones</a></li>
+		</g:form>
+		</ul>
+		</div>						
+	</div>								
 	<g:layoutBody/>
 	<r:layoutResources />
 </body>

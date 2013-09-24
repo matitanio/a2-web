@@ -15,7 +15,7 @@
 
 <body>
 <g:form  class="form-horizontal">
-<div class="row main-flow">
+<div class="row">
 	<div class="span4">
 		<fieldset class="form">
 			
@@ -31,13 +31,7 @@
 		
 	</div>
 	<div class="span4"></div>
-</div>
-<div class="form-actions">
-	<g:render template="nuevaHabitacion/formActions"/>
-</div>
-</g:form>
-
-<div id="camaras">
+	<div class="span4">
 		<g:if test="${!camaras}">
 			<div class="alert alert-info" style="text-align: center"> Agregar camaras para continuar</div>
 		</g:if>
@@ -49,8 +43,12 @@
 				</g:each>
 			</ul>
 		</g:else>
-
 	</div>
+</div>
+<div class="form-actions">
+	<g:render template="nuevaHabitacion/formActions"/>
+</div>
+</g:form>
 </body>
 
 </html>
