@@ -43,7 +43,7 @@ class SensorHabitacion implements Serializable {
 	
 }
 
-class Warning{
+class Warning implements Serializable{
 	
  	Integer valorWarning
 	String comparador

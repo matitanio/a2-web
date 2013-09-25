@@ -17,56 +17,89 @@
 <g:form  class="form-horizontal">
 <div class="row">
 	<div class="span4">
-		<fieldset class="form">
-			<div class="control-group fieldcontain" required>
-				<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Cuenta" /></label>
-				<div class="controls">
-					<g:select id="tipo" name="tipo" from="${arduito.Sensor.list()}" optionKey="id" 
-					class="many-to-one" noSelection="['null': 'Seleccione un sensor']" value=""/>
+		<div class="row">
+			<div class="span4">
+				<div class="control-group fieldcontain" required>
+					<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Cuenta" /></label>
+					<div class="controls">
+						<g:select id="tipo" name="tipo" from="${arduito.Sensor.list()}" optionKey="id" 
+						class="many-to-one" noSelection="['null': 'Seleccione un sensor']" value="${paso2Command?.tipo }"/>
+					</div>
 				</div>
 			</div>
-			<div class="control-group fieldcontain ${hasErrors(bean: paso2Command, field: 'valorMaximo', 'error')}" required>
-				<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Valor máximo" /></label>
-				<div class="controls">
-					<g:textField name="valorMaximo" id="valorMaximo" value="${paso2Command?.valorMaximo }"/>
+		</div>
+		<div class="row">
+			<div class="span4">
+				<div class="control-group fieldcontain ${hasErrors(bean: paso2Command, field: 'valorMaximo', 'error')}" required>
+					<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Valor máximo" /></label>
+					<div class="controls">
+						<g:textField name="valorMaximo" id="valorMaximo" value="${paso2Command?.valorMaximo }"/>
+					</div>
+					<span class="help-inline">${hasErrors(bean: paso2Command, field: 'valorMaximo', 'error')}</span>
 				</div>
-				<span class="help-inline">${hasErrors(bean: paso2Command, field: 'valorMaximo', 'error')}</span>
 			</div>
-			<div class="control-group fieldcontain ${hasErrors(bean: paso2Command, field: 'valorMinimo', 'error')}" required>
-				<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Valor mínimo" /></label>
-				<div class="controls">
-					<g:textField name="valorMinimo" />
+		</div>
+		<div class="row">
+			<div class="span4">	
+				<div class="control-group fieldcontain" required>
+					<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Comparador" /></label>
+					<div class="controls">
+						<g:select id="tipo" name="comparador" from="${['>','>=','<','<=','=']}" 
+						class="many-to-one" noSelection="['-1': 'Seleccione un comparador']" value="${paso2Command?.comparador}"/>
+					</div>
 				</div>
-				<span class="help-inline">${hasErrors(bean: paso2Command, field: 'valorMinimo', 'error')}</span>
 			</div>
+		</div>
 			
-		</fieldset>
 		<g:submitButton class="btn btn-primary" name="agregarSensor" value="Agregar" id="agregar"/>
 		
 	</div>
-	<div class="span4"></div>
-
+	<div class="span4">
+		<div class="row">
+			<div class="span4">	
+				<div class="fieldcontain ${hasErrors(bean: paso2Command, field: 'valorMinimo', 'error')}" required>
+					<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Valor mínimo" /></label>
+					<div class="controls">
+						<g:textField name="valorMinimo" value="${paso2Command?.valorMinimo }" />
+					</div>
+					<span class="help-inline">${hasErrors(bean: paso2Command, field: 'valorMinimo', 'error')}</span>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span4">	
+				<div class="fieldcontain ${hasErrors(bean: paso2Command, field: 'valorAlerta', 'error')}" required>
+					<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Valor Alerta" /></label>
+					<div class="controls">
+						<g:textField name="valorAlerta" id="valorAlerta" value="${paso2Command?.valorAlerta }"/>
+					</div>
+					<span class="help-inline">${hasErrors(bean: paso2Command, field: 'valorAlerta', 'error')}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="span4 offset2">
+	
+		<g:if test="${!sensores}">
+			<div class="alert alert-info" style="text-align: center"> Agregar Sensores para contunuar </div>
+		</g:if>
+		<g:else>
+			<h4>Sensores Agregados</h4>
+			<ul>
+				<g:each in="${sensores}" var="sensor">
+				<li> ${sensor.nombre +' : '+sensor.tipo + ' ' + sensor.min + ' ' +sensor.max}
+					<g:link event="eliminarSensor" params="[uuid:sensor.uuid]"><i class="icon-remove"></i></g:link>
+				</g:each>
+			</ul>
+		</g:else>
+	
+	</div>
+		
 </div>
 <div class="form-actions">
 	<g:render template="nuevaHabitacion/formActions"/>
 </div>
 </g:form>
-	<div id='sensores'>
-		<g:if test="${!sensores}">
-			<div class="alert alert-info" style="text-align: center"> Agregar Sensores para contunuar </div>
-		</g:if>
-		<g:else>
-			<ul>
-				<g:each in="${sensores}" var="sensor">
-				<g:form>
-				<li> ${sensor.nombre +' : '+sensor.tipo + ' ' + sensor.min + ' ' +sensor.max}
-				<g:link event="eliminarSensor" params="[uuid:sensor.uuid]"><i class="icon-remove"></i></g:link>
-				</g:form>
-				</g:each>
-			</ul>
-		</g:else>
-
-	</div>
 	<g:each in="${sensoresValores}" var="sensor">
 		<g:hiddenField name="sensor_${sensor.key}" id="sensor_${sensor.key}"
 		value="${sensor.value.valorMaximo}:${sensor.value.valorMinimo}"/>

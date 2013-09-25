@@ -32,6 +32,7 @@ class HabitacionService {
 			sensorHabitacion.sensor = Sensor.get(unSensor.tipo as Long)
 			sensorHabitacion.valorMaximo = unSensor.max as Float
 			sensorHabitacion.valorMinimo = unSensor.min as Float
+			agregarWarning(sensorHabitacion,unSensor)
 			agregarNotificables(sensorHabitacion,unSensor.notificables)
 			habitacion.addToSensores(sensorHabitacion)
 		}
@@ -43,6 +44,15 @@ class HabitacionService {
 
 			elNotificable.addToNotificables(DispositivoMovil.get(unDispositivo as Long))
 		}
+	}
+	
+	private agregarWarning(sensorHabitacion,sensor){
+		
+		if(sensor.comparador != '-1'){
+			
+			sensor.warning = new Warning(comparador: sensor.comparador,valorWarning: sensor.valorAlerta,  )
+		}
+		
 	}
 
 	private agregarCamaras(habitacion,camaras){

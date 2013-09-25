@@ -88,7 +88,6 @@ class HabitacionController {
 		paso5{
 
 			on('siguiente'){
-				flow.rfid = [notificables:[]]
 				flow.dispositivos = DispositivoMovil.createCriteria().list{
 					owner{
 						eq('cuenta',Cuenta.get(flow.paso1Command.cuenta))
@@ -153,7 +152,9 @@ class HabitacionController {
 			Sensor.list().collect{
 				sensoresValores.put(it.id, [valorMaximo:it.valorMaximo,valorMinimo:it.valorMinimo])
 			}
-
+			if(parameters.flow.paso1Command){
+				parameters.flow = [notificables:[]]
+			}
 			parameters.flow.sensoresValores = sensoresValores
 			return success()
 		}
@@ -176,7 +177,8 @@ class HabitacionController {
 			def uuid = UUID.randomUUID()
 			def sensor = Sensor.get(paso2Command.tipo.toLong())
 			sensores << [tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,
-				uuid:uuid,nombre:sensor.tipo,notificables:[]]
+						warning:[comparador:paso2Command.comparador,valorAlerta:paso2Command.valorAlerta],
+						uuid:uuid,nombre:sensor.tipo,notificables:[]]
 			success()
 		}else{
 			flow.paso2Command = paso2Command
@@ -267,7 +269,6 @@ class HabitacionController {
 		buscarNotificables(flow.sensores)
 		buscarNotificables(flow.camaras)
 		flow.rfid.notificables = params.list("dispositivos-rfid")
-		
 		success()
 	}
 	
@@ -338,10 +339,27 @@ class Paso2Command implements Serializable{
 	Long tipo
 	String valorMaximo
 	String valorMinimo
+	String valorAlerta
+	String comparador
 
 	static constraints = {
 		tipo nullable:false
 		valorMaximo nullable:false
-		valorMinimo nullable:false
+		valorMinimo nullable:false,validator:{val,obj ->
+			
+			val<obj.valorMaximo
+		}
+		valorAlerta validator:{val,obj ->
+			
+			if(val.replaceAll(" ","") != "")
+				val > obj.valorMinimo && val < obj.valorMaximo
+			
+		}
+		comparador validator:{val,obj ->
+			println val
+				if(val != '-1'){
+					obj.valorAlerta.replaceAll(" ","") != ""
+				}
+		}
 	}
 }

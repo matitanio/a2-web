@@ -29,7 +29,7 @@
 			<g:each in="${sensores}" var="unSensor" status="i">
 			<div class="row">
 				<div class="span2">
-					${unSensor.nombre} <select id="multiple-sensor${i}" class="notificadores" name="dispositivos-${unSensor.uuid}" multiple="multiple">
+					${unSensor.nombre} <select id="multiple-sensor${i}" class="notificadores ui.multiselect-not-selected" name="dispositivos-${unSensor.uuid}" multiple="multiple">
 					<g:each in="${dispositivos}" var="unDispositivo">
 						<option value="${unDispositivo.id}" ${unSensor.notificables.contains(unDispositivo.id as String)?"selected='selected'":''}>${unDispositivo.owner}</option>
 					</g:each>
@@ -45,7 +45,7 @@
 			<g:each in="${camaras}" var="unaCamara" status="i">
 			<div class="row">
 				<div class="span2">
-					Camara ${i} - ip :${unaCamara.ip} <select id="multiple-camara${i}" class="notificadores" name="dispositivos-${unaCamara.uuid}" multiple="multiple">
+					<div style="position:relative; width: 200px;">Camara ${i} - ip :${unaCamara.ip}</div> <select id="multiple-camara${i}" class="notificadores" name="dispositivos-${unaCamara.uuid}" multiple="multiple">
 					<g:each in="${dispositivos}" var="unDispositivo">
 						<option value="${unDispositivo.id}" ${unaCamara.notificables.contains(unDispositivo.id as String)?"selected='selected'":''}>${unDispositivo.owner}</option>
 					</g:each>
@@ -59,6 +59,7 @@
 	<div class="span4">
 		<g:if test="${paso1Command.rfid}">
 			<h4>Rfid</h4>
+			<div style="position:relative; width: 200px;">Lector rfid</div>
 			<div class="row">
 				<div class="span2">
 					<select id="multiple-rfid${i}" class="notificadores" name="dispositivos-rfid" multiple="multiple">
@@ -98,10 +99,14 @@ function sePuedeSeguir(){
 
 $(document).ready(function(){
 
-		<g:if test="${resumen}">
-			$('#btn-siguiente').removeAttr('disabled')
-		</g:if>
+	<g:if test="${resumen}">
+		$('#btn-siguiente').removeAttr('disabled')
+	</g:if>
+	<g:else>
+		$('#btn-siguiente').attr('disabled','disabled')
+	</g:else>
 	
+		
 	   $(".sensor").click(function(){ // Click to only happen on announce links
 	     $("#sensor-uuid").val($(this).data('id'));
 	   });
@@ -119,6 +124,6 @@ $(document).ready(function(){
 	});
 
 	
-</script><
+</script>
 </body>
 </html>

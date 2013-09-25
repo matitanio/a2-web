@@ -66,7 +66,7 @@ fixture{
 	def usuario1 = Usuario.findByUsername('user1')
 	def usuario2 = Usuario.findByUsername('user2')
 	def usuario3 = Usuario.findByUsername('user3')
-	edificio(Edificio,owner:cuenta,direccion:'aaa',nombre:'aaaa')
+	edificio(Edificio,owner:cuenta,direccion:'Reconquista 464',nombre:'Infraestructura Tec.')
 	dispositivoMovil1(DispositivoMovil,owner:usuario1)
 	dispositivoMovil2(DispositivoMovil,owner:usuario2)
 	dispositivoMovil3(DispositivoMovil,owner:usuario3)
