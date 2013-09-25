@@ -153,7 +153,7 @@ class HabitacionController {
 				sensoresValores.put(it.id, [valorMaximo:it.valorMaximo,valorMinimo:it.valorMinimo])
 			}
 			if(parameters.flow.paso1Command){
-				parameters.flow = [notificables:[]]
+				parameters.flow.rfid = [notificables:[]]
 			}
 			parameters.flow.sensoresValores = sensoresValores
 			return success()
@@ -170,15 +170,13 @@ class HabitacionController {
 
 		def sensores = flow.sensores
 		if(!sensores){
-			sensores = []
-			flow.sensores  = sensores
+			flow.sensores  = []
 		}
 		if(paso2Command.validate()){
-			def uuid = UUID.randomUUID()
 			def sensor = Sensor.get(paso2Command.tipo.toLong())
-			sensores << [tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,
+			flow.sensores.add([tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,
 						warning:[comparador:paso2Command.comparador,valorAlerta:paso2Command.valorAlerta],
-						uuid:uuid,nombre:sensor.tipo,notificables:[]]
+						uuid:new Date().time,nombre:sensor.tipo,notificables:[]])
 			success()
 		}else{
 			flow.paso2Command = paso2Command
@@ -189,12 +187,13 @@ class HabitacionController {
 	private doEliminarSensor = {parameters ->
 
 		def flow = parameters.flow
-		params.uuid
-		def sensor = flow.sensores.find{
-			it.uuid = params.uuid
+		def index = 0
+		def sensor = flow.sensores.eachWithIndex{it,i ->
+			if(it.uuid.toString() == params.uuid)
+				index = i
 		}
 
-		flow.sensores.remove(sensor)
+		flow.sensores.remove(index)
 		return success()
 	}
 

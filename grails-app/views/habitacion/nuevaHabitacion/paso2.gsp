@@ -86,9 +86,9 @@
 		<g:else>
 			<h4>Sensores Agregados</h4>
 			<ul>
-				<g:each in="${sensores}" var="sensor">
-				<li> ${sensor.nombre +' : '+sensor.tipo + ' ' + sensor.min + ' ' +sensor.max}
-					<g:link event="eliminarSensor" params="[uuid:sensor.uuid]"><i class="icon-remove"></i></g:link>
+				<g:each in="${sensores}" var="unSensor">
+				<li> ${unSensor.nombre +' : '+unSensor.tipo + ' ' + unSensor.min + ' ' +unSensor.max}
+					<g:link event="eliminarSensor" params="[uuid:unSensor.uuid]"><i class="icon-remove"></i></g:link>
 				</g:each>
 			</ul>
 		</g:else>
