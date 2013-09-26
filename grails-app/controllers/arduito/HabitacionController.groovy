@@ -129,7 +129,7 @@ class HabitacionController {
 		todos
 	}
 	
-	def doSave(flow){
+	private doSave(flow){
 		
 		def parametros = [:]
 		parametros.cuenta = flow.paso1Command.cuenta
@@ -140,12 +140,12 @@ class HabitacionController {
 		parametros.rfid = flow.paso1Command.rfid
 		parametros.sensores = flow.sensores
 		parametros.camaras = flow.camaras
-		parametros.plano = flow.urlPlanoAbsoluta
+		parametros.plano = flow.urlPlanoRelativa
 		parametros.rfid = [contiene:flow.paso1Command.rfid,notificables:flow.rfid.notificables]
 		habitacionService.crear(parametros)
 	}
 	
-	def doStep(stepNumber,delegate,parameters){
+	private doStep(stepNumber,delegate,parameters){
 
 		def stepClosure = this."$stepNumber"
 		stepClosure.delegate = delegate

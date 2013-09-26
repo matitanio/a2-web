@@ -71,13 +71,29 @@
 			<div class="alert alert-info" style="text-align: center"> Agregar Sensores para contunuar </div>
 		</g:if>
 		<g:else>
-			<h4>Sensores Agregados</h4>
-			<ul>
+			
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>Sensores Agregados</th>
+					</tr>
+					<tr>
+
+						<th>tipo</th>
+						<th>valores</th>
+						<th>eliminar</th>
+					</tr>
+				</thead>
+				<tbody>
 				<g:each in="${sensores}" var="unSensor">
-				<li> ${unSensor.nombre +' : '+unSensor.tipo + ' ' + unSensor.min + ' ' +unSensor.max}
-					<g:link event="eliminarSensor" params="[uuid:unSensor.uuid]"><i class="icon-remove"></i></g:link>
+					<tr>
+						<th>${unSensor.nombre}</th>
+						<th>${unSensor.min + '-' +unSensor.max}</th>
+						<th><g:link event="eliminarSensor" params="[uuid:unSensor.uuid]"><i class="icon-remove"></i></g:link></th>
+					</tr>
 				</g:each>
-			</ul>
+				</tbody>
+			</table>
 		</g:else>
 		
 	</div>
