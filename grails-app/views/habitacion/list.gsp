@@ -40,15 +40,70 @@
 						</div>  
 						<div class="modal-body">  
 						        
-						        ip: ${habitacionInstance.ipHabitacion}
-						        sensores:
-						        <g:each in="${habitacionInstance.sensores}" var="unSensor">
+						         <table class="table table-bordered">
+							        <thead>
+							        	<tr align="center">
+							        		<th align="center">Parametros configuracion</th>
+							        	</tr>
+							        </thead>
+							        <tbody>
+										<tr>																        
+							        		<td>Ip</td>
+							        		<td>${habitacionInstance.ipHabitacion}</td>
+							        	</tr>
+							        	<tr>																        
+							        		<td>Edificio</td>
+							        		<td>${habitacionInstance.edificio}</td>
+							        	</tr>
+							        	<tr>																        
+							        		<td>Id Edificio</td>
+							        		<td>${habitacionInstance.edificio.id}</td>
+							        	</tr>
+							        	<tr>																        
+							        		<td>Piso</td>
+							        		<td>${habitacionInstance.piso}</td>
+							        	</tr>
+							        	<tr>																        
+							        		<td>Numero</td>
+							        		<td>${habitacionInstance.numero}</td>
+							        	</tr>
+							        </tbody>
+						        </table>
+						        <table class="table table-bordered">
+							        <thead>
+							        	<tr align="center">
+							        		<th align="center">Sensores</th>
+							        	</tr>
+							        	 <tr>
+									      <th>Tipo</th>
+									      <th>Id Notificacion</th>
+									    </tr>
+							        </thead>
+							        <tbody>
+							        <g:each in="${habitacionInstance.sensores}" var="unSensor">
+										<tr>																        
+							        		<td>${unSensor.sensor.tipo}</td>
+							        		<td>${unSensor.id}</td>
+							        	</tr>
+							        </g:each>
+							        </tbody>
+						        </table>
 						        
-						        	tipo: ${unSensor.sensor.tipo}
-						        	id para notificaicon: ${unSensor.id}
-						        	numero: ${unSensor.numeroSensor}
-						        	<br>
-						        </g:each>
+						        <table class="table table-bordered">
+							        <thead>
+							        	<tr align="center">
+							        		<th align="center">Camaras</th>
+							        	</tr>
+							        </thead>
+							        <tbody>
+							        <g:each in="${habitacionInstance.camaras}" var="unaCamara">
+										<tr>
+											<td>ip</td>																        
+							        		<td>${unaCamara.ip}</td>
+							        	</tr>
+							        </g:each>
+							        </tbody>
+						        </table>
 						</div>  
 						<div class="modal-footer">
 							<a href="#" class="btn" data-dismiss="modal">Cerrar</a>

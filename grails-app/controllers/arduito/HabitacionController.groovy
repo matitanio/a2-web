@@ -167,7 +167,7 @@ class HabitacionController {
 
 		def flow = parameters.flow
 		def paso2Command = parameters.paso2Command
-
+		println paso2Command.valorMaximo
 		def sensores = flow.sensores
 		if(!sensores){
 			flow.sensores  = []
@@ -177,9 +177,11 @@ class HabitacionController {
 			flow.sensores.add([tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,
 						warning:[comparador:paso2Command.comparador,valorAlerta:paso2Command.valorAlerta],
 						uuid:new Date().time,nombre:sensor.tipo,notificables:[]])
+			flow.paso2Command = null
 			success()
 		}else{
 			flow.paso2Command = paso2Command
+			println flow.paso2Command.valorMaximo
 			error()
 		}
 	}
@@ -201,21 +203,29 @@ class HabitacionController {
 
 		def flow = parameters.flow
 		def camaras = flow.camaras
-
+		flow.ipError = null
+		
 		if(!camaras)
 			flow.camaras = []
 
-		if(flow.camaras.contains(params.ip)){
-			flash.ipError = 'Ya existe es ip en esta haitacion'
+		if(ipCamaraDuplicada(params.ip,flow.camaras)){
+			flow.ipError = 'Ya existe es ip en esta haitacion'
 			error()
 		}else if(!InetAddressValidator.getInstance().isValid(params.ip)){
-			flash.ipError = 'Debe ser una ip valida'
+			flow.ipError = 'Debe ser una ip valida'
 			error()
 		}else{
 			def uuid = UUID.randomUUID()
 			flow.camaras << [ip:params.ip,uuid:uuid,notificables:[]]
 			success()
 		}
+	}
+	
+	private ipCamaraDuplicada(ip,camaras){
+		
+		camaras.find{
+			ip == it.ip
+		} != null
 	}
 
 	private doPaso4 = {parameters ->
@@ -327,6 +337,7 @@ class Paso1Command implements Serializable{
 	static constraints = {
 		cuenta nullable:false
 		edificio nullable:false
+		numero nullable:false,blank:false
 		ip validator: {value->
 			if(!InetAddressValidator.getInstance().isValid(value)) return['ipNovalida']
 		}
@@ -336,28 +347,46 @@ class Paso1Command implements Serializable{
 class Paso2Command implements Serializable{
 
 	Long tipo
-	String valorMaximo
-	String valorMinimo
-	String valorAlerta
+	Double valorMaximo
+	Double valorMinimo
+	Double valorAlerta
 	String comparador
 
 	static constraints = {
 		tipo nullable:false
-		valorMaximo nullable:false
-		valorMinimo nullable:false,validator:{val,obj ->
+		valorMaximo nullable:false,validator:{val,obj ->
 			
-			val<obj.valorMaximo
+			if(val<obj.valorMinimo)
+				return 'maximo.menor.minimo'
 		}
-		valorAlerta validator:{val,obj ->
+		valorMinimo nullable:false,blank:false,validator:{val,obj ->
 			
-			if(val.replaceAll(" ","") != "")
-				val > obj.valorMinimo && val < obj.valorMaximo
+			if(val>obj.valorMaximo)
+				return 'minimo.mayor.maximo'
+		}
+		valorAlerta nullable:true,validator:{val,obj ->
 			
+			def resultado = null
+			if(val){
+				if(val < obj.valorMinimo){
+				
+					resultado = 'alerta.menor.minimo'
+				}
+				if(val > obj.valorMaximo){
+					resultado = 'alerta.mayor.maximo'
+				}
+			}
+				
+			resultado
 		}
 		comparador validator:{val,obj ->
-			println val
 				if(val != '-1'){
-					obj.valorAlerta.replaceAll(" ","") != ""
+					if(!obj.valorAlerta)
+						return 'warning.sin.valor'
+				}else{
+					if(obj.valorAlerta)
+						return 'warning.con.valor.sin.comparador'
+					
 				}
 		}
 	}

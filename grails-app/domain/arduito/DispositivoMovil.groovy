@@ -1,6 +1,6 @@
 package arduito
 
-class DispositivoMovil implements Serializable {
+class DispositivoMovil extends Notificable implements Serializable  {
 
 	
 	String pin
@@ -15,6 +15,12 @@ class DispositivoMovil implements Serializable {
 		key nullable:true
 		owner nullable:true
 	}
+
+	def notificar() {
+		// TODO Auto-generated method stub
+		return null;
+	}	
+	
 }
 
 enum Estado {

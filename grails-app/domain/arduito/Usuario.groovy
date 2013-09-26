@@ -2,7 +2,7 @@ package arduito
 
 import java.io.Serializable;
 
-class Usuario implements Serializable{
+class Usuario extends Notificable implements Serializable{
 
 	transient static springSecurityService
 
@@ -86,4 +86,11 @@ class Usuario implements Serializable{
 		
 		todos
 	}
+
+	def notificar() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }

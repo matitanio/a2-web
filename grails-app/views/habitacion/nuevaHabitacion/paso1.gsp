@@ -24,7 +24,7 @@
 							            action:'edificiosPorCuenta', 
 							            params:'\'id=\' + escape(this.value)', 
 							            update:'edificios-div')}"/>
-					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'cuenta', 'error')}</span>
+					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'cuenta', 'Debes seleccionar una cuenta')}</span>
 				</div>
 			</div>
 			<div id="edificios-div">
@@ -36,7 +36,7 @@
 				<div class="controls">
 					<g:textField name="ip" id="ip" 
 					value="${paso1Command?.ip}"/>
-					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'piso', 'error')}</span>
+					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'ip', 'La ip de la habitacion no es valida')}</span>
 				</div>
 			</div>
 		</div>
@@ -55,7 +55,7 @@
 				<div class="controls">
 					<g:textField name="numero" id="numero" 
 					value="${paso1Command?.numero}"/>
-					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'numero', 'error')}</span>
+					<span class="help-inline">${hasErrors(bean: paso1Command, field: 'numero', 'Debe ingresar un numero de habitacion')}</span>
 				</div>
 			</div>
 			<div class="control-group fieldcontain  ${hasErrors(bean: paso1Command, field: 'rfid', 'error')}">

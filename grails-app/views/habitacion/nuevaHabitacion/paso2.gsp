@@ -19,11 +19,12 @@
 	<div class="span4">
 		<div class="row">
 			<div class="span4">
-				<div class="control-group fieldcontain" required>
+				<div class="control-group fieldcontain ${hasErrors(bean: paso2Command, field: 'tipo', 'error')}" required>
 					<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Cuenta" /></label>
 					<div class="controls">
 						<g:select id="tipo" name="tipo" from="${arduito.Sensor.list()}" optionKey="id" 
 						class="many-to-one" noSelection="['null': 'Seleccione un sensor']" value="${paso2Command?.tipo }"/>
+						<span class="help-inline">${hasErrors(bean: paso2Command, field: 'tipo', 'Debes seleccionar el tipo de sensor')}</span>
 					</div>
 				</div>
 			</div>
@@ -33,20 +34,25 @@
 				<div class="control-group fieldcontain ${hasErrors(bean: paso2Command, field: 'valorMaximo', 'error')}" required>
 					<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Valor máximo" /></label>
 					<div class="controls">
-						<g:textField name="valorMaximo" id="valorMaximo" value="${paso2Command?.valorMaximo }"/>
+						<g:textField name="valorMaximo" id="valorMaximo" value="${paso2Command?paso2Command?.valorMaximo.toString().replace('.',','):''}"/>
 					</div>
-					<span class="help-inline">${hasErrors(bean: paso2Command, field: 'valorMaximo', 'error')}</span>
+					<span class="help-inline">
+						<g:renderErrors bean="${paso2Command}" field="valorMaximo" as="list" />
+					</span>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="span4">	
-				<div class="control-group fieldcontain" required>
+				<div class="control-group fieldcontain ${hasErrors(bean: paso2Command, field: 'comparador', 'error')}" required>
 					<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Comparador" /></label>
 					<div class="controls">
 						<g:select id="tipo" name="comparador" from="${['>','>=','<','<=','=']}" 
 						class="many-to-one" noSelection="['-1': 'Seleccione un comparador']" value="${paso2Command?.comparador}"/>
 					</div>
+					<span class="help-inline" style="with:150px;">
+						<g:renderErrors bean="${paso2Command}" field="comparador" as="list" />
+					</span>
 				</div>
 			</div>
 		</div>
@@ -56,24 +62,28 @@
 	</div>
 	<div class="span4">
 		<div class="row">
-			<div class="span4">	
-				<div class="fieldcontain ${hasErrors(bean: paso2Command, field: 'valorMinimo', 'error')}" required>
+			<div class="span4 offset1">	
+				<div class="control-group fieldcontain ${hasErrors(bean: paso2Command, field: 'valorMinimo', 'error')}" required>
 					<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Valor mínimo" /></label>
 					<div class="controls">
-						<g:textField name="valorMinimo" value="${paso2Command?.valorMinimo }" />
+						<g:textField name="valorMinimo" value="${paso2Command?paso2Command?.valorMinimo.toString().replace('.',','):''}" /> 
 					</div>
-					<span class="help-inline">${hasErrors(bean: paso2Command, field: 'valorMinimo', 'error')}</span>
+					<span class="help-inline" style="with:150px;">
+						<g:renderErrors bean="${paso2Command}" field="valorMinimo" as="list" />
+					</span>
 				</div>
 			</div>
 		</div>
 		<div class="row">
-			<div class="span4">	
-				<div class="fieldcontain ${hasErrors(bean: paso2Command, field: 'valorAlerta', 'error')}" required>
+			<div class="span4 offset1">	
+				<div class="control-group fieldcontain ${hasErrors(bean: paso2Command, field: 'valorAlerta', 'error')}" required>
 					<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Valor Alerta" /></label>
 					<div class="controls">
-						<g:textField name="valorAlerta" id="valorAlerta" value="${paso2Command?.valorAlerta }"/>
+						<g:textField name="valorAlerta" id="valorAlerta" value="${paso2Command?paso2Command?.valorAlerta.toString().replace('.',','):''}"/>
 					</div>
-					<span class="help-inline">${hasErrors(bean: paso2Command, field: 'valorAlerta', 'error')}</span>
+					<span class="help-inline" >
+						<g:renderErrors bean="${paso2Command}" field="valorAlerta" as="list" />
+					</span>
 				</div>
 			</div>
 		</div>
