@@ -22,9 +22,12 @@
 			<div class="control-group fieldcontain ${ipError?'error':''}" required>
 				<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="ip" /></label>
 				<div class="controls">
-					<g:textField name="ip" value="${ip}"/> 
+					<g:textField name="ip" value="${ip}"/>
+					<g:if test="${ipError}">
+						<span class="help-inline"><ul><li>${ipError}</li></ul></span>
+					</g:if> 
 				</div>
-				<span class="help-inline"><ul><li>${ipError}</li></ul></span>
+					
 			</div>
 		</fieldset>
 		<g:submitButton class="btn btn-primary" name="agregarCamara" value="Agregar" id="agregar"/>

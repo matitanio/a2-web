@@ -36,7 +36,7 @@
   </script>
 <g:form class="form-horizontal" >
 <div class="row">
-	<div class="span8 offset2">
+	<div class="span8">
 		<div id="droppable" style='position:relative; width: 600px; height: 600px;  border: 1px solid black; background-image: url("/a2-web/${urlPlanoRelativa}");background-size: 100% 100%;'>
 			<g:if test="${ubicacion}">
 				<g:each in="${sensores}" var="unSensor">

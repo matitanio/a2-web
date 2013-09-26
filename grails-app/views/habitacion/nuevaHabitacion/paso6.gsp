@@ -23,7 +23,7 @@
 <body>
 <g:form  class="form-horizontal">
 <div class="row">
-	<div class="span4  offset2">
+	<div class="span4">
 		<fieldset class="form">
 			<h4>Sensores</h4>
 			<g:each in="${sensores}" var="unSensor" status="i">
@@ -91,7 +91,6 @@
 				</div>
 			</div>	
 		</g:if>
-<%--	--%>
 	</div>
 </div>
 <div class="form-actions">

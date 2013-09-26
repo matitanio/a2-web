@@ -42,8 +42,10 @@
 		<g:render template="/layouts/header"/>														
 	</g:else>
 	<g:render template="/layouts/menu"/>
-	<div class="row">
-	<div class="span12 pagination-centered offset1">
+			
+	<div class="container" style="min-height: 400px;">
+		<div class="row">
+	<div class="span12 pagination-centered">
 		<ul class="breadcrumb">
 		<g:form>
 		  <li class="active"><a href="#">Inicio</a></li>
@@ -55,8 +57,9 @@
 		</g:form>
 		</ul>
 		</div>						
-	</div>								
-	<g:layoutBody/>
+		</div>						
+		<g:layoutBody/>
+	</div>
 	<r:layoutResources />
 </body>
 
