@@ -30,9 +30,16 @@
 			<div class="row">
 				<div class="span2">
 					${unSensor.nombre} <select id="multiple-sensor${i}" class="notificadores ui.multiselect-not-selected" name="dispositivos-${unSensor.uuid}" multiple="multiple">
-					<g:each in="${dispositivos}" var="unDispositivo">
-						<option value="${unDispositivo.id}" ${unSensor.notificables.contains(unDispositivo.id as String)?"selected='selected'":''}>${unDispositivo.owner}</option>
-					</g:each>
+					<optgroup label="Usuarios">
+						<g:each in="${usuariosNotificables}" var="unNotificable">
+							<option value="${unNotificable.id}" ${unSensor.notificables.contains(unNotificable.id as String)?"selected='selected'":''}>${unNotificable.descripcion}</option>
+						</g:each>
+					</optgroup>
+					<optgroup label="Dispositivos">
+						<g:each in="${dispositivosNotificables}" var="unNotificable">
+							<option value="${unNotificable.id}" ${unSensor.notificables.contains(unNotificable.id as String)?"selected='selected'":''}>${unNotificable.descripcion}</option>
+						</g:each>
+					</optgroup>
 					</select>
 				</div>
 			</div>	
@@ -46,9 +53,16 @@
 			<div class="row">
 				<div class="span2">
 					<div style="position:relative; width: 200px;">Camara ${i} - ip :${unaCamara.ip}</div> <select id="multiple-camara${i}" class="notificadores" name="dispositivos-${unaCamara.uuid}" multiple="multiple">
-					<g:each in="${dispositivos}" var="unDispositivo">
-						<option value="${unDispositivo.id}" ${unaCamara.notificables.contains(unDispositivo.id as String)?"selected='selected'":''}>${unDispositivo.owner}</option>
-					</g:each>
+					<optgroup label="Usuarios">
+						<g:each in="${usuariosNotificables}" var="unNotificable">
+							<option value="${unNotificable.id}" ${unaCamara.notificables.contains(unNotificable.id as String)?"selected='selected'":''}>${unNotificable.descripcion}</option>
+						</g:each>
+					</optgroup>
+					<optgroup label="Dispositivos">
+						<g:each in="${dispositivosNotificables}" var="unNotificable">
+							<option value="${unNotificable.id}" ${unaCamara.notificables.contains(unNotificable.id as String)?"selected='selected'":''}>${unNotificable.descripcion}</option>
+						</g:each>
+					</optgroup>
 					</select>
 				</div>
 			</div>	
@@ -63,14 +77,21 @@
 			<div class="row">
 				<div class="span2">
 					<select id="multiple-rfid${i}" class="notificadores" name="dispositivos-rfid" multiple="multiple">
-					<g:each in="${dispositivos}" var="unDispositivo">
-						<option value="${unDispositivo.id}" ${rfid.notificables.contains(unDispositivo.id as String)?"selected='selected'":''}>${unDispositivo.owner}</option>
-					</g:each>
+					<optgroup label="Usuarios">
+						<g:each in="${usuariosNotificables}" var="unNotificable">
+							<option value="${unNotificable.id}" ${rfid.notificables.contains(unNotificable.id as String)?"selected='selected'":''}>${unNotificable.descripcion}</option>
+						</g:each>
+					</optgroup>
+					<optgroup label="Dispositivos">
+						<g:each in="${dispositivosNotificables}" var="unNotificable">
+							<option value="${unNotificable.id}" ${rfid.notificables.contains(unNotificable.id as String)?"selected='selected'":''}>${unNotificable.descripcion}</option>
+						</g:each>
+					</optgroup>
 					</select>
 				</div>
 			</div>	
 		</g:if>
-	
+<%--	--%>
 	</div>
 </div>
 <div class="form-actions">

@@ -34,7 +34,6 @@
 	<div class="span4">
 		<g:if test="${!camaras}">
 			<div class="alert alert-info" style="text-align: center"> Agregar camaras para continuar</div>
-			∂
 		</g:if>
 		<g:else>
 			<h4>Camaras agregadas</h4>

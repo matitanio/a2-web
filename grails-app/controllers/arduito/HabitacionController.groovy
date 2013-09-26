@@ -16,6 +16,7 @@ class HabitacionController {
 	def springSecurityService
 	def grailsApplication
 	def habitacionService
+	def notificacionService
 
 	def create(){
 		redirect(action:'nuevaHabitacion')
@@ -88,11 +89,11 @@ class HabitacionController {
 		paso5{
 
 			on('siguiente'){
-				flow.dispositivos = DispositivoMovil.createCriteria().list{
-					owner{
-						eq('cuenta',Cuenta.get(flow.paso1Command.cuenta))
-					}
-				}
+				
+				def cuenta = Cuenta.get(flow.paso1Command.cuenta)
+				flow.usuariosNotificables = notificacionService.buscarUsuarios(cuenta)
+				flow.dispositivosNotificables = notificacionService.buscarDispositivos(cuenta)
+				
 				return doStep('doPaso5',delegate,[flow:flow])
 			}.to('paso6')
 			on('atras').to('paso4')
@@ -122,6 +123,12 @@ class HabitacionController {
 			redirect (action: "list")
 		}
 	}
+	
+	private buscarTodosNotificables(cuenta){
+		def todos = notificacionService.buscarTodos(Cuenta.get(cuenta))
+		todos
+	}
+	
 	def doSave(flow){
 		
 		def parametros = [:]

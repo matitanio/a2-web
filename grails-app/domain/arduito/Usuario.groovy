@@ -1,11 +1,11 @@
 package arduito
 
 import java.io.Serializable;
+import java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy;
 
 class Usuario extends Notificable implements Serializable{
 
 	transient static springSecurityService
-
 	String username
 	String password
 	String email
@@ -14,12 +14,14 @@ class Usuario extends Notificable implements Serializable{
 	boolean accountLocked = false
 	boolean passwordExpired = false
 	
+	static hasMany = [dispositivosMoviles:DispositivoMovil]
 	Cuenta cuenta
 	static constraints = {
 		username blank: false, unique: true
 		password blank: false,password:true
 		cuenta nullable:true
 		email blank:false,email:true,unique:true
+		dispositivosMoviles nullable:true
 	}
 
 	static mapping = {
@@ -48,10 +50,6 @@ class Usuario extends Notificable implements Serializable{
 		password = springSecurityService.encodePassword(password)
 	}
 	
-	String toString(){
-		
-		username
-	}
 	
 	static def buscarTodos(params){
 		def user = Usuario.findByUsername(springSecurityService.principal.username)
@@ -87,9 +85,13 @@ class Usuario extends Notificable implements Serializable{
 		todos
 	}
 
-	def notificar() {
+	def notificar(mesaje) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	def getDescripcion(){
+			username
 	}
 	
 	

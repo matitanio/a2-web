@@ -4,10 +4,10 @@ package arduito
  * Notificable
  * A domain class describes the data object and it's mapping to the database
  */
-abstract class Notificable {
+class Notificable {
 
 	/* Default (injected) attributes of GORM */
-//	Long	id
+	Long	id
 //	Long	version
 	
 	/* Automatic timestamping of GORM */
@@ -20,12 +20,15 @@ abstract class Notificable {
 //	static mappedBy		= []	// specifies which property should be used in a mapping 
 	
     static mapping = {
+        tablePerHierarchy false
     }
     
 	static constraints = {
     }
 	
-	abstract def notificar()
+	def notificar(mensaje){}
+	def getDescripcion(){}
+	
 	/*
 	 * Methods of the Domain Class
 	 */

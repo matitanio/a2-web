@@ -79,12 +79,9 @@ class SensorService {
 	
 	private notificarSensor(sensor,mensaje){
 		
-		sensor.notificables.each{dispositivo->
-			if(dispositivo.estado == Estado.VERIFICADO){
-				notificacionService.notificar(mensaje,dispositivo.key)
-			}else{
-				log.error('El dispositov [' + dispositivo + '] no ha sido verificado aun')
-			}
+		sensor.notificables.each{unNotificable->
+			
+			unNotificable.notificar(mensaje)
 		}
 		
 	}

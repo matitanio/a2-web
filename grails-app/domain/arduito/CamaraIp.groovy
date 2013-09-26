@@ -8,7 +8,7 @@ class CamaraIp implements Serializable {
 
 	String ip
 	
-	static hasMany		= [notificables:DispositivoMovil]
+	static hasMany		= [notificables:Notificable]
 	static belongsTo = [habitacion:Habitacion]
 
 	    static mapping = {

@@ -1,13 +1,17 @@
 package arduito
 
+import org.springframework.transaction.annotation.Propagation
+import org.springframework.transaction.annotation.Transactional
+
 /**
  * HabitacionService
  * A service class encapsulates the core business logic of a Grails application
  */
 class HabitacionService {
 
-	static transactional = true
+	static transactional = false
 
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
 	def crear(parametros) {
 
 		def habitacion = new Habitacion()
@@ -19,6 +23,7 @@ class HabitacionService {
 		agregarSensores(habitacion,parametros.sensores)
 		agregarCamaras(habitacion,parametros.camaras)
 		agregarRfid(habitacion,parametros)
+		
 		habitacion.save(flush:true)
 	}
 
@@ -40,9 +45,10 @@ class HabitacionService {
 
 	private agregarNotificables(elNotificable,notificables){
 
-		notificables.each{ unDispositivo ->
-
-			elNotificable.addToNotificables(DispositivoMovil.get(unDispositivo as Long))
+		notificables.each{ unNotificable ->
+			println Usuario.findAll()
+			def notif = Notificable.get(unNotificable as Long)
+			elNotificable.addToNotificables(notif)
 		}
 	}
 	

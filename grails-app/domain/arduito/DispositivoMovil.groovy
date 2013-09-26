@@ -7,6 +7,8 @@ class DispositivoMovil extends Notificable implements Serializable  {
 	String key
 	String codigoRegistro
 	static belongsTo = [owner:Usuario]
+	transient grailsApplication
+	transient androidGcmService
 	
 	Estado estado = Estado.SIN_VERIFICAR
 	static constraints = {
@@ -16,11 +18,22 @@ class DispositivoMovil extends Notificable implements Serializable  {
 		owner nullable:true
 	}
 
-	def notificar() {
-		// TODO Auto-generated method stub
-		return null;
-	}	
+	 def notificar(mensaje) {
+		
+		def apiKey = grailsApplication.config.android.gcm.api.key
+		
+		if(estado == Estado.VERIFICADO){
+			androidGcmService.sendMessage(mensaje, [key],
+			"", apiKey)
+		}else{
+			log.error('El dispositvo [' + this.id + '] no ha sido verificado aun')
+		}
+		
+    }
 	
+	def getDescripcion(){
+		'Dispositivo Movil de ' + owner.username
+	}
 }
 
 enum Estado {
