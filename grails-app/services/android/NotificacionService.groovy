@@ -24,7 +24,6 @@ class NotificacionService {
     }
 	
 	
-	@Transactional(readOnly = true,propagation=Propagation.NOT_SUPPORTED)
 	def buscarUsuarios(cuenta){
 		
 		def lista = Usuario.findAllByCuenta(cuenta).collect{
@@ -35,7 +34,6 @@ class NotificacionService {
 		collectData(lista)
 	}
 
-	@Transactional(readOnly = true,propagation=Propagation.NOT_SUPPORTED)
 	def buscarDispositivos(cuenta){
 		
 		
@@ -48,7 +46,6 @@ class NotificacionService {
 		collectData(lista)
 	}
 	
-	@Transactional(readOnly = true,propagation=Propagation.NOT_SUPPORTED)
 	private collectData(collection){
 		
 		collection.collect{

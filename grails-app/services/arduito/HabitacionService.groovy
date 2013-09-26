@@ -46,9 +46,7 @@ class HabitacionService {
 	private agregarNotificables(elNotificable,notificables){
 
 		notificables.each{ unNotificable ->
-			println Usuario.findAll()
-			def notif = Notificable.get(unNotificable as Long)
-			elNotificable.addToNotificables(notif)
+			elNotificable.addToNotificables(Notificable.get(unNotificable as Long))
 		}
 	}
 	
@@ -56,7 +54,7 @@ class HabitacionService {
 		
 		if(sensor.comparador != '-1'){
 			
-			sensor.warning = new Warning(comparador: sensor.comparador,valorWarning: sensor.valorAlerta,  )
+			sensor.warning = new Warning(comparador: sensor.comparador,valorWarning: sensor.valorAlerta)
 		}
 		
 	}

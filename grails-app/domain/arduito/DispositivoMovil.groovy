@@ -6,7 +6,7 @@ class DispositivoMovil extends Notificable implements Serializable  {
 	String pin
 	String key
 	String codigoRegistro
-	static belongsTo = [owner:Usuario]
+	static hasOne = [owner:Usuario]
 	transient grailsApplication
 	transient androidGcmService
 	
