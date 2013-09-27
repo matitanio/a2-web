@@ -27,6 +27,10 @@ class HabitacionController {
 		[habitacionInstanceList: Habitacion.list(params), habitacionInstanceTotal: Habitacion.count()]
 	}
 
+	def edit(Long id){
+		
+		[habitacion:Habitacion.get(id)]
+	}
 	def nuevaHabitacionFlow = {
 		onStart{ flow.resumen = false }
 		paso1{

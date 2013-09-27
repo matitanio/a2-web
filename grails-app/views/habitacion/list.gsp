@@ -12,7 +12,8 @@
 	/* new custom width */
 	width: 800px;
 	/* must be half of the width, minus scrollbar on the left (30px) */
-	margin-right: 200px;
+	margin-right: 250px;
+	left: 40%;
 }
 </style>
 </head>
@@ -33,6 +34,7 @@
 						<g:sortableColumn property="ipHabitacion" title="ip" />
 						<th>Instalacion</th>
 						<th>Estado Actual</th>
+						<th>Editar</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -149,15 +151,15 @@
 								class="btn btn-primary btn-small verificador">Ver</a>
 
 								<div id="estado${habitacionInstance.id}-modal"
-									class="modal hide fade in">
+									class="modal hide fade in" style="top: 40%;">
 									<div class="modal-header">
 										<a class="close" data-dismiss="modal">×</a>
 										<H4>Estado Habitacion</H4>
 									</div>
 									<div class="modal-body "
-										style="display: block; width: 650px; height: 650px;">
+										style="display: block; width: 700px; height: 700px;">
 										<div id="droppable"
-											style='position:relative; width: 600px; height: 600px;  border: 1px solid black;  background-image: url("/a2-web/${habitacionInstance.urlPlano}");background-size: 100% 100%;'>
+											style='position:relative;width: 600px; height: 600px;  border: 1px solid black;  background-image: url("/a2-web/${habitacionInstance.urlPlano}");background-size: 100% 100%;'>
 											<g:each in="${habitacionInstance.sensores}" var="unSensor">
 												<div
 													style='position:relative; top:${unSensor.coordenadaY}px; left:${unSensor.coordenadaX}px; width: 10px; height: 10px;'
@@ -177,8 +179,7 @@
 										<a href="#" class="btn" data-dismiss="modal">Cerrar</a>
 									</div>
 								</div></td>
-
-
+							<td><g:link role="button" class="btn btn-primary btn-small" action="edit"  id="${habitacionInstance.id}">Editar</g:link></td>
 						</tr>
 					</g:each>
 				</tbody>

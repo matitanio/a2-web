@@ -46,14 +46,16 @@
 	<div class="container" style="min-height: 400px;">
 		<div class="row">
 	<div class="span12 pagination-centered">
+	
 		<ul class="breadcrumb">
 		<g:form>
-		  <li class="active"><a href="#">Inicio</a></li>
+		  <li class="active"><a href="#">Inicio</a>
+		  <li><a href="#">Sensores</a></li>
+		  <li><a href="#">Camaras</a></li>
 		  <li><a href="#">Plano</a></li>
-		  <li><g:link  event="sensores">Sensores</g:link></li>
-		  <li><a href="#">Acesso</a></li>
-		  <li><a href="#">Camara sensores</a></li>
-		  <li><a href="#">Notificaciones</a></li>
+		  <li><a href="#">Hubicacion</a></li>
+		  <li><g:link  event="sensores">Notificaciones</g:link></li>
+		  <li><a href="#">Resumen</a></li>
 		</g:form>
 		</ul>
 		</div>						
