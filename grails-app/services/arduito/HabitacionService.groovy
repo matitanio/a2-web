@@ -25,6 +25,8 @@ class HabitacionService {
 		agregarRfid(habitacion,parametros)
 		
 		habitacion.save(flush:true)
+		
+		habitacion
 	}
 
 	private agregarSensores(habitacion,sensores){
@@ -52,9 +54,10 @@ class HabitacionService {
 	
 	private agregarWarning(sensorHabitacion,sensor){
 		
-		if(sensor.comparador != '-1'){
+		if(sensor.warning.comparador != '-1'){
 			
-			sensor.warning = new Warning(comparador: sensor.comparador,valorWarning: sensor.valorAlerta)
+			def warning = new Warning(comparador: sensor.warning.comparador,valorWarning: sensor.warning.valorAlerta)
+			sensorHabitacion.warning = warning
 		}
 		
 	}

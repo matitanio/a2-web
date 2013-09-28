@@ -49,7 +49,7 @@
 
 				<g:each in="${camaras}" var="unaCamara" status="i">
 				<div class="draggable" style='width: 40px; height: 40px; top:${unaCamara.ubicacion?unaCamara.ubicacion.split(':')[0]:-1}px; left:${unaCamara.ubicacion?unaCamara.ubicacion.split(':')[1]:-1}px;'>
-					<strong>.</strong><img src="http://grails.org/wikiImage/description-693/webcam_icon.jpg" height="30" width="30"/>
+					<strong>.</strong><img src="/a2-web/images/camara.jpg" height="30" width="30"/>
 					<span style="position:absolute; display:none; width: 100px; height: auto; background:white">ip-${unaCamara.ip}</span>
 					<g:hiddenField name="${unaCamara.uuid}" value="${ubicacion?unaCamara.ubicacion:'-1:-1'}"/>
 				</div>
@@ -73,7 +73,7 @@
 		<h4>Camaras</h4>
 		<g:each in="${camaras}" var="unaCamara" status="i">
 		<div class="draggable" style="width: 40px; height: 40px;">
-			<strong>.</strong><img src="http://grails.org/wikiImage/description-693/webcam_icon.jpg" height="30" width="30"/>
+			<strong>.</strong><img src="/a2-web/images/camara.jpg" height="30" width="30"/>
 			<span style="position:absolute; display:none; width: 100px; height: auto; background:white; left: 40px; top:-5px;">ip-${unaCamara.ip}</span>
 			<g:hiddenField name="${unaCamara.uuid}" value="-1:-1"/>
 		</div>

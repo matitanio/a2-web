@@ -55,7 +55,7 @@ class SensorHabitacion implements Serializable {
 
 class Warning implements Serializable{
 	
- 	Integer valorWarning
+ 	Double valorWarning
 	String comparador
 	
 	def validar(valorMedido){
