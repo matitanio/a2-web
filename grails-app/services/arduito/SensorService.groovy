@@ -23,11 +23,14 @@ class SensorService {
 	private formatearSensores(sensores){
 
 		def sensoresADevolver = [sensores:[]]
+		
 		sensores.each{sensor ->
+			
 			def habitacion = sensor.habitacion
 			sensoresADevolver.sensores << [id:sensor.id,habitacion:formatHabitacion(habitacion),valorActual:sensor.valorActual,
 				valorMaximo:sensor.valorMaximo,valorMinimo:sensor.valorMinimo,nombreSensor:sensor.sensor.tipo, unidad:sensor.sensor.unidades]
 		}
+		
 		sensoresADevolver
 	}
 	
@@ -91,15 +94,20 @@ class SensorService {
 		
 		def sensores = SensorHabitacion.findAllByActivoAndInstalado(false,true)
 		notificarSensoresInactivos(sensores)
-		SensorHabitacion.withTransaction {
-			SensorHabitacion.executeUpdate("update SensorHabitacion s set s.activo=false where activo=true and instalado=true")
-		}
+		actualizarEstadoSensoresActivos()
 	}
 	
 	private notificarSensoresInactivos(sensores){
 		
 		sensores.each{unSensor ->
 			notificarSensor(unSensor,[mensaje:"El sensor de ${unSensor.sensor.tipo} de la habitacion ${unSensor.habitacion.edificio.direccion} no esta enviando valores"])
+		}
+	}
+	
+	private actualizarEstadoSensoresActivos(){
+		
+		SensorHabitacion.withTransaction {
+			SensorHabitacion.executeUpdate("update SensorHabitacion s set s.activo=false where activo=true and instalado=true")
 		}
 	}
 	

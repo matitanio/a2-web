@@ -33,6 +33,5 @@ class ArduinoMessagingService {
 		def sensor = Sensor.get(msg.sensor.toLong())
 		
 		SensorHabitacion.findByHabitacionAndSensorAndNumeroSensor(habitacion,sensor,msg.numeroSensor)
-		
 	}
 }

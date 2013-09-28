@@ -32,9 +32,9 @@ class DispositivoMovilService {
 	def registrar(pin,key){
 		
 		def dispositivo = DispositivoMovil.findByPin(pin)
+		
 		dispositivo.estado = Estado.VERIFICADO
 		dispositivo.key = key
-		println 'errors: ' + dispositivo.errors
 		dispositivo.save(flush:true)
 	}
 	
@@ -65,7 +65,6 @@ class DispositivoMovilService {
 			subject "Codigo de registro para arduito movil"
 			body "Hola tu codigo de registro es ${codigoRegistro}"
 		}
-		println codigoRegistro
 		dispositivo.pin = null
 		dispositivo.codigoRegistro = codigoRegistro
 		dispositivo.save()
