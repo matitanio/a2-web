@@ -114,7 +114,7 @@ grails.plugins.activemq.port=7892
 	jms {
 		containers {
 			arduino {
-				concurrentConsumers = 5
+				concurrentConsumers = 10
 				connectionFactoryBean = 'jmsConnectionFactory'
 			}
 			registro{
