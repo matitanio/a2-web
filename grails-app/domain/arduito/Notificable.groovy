@@ -4,7 +4,7 @@ package arduito
  * Notificable
  * A domain class describes the data object and it's mapping to the database
  */
-class Notificable implements Serializable{
+abstract class Notificable implements Serializable{
 
 	/* Default (injected) attributes of GORM */
 	Long	id
@@ -26,8 +26,8 @@ class Notificable implements Serializable{
 	static constraints = {
     }
 	
-	def notificar(mensaje){}
-	def getDescripcion(){}
+	abstract notificar(mensaje)
+	abstract getDescripcion()
 	
 	/*
 	 * Methods of the Domain Class
