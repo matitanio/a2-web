@@ -19,14 +19,11 @@ class ArduinoMessagingService {
 
 	void onMessage(msg){
 		
-		//sensorService.sensorActivado(msg.sensor)
 		
-		//identificar el sensor
-		println msg
 		def sensor = buscarSensor(msg)
-		sensor.valorActual = msg.valores as Float
-		sensor.save(flush:true)
-		sensorService.validarMedicion(sensor,msg.valores)
+		def valorMedido = msg.valores
+		sensor.registrarMedicion(valorMedido)
+		sensorService.validarMedicion(sensor,valorMedido)
 		sendJMSMessage("registro.queue", [tipo:'registro-medicion',sensorId:sensor.id,valorMedido:sensor.valorActual,fecha:new Date().format(RegistroService.formatoFecha)])
 	}
 	

@@ -86,4 +86,21 @@ class SensorService {
 		
 	}
 	
+	public comprobarEstadoSensores(){
+		
+		
+		def sensores = SensorHabitacion.findAllByActivoAndInstalado(false,true)
+		notificarSensoresInactivos(sensores)
+		SensorHabitacion.withTransaction {
+			SensorHabitacion.executeUpdate("update SensorHabitacion s set s.activo=false where activo=true and instalado=true")
+		}
+	}
+	
+	private notificarSensoresInactivos(sensores){
+		
+		sensores.each{unSensor ->
+			notificarSensor(unSensor,[mensaje:"El sensor de ${unSensor.sensor.tipo} de la habitacion ${unSensor.habitacion.edificio.direccion} no esta enviando valores"])
+		}
+	}
+	
 }

@@ -17,6 +17,8 @@ class SensorHabitacion implements Serializable {
 	
 	Float coordenadaX
 	Float coordenadaY
+	Boolean activo = true
+	Boolean instalado = false
 	
 /* Automatic timestamping of GORM */
 //	Date	dateCreated
@@ -38,6 +40,14 @@ class SensorHabitacion implements Serializable {
 	
 	def validar(valorMedido){
 		(valorMedido > valorMinimo && valorMedido < valorMaximo)
+	}
+	
+	def registrarMedicion(valor){
+		
+		this.valorActual = valor as Float
+		this.activo = true
+		this.save(flush:true)
+		
 	}
 	
 	
