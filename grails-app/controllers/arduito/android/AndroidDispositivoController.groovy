@@ -13,7 +13,7 @@ class AndroidDispositivoController {
 	
 	def registrar() {
 		
-		dispositivoMovilService.registrar(params.pin,params.gcmKey)
+		dispositivoMovilService.registrar(params.pin,params.gcmkey)
 		render 'ok'
 	}
 	

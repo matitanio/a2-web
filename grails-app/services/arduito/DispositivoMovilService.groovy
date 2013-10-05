@@ -36,6 +36,8 @@ class DispositivoMovilService {
 		dispositivo.estado = Estado.VERIFICADO
 		dispositivo.key = key
 		dispositivo.save(flush:true)
+		
+		dispositivo
 	}
 	
 	def validar(pinRegistracion,nombreUsuario){
@@ -61,11 +63,11 @@ class DispositivoMovilService {
 		dispositivo.estado = Estado.VERIFICANDO
 		def codigoRegistro = new Date().time
 		println codigoRegistro
-		sendMail {
-			to dispositivo.owner.email
-			subject "Codigo de registro para arduito movil"
-			body "Hola tu codigo de registro es ${codigoRegistro}"
-		}
+//		sendMail {
+//			to dispositivo.owner.email
+//			subject "Codigo de registro para arduito movil"
+//			body "Hola tu codigo de registro es ${codigoRegistro}"
+//		}
 		dispositivo.pin = null
 		dispositivo.codigoRegistro = codigoRegistro
 		dispositivo.save()

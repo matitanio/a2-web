@@ -31,12 +31,9 @@ class ControlAccesoService {
 		def habitacion = Habitacion.get(id)
 		def tarjetasFormateadas = habitacion.rfeed.tarjetasConAcceso.collect{it.acceso}.join(';')
 		
-		def url = "http://${habitacion.ipHabitacion}/accesos/${tarjetasFormateadas}"
-		println url
+		def resultado = "http://${habitacion.ipHabitacion}/accesos/${tarjetasFormateadas}".toURL().text
 		
-		def resultado = url.toURL()
-		
-		assert resultado.text == 'ok'
+		assert resultado == 'OK'
 		
 	}
 }
