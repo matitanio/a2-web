@@ -13,6 +13,10 @@ class CuentaController {
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
+	def pepe(){
+		render 'pepe'
+	}
+	
     def index() {
         redirect(action: "list", params: params)
     }

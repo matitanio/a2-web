@@ -18,6 +18,25 @@ class ControlAccesoService {
 		def rfeed = habitacion.rfeed
 		def resultado = rfeed.tarjetasConAcceso.contains(acceso)	
 		sendJMSMessage("registro.queue", [tipo:'registro-acceso',habitacion:habitacion?.id,tarjeta:acceso?.id,resultado:resultado,fecha:new Date().format(RegistroService.formatoFecha)])
-		resultado?'si':'no'
+		def respuesta = resultado?'si':'no'
+		log.info(respuesta)
+		
+		respuesta
     }
+	
+	
+	
+	def actualizarAccesosHabitacion(id){
+		
+		def habitacion = Habitacion.get(id)
+		def tarjetasFormateadas = habitacion.rfeed.tarjetasConAcceso.collect{it.acceso}.join(';')
+		
+		def url = "http://${habitacion.ipHabitacion}/accesos/${tarjetasFormateadas}"
+		println url
+		
+		def resultado = url.toURL()
+		
+		assert resultado.text == 'ok'
+		
+	}
 }

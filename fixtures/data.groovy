@@ -75,7 +75,7 @@ fixture{
 	tarjetaAcceso2(TarjetaAcceso,acceso:'2222')
 	rfeed(LectorRfeed,tarjetasConAcceso:[tarjetaAcceso1,tarjetaAcceso2],notificables:[dispositivoMovil1])
 	
-	habitacion(Habitacion,piso:'1',numero:'1',urlPlano:'aa',ipHabitacion:'192.168.0.1',edificio:edificio,
+	habitacion(Habitacion,piso:'1',numero:'1',urlPlano:'aa',ipHabitacion:'192.168.1.139',edificio:edificio,
 				rfeed:rfeed)
 	habitacion2(Habitacion,piso:'1',numero:'2',urlPlano:'aa',ipHabitacion:'192.168.0.2',edificio:edificio)
 	

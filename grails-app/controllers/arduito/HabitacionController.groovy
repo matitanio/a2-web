@@ -17,7 +17,15 @@ class HabitacionController {
 	def grailsApplication
 	def habitacionService
 	def notificacionService
+	def controlAccesoService
 
+	
+	def actulizarAccesos(Long id){
+		
+		controlAccesoService.actualizarAccesosHabitacion(id)
+		redirect action:'list'
+	}
+	
 	def create(){
 		redirect(action:'nuevaHabitacion')
 	}

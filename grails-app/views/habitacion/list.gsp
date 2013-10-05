@@ -35,6 +35,7 @@
 						<th>Instalacion</th>
 						<th>Estado Actual</th>
 						<th>Editar</th>
+						<th>Actualizar Accesos</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -180,6 +181,7 @@
 									</div>
 								</div></td>
 							<td><g:link role="button" class="btn btn-primary btn-small" action="edit"  id="${habitacionInstance.id}">Editar</g:link></td>
+							<td><g:link role="button" class="btn btn-primary btn-small" action="actulizarAccesos"  id="${habitacionInstance.id}">Actualizar Accesos</g:link></td>
 						</tr>
 					</g:each>
 				</tbody>

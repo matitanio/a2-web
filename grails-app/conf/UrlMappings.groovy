@@ -28,20 +28,27 @@ class UrlMappings {
 		  	}
 		}
 
+		//URL notificacion de sensores
+
 		"/notificacion/$edificio/$habitacion/$sensor/$numeroSensor/$valores"{
 			controller = 'notificacion'
 			action = 'index'
 		}
 		
+		//URL de control de acceso
 		"/validar/acceso/$habitacion/$tarjeta"{
 			controller = 'notificacion'
 			action = 'controAcceso'
 		}
+		
+		
+		//URLs consumibles desde el celular
 		"/api/$pin/accesos/$action?/$id?"(controller: "accesosApi")
 		"/api/$pin/edificios/$action?/$id?"(controller: "edificiosApi")
 		"/api/$pin/sensores/$action?/$id?"(controller: "sensoresApi")
 		
 		
+		//URLs proceso de registro del dispositivo movil
 		"/registro/$pin/$gcmKey?"(controller: "androidDispositivo",action:'registrar')
 		"/validar/$pinValidacion/$usuario"(controller: "androidDispositivo",action:'validar')
 		

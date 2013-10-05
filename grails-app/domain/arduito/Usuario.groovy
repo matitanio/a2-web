@@ -94,5 +94,10 @@ class Usuario extends Notificable implements Serializable{
 			username
 	}
 	
+	String toString(){
+		
+		username
+	}
+	
 	
 }
