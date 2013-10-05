@@ -28,6 +28,12 @@ class UrlMappings {
 		  	}
 		}
 
+		"/status"{
+			controller = 'notificacion'
+			action = 'status'
+		}
+
+
 		//URL notificacion de sensores
 
 		"/notificacion/$edificio/$habitacion/$sensor/$numeroSensor/$valores"{

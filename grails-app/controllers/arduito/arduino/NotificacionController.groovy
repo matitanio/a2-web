@@ -28,4 +28,9 @@ class NotificacionController {
 		render controlAccesoService.validarAcceso(habitacion, tarjeta)
 		
 	}
+	
+	def status(){
+		
+		render 'OK'
+	}
 }
