@@ -51,6 +51,7 @@ class DispositivoMovilService {
 			dispositivo.estado = Estado.VERIFICADO
 			respuesta.resultado = 'si'
 			respuesta.pin =dispositivo.pin
+			dispositivo.codigoRegistro = null	
 			dispositivo.save(flush:true)
 		}
 		
@@ -63,11 +64,12 @@ class DispositivoMovilService {
 		dispositivo.estado = Estado.VERIFICANDO
 		def codigoRegistro = new Date().time
 		println codigoRegistro
-		sendMail {
-			to dispositivo.owner.email
-			subject "Codigo de registro para arduito movil"
-			body "Hola tu codigo de registro es ${codigoRegistro}"
-		}
+		
+//		sendMail {
+//			to dispositivo.owner.email
+//			subject "Codigo de registro para arduito movil"
+//			body "Hola tu codigo de registro es ${codigoRegistro}"
+//		}
 		dispositivo.pin = null
 		dispositivo.codigoRegistro = codigoRegistro
 		dispositivo.save()

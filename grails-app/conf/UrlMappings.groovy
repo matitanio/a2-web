@@ -55,7 +55,7 @@ class UrlMappings {
 		
 		
 		//URLs proceso de registro del dispositivo movil
-		"/registro/$pin/$gcmKey?"(controller: "androidDispositivo",action:'registrar')
+		"/registro/$pin/$gcmkey?"(controller: "androidDispositivo",action:'registrar')
 		"/validar/$pinValidacion/$usuario"(controller: "androidDispositivo",action:'validar')
 		
 		/* 
