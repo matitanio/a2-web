@@ -3,4 +3,4 @@
 	<g:submitButton class="btn btn-primary" name="resumen" value="Resumen" />
 </g:if>
 <g:submitButton class="btn btn-primary" name="atras" value="Atras" />
-<g:link class="btn btn-danger" role="button" name="cancelar" controller="home">Cancelar</g:link>
+<g:link class="btn btn-danger" role="button" name="cancelar" action="list">Cancelar</g:link>

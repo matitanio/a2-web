@@ -76,7 +76,7 @@
 			    	<g:if test="${resumen}">
 						<g:submitButton class="btn btn-primary" name="resumen" value="Resumen" />
 					</g:if>
-			    	<g:link class="btn btn-danger" role="button" name="cancelar" controller="home">Cancelar</g:link>
+			    	<g:link class="btn btn-danger" role="button" name="cancelar" action="list">Cancelar</g:link>
 				
 			</div>
 </g:form>

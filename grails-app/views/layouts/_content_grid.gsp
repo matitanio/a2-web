@@ -1,3 +1,8 @@
+<style>
+#Content{
+	min-height: 500px;
+}
+</style>
 <div id="Content" class="container">
 
 	<!-- Main menu in one line (e.g., controller entry points -->
