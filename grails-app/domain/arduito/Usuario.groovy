@@ -32,6 +32,11 @@ class Usuario extends Notificable implements Serializable{
 		UsuarioPerfil.findAllByUsuario(this).collect { it.perfil } as Set
 	}
 	
+	Perfil getPerfil(){
+		//por ahora solo tenemos un perfil
+		UsuarioPerfil.findByUsuario(this).collect { it.perfil}[0]
+	}
+	
 	def tienePerfil(rol){
 		authorities.contains(Perfil.findByAuthority(rol))
 	}

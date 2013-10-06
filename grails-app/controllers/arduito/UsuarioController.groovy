@@ -34,10 +34,12 @@ class UsuarioController {
 		def cuenta = params['cuenta.id']?Cuenta.get(params.long('cuenta.id')):springSecurityService.currentUser.cuenta
 		usuarioInstance.cuenta = cuenta
         if (!usuarioInstance.save(flush: true)) {
+			
+			
             render(view: "create", model: [usuarioInstance: usuarioInstance])
             return
         }
-
+		UsuarioPerfil.create(usuarioInstance, Perfil.get(params.long('rol')))
         flash.message = message(code: 'default.created.message', args: [message(code: 'usuario.label', default: 'Usuario'), usuarioInstance.id])
         redirect(action: "show", id: usuarioInstance.id)
     }
@@ -89,10 +91,11 @@ class UsuarioController {
 		}
 
         if (!usuarioInstance.save(flush: true)) {
+			
             render(view: "edit", model: [usuarioInstance: usuarioInstance])
             return
         }
-
+		actualizarRoles(usuarioInstance)
         flash.message = message(code: 'default.updated.message', args: [message(code: 'usuario.label', default: 'Usuario'), usuarioInstance.id])
         redirect(action: "show", id: usuarioInstance.id)
     }
@@ -116,15 +119,12 @@ class UsuarioController {
         }
     }
 	
-	def actualizarRoles(Long id){
+	private actualizarRoles(usuario){
 		
-		def usuario = Usuario.get(id)
 		UsuarioPerfil.removeAll(usuario)
 		params.list('rol').each{unPerfil ->
 			
-			UsuarioPerfil.create(usuario,Perfil.findByAuthority(unPerfil))
+			UsuarioPerfil.create(usuario,Perfil.get(unPerfil))
 		}
-		
-		redirect(action: "show", id: id)
 	}
 }
