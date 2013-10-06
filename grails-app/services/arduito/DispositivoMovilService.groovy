@@ -75,4 +75,11 @@ class DispositivoMovilService {
 		dispositivo.save()
 	}
 	
+	def enviarAlertaPrueba(id){
+		
+		def dispositivo = DispositivoMovil.get(id)
+		def mensaje = [mensaje:"Notificacion de prueba"]
+		dispositivo.notificar(mensaje)
+	}
+	
 }

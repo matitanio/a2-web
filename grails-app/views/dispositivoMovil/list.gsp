@@ -39,8 +39,10 @@
 					</g:if>
 					<g:if test="${dispositivoMovilInstance?.estado == Estado.VERIFICADO}">
 						<a data-toggle="modal" href="#verificar-modal" class="btn btn-danger btn-small verificador"  data-id="${dispositivoMovilInstance.id}">Re-Verificar</a>
-					</g:if>		
+						<g:link role="button" class="btn btn-primary btn-small verificador"  action="enviarAlertaPrueba" id="${dispositivoMovilInstance.id}">Alerta prueba</g:link>
+					</g:if>
 				</td>
+				
 			</tr>
 		</g:each>
 		</tbody>

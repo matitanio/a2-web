@@ -121,4 +121,12 @@ class DispositivoMovilController {
 		dispositivoMovilService.enviarCodigoRegistro(params.long('dispositivo-id'))
 		redirect(action: "list")
 	}
+	
+	
+	def enviarAlertaPrueba(Long id){
+		
+		dispositivoMovilService.enviarAlertaPrueba(id)
+		redirect(action: "list")
+	}
+	
 }
