@@ -73,7 +73,7 @@ fixture{
 	
 	tarjetaAcceso1(TarjetaAcceso,acceso:'56CFC1B4EC')
 	tarjetaAcceso2(TarjetaAcceso,acceso:'2222')
-	rfeed(LectorRfeed,tarjetasConAcceso:[tarjetaAcceso1,tarjetaAcceso2],notificables:[dispositivoMovil1])
+	rfeed(LectorRfeed,tarjetasConAcceso:[tarjetaAcceso1,tarjetaAcceso2],notificables:[dispositivoMovil1,dispositivoMovil2])
 	
 	habitacion(Habitacion,piso:'1',numero:'1',urlPlano:'aa',ipHabitacion:'192.168.1.103',edificio:edificio,
 				rfeed:rfeed)
@@ -82,10 +82,14 @@ fixture{
 	sensorTemperatura(Sensor,tipo:'temperatura',unidades:'grados',descripcion:'aa',valorMaximo:'40',valorMinimo:'10')
 	sensorHumedad(Sensor,tipo:'humedad',unidades:'%',descripcion:'aa',valorMaximo:'80',valorMinimo:'40')
 	sensorGas(Sensor,tipo:'gas',unidades:'ppm',descripcion:'aa',valorMaximo:'300',valorMinimo:'0')
+	
+	sensorHumedad1(Sensor,tipo:'humedad',unidades:'%',descripcion:'sensor que mide humedad en ctro computos',valorMaximo:'70',valorMinimo:'50')
+	sensorGas1(Sensor,tipo:'gas',unidades:'ppm',descripcion:'sensor para saber si hay gas en lugar trabajo',valorMaximo:'300',valorMinimo:'0')
+	
 	sensorHabitacion(SensorHabitacion,sensor:sensorTemperatura,numeroSensor:'1',valorActual:20,valorMinimo:5,valorMaximo:38,coordenadaX:120,coordenadaY:130,habitacion:habitacion,
 						warning:new Warning(valorWarning:15,comparador:ComparadoresWarning.GT),notificables:[dispositivoMovil1,dispositivoMovil2])
 	sensorHabitacion1(SensorHabitacion,sensor:sensorHumedad,numeroSensor:'1',valorActual:60,valorMinimo:40,valorMaximo:80,coordenadaX:120,coordenadaY:130,habitacion:habitacion,
-						notificables:[dispositivoMovil1,dispositivoMovil3])
+						notificables:[dispositivoMovil1,dispositivoMovil2,dispositivoMovil3])
 	sensorHabitacion2(SensorHabitacion,sensor:sensorGas,numeroSensor:'1',valorActual:150,valorMinimo:0,valorMaximo:300,coordenadaX:120,coordenadaY:130,habitacion:habitacion)
 	
 	
