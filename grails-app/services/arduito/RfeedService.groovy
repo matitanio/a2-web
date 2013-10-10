@@ -27,7 +27,7 @@ class RfeedService {
 				tarjeta:unAcceso?.tarjeta?.acceso,resultado:unAcceso.resultado]
 		}
 
-		accesosFormateados
+		[accesos:accesosFormateados]
 	}
 
 	private formatHabitacion(habitacion){
