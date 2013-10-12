@@ -17,7 +17,7 @@ class SensorHabitacion implements Serializable {
 	
 	Float coordenadaX
 	Float coordenadaY
-	Boolean activo = true
+	Boolean activo = false
 	Boolean instalado = false
 	
 /* Automatic timestamping of GORM */
