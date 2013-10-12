@@ -23,7 +23,7 @@ class RfeedService {
 		def accesosFormateados = []
 		ultimosAccesos.each{unAcceso ->
 
-			accesosFormateados << [habitacion:formatHabitacion(unAcceso.habitacion),fecha:unAcceso.fecha,
+			accesosFormateados << [habitacion:formatHabitacion(unAcceso.habitacion),fecha:Date.format("dd/MM/yyyy hh:mm:ss", unAcceso.fecha),
 				tarjeta:unAcceso?.tarjeta?.acceso,resultado:unAcceso.resultado]
 		}
 
