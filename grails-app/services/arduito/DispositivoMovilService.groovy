@@ -78,8 +78,12 @@ class DispositivoMovilService {
 	def enviarAlertaPrueba(id){
 		
 		def dispositivo = DispositivoMovil.get(id)
-		def mensaje = [mensaje:"Notificacion de prueba"]
-		dispositivo.notificar(mensaje)
+		if(dispositivo){
+			def mensaje = [mensaje:"Notificacion de prueba"]
+			dispositivo.notificar(mensaje)
+		}else{
+			log.error('No existe El dispositivo Movil con id['+id+']')
+		}
 	}
 	
 }
