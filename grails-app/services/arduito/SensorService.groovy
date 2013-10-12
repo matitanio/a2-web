@@ -67,7 +67,7 @@ class SensorService {
 
 		def warning = sensor.warning 
 		if(warning && warning.validar(valorMedido)){
-			def mensaje = [mensaje:"Se activo el Warning para el sensor: $sensor"]
+			def mensaje = [titulo:'Warning en sensor',mensaje:"Se activo el Warning para el sensor: $sensor"]
 			notificarSensor(sensor,mensaje)
 		}
 	}
@@ -75,7 +75,7 @@ class SensorService {
 	private validarRangoMedicion(sensor,valorMedido){
 
 		if(!sensor.validar(valorMedido)){
-			def mensaje = [mensaje:"Se activo el sensor: $sensor"]
+			def mensaje = [titulo:'Alerta en sensor',mensaje:"Se activo el sensor: $sensor"]
 			notificarSensor(sensor,mensaje)
 		}
 	}
@@ -102,7 +102,7 @@ class SensorService {
 		
 		sensores.each{unSensor ->
 			log.info('notificando sensor inactvo com id[' + unSensor.id +']')
-			notificarSensor(unSensor,[mensaje:"El sensor de ${unSensor.sensor.tipo} de la habitacion ${unSensor.habitacion.edificio.direccion} no esta enviando valores"])
+			notificarSensor(unSensor,[titulo:'Sensor no Activo',mensaje:"El sensor de ${unSensor.sensor.tipo} de la habitacion ${unSensor.habitacion.edificio.direccion} no esta enviando valores"])
 		}
 	}
 	

@@ -79,7 +79,7 @@ class DispositivoMovilService {
 		
 		def dispositivo = DispositivoMovil.get(id)
 		if(dispositivo){
-			def mensaje = [mensaje:"Notificacion de prueba"]
+			def mensaje = [mensaje:"Esta es una notificacion de prueba",titulo:'Notificacion de prueba']
 			dispositivo.notificar(mensaje)
 		}else{
 			log.error('No existe El dispositivo Movil con id['+id+']')

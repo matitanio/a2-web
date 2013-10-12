@@ -24,4 +24,10 @@ class SensoresApiController {
 		render sensoresADevolver as JSON
 		
 	}
+	
+	
+	def ultimasAlertas(){
+		
+			
+	}
 }
