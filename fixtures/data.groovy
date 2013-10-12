@@ -84,11 +84,15 @@ fixture{
 	sensorGas(Sensor,tipo:'gas',unidades:'ppm',descripcion:'aa',valorMaximo:'300',valorMinimo:'0')
 	sensorHabitacion(SensorHabitacion,sensor:sensorTemperatura,numeroSensor:'1',valorActual:20,valorMinimo:5,valorMaximo:38,coordenadaX:120,coordenadaY:130,habitacion:habitacion,
 						warning:new Warning(valorWarning:15,comparador:ComparadoresWarning.GT),notificables:[dispositivoMovil1,dispositivoMovil2])
+	
+	
+	//sensores habitacion1
 	sensorHabitacion1(SensorHabitacion,sensor:sensorHumedad,numeroSensor:'1',valorActual:60,valorMinimo:40,valorMaximo:80,coordenadaX:120,coordenadaY:130,habitacion:habitacion,
-						notificables:[dispositivoMovil1,dispositivoMovil3])
-	sensorHabitacion2(SensorHabitacion,sensor:sensorGas,numeroSensor:'1',valorActual:150,valorMinimo:0,valorMaximo:300,coordenadaX:120,coordenadaY:130,habitacion:habitacion)
+						notificables:[dispositivoMovil1,dispositivoMovil3],instalado:true)
+	sensorHabitacion2(SensorHabitacion,sensor:sensorGas,numeroSensor:'1',valorActual:150,valorMinimo:0,valorMaximo:300,coordenadaX:120,coordenadaY:130,habitacion:habitacion,instalado:true)
 	
 	
+	//sensores habitacion
 	sensorHabitacion3(SensorHabitacion,sensor:sensorTemperatura,numeroSensor:'1',valorActual:15,valorMinimo:10,valorMaximo:20,coordenadaX:120,coordenadaY:130,habitacion:habitacion2)
 	sensorHabitacion4(SensorHabitacion,sensor:sensorHumedad,numeroSensor:'1',valorActual:60,valorMinimo:10,valorMaximo:80,coordenadaX:120,coordenadaY:130,habitacion:habitacion2)
 	sensorHabitacion5(SensorHabitacion,sensor:sensorGas,numeroSensor:'1',valorActual:200,valorMinimo:0,valorMaximo:300,coordenadaX:120,coordenadaY:130,habitacion:habitacion2)

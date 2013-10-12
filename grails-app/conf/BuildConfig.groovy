@@ -70,6 +70,7 @@ grails.project.dependency.resolution = {
 		compile ":jms:1.2"
 		compile ":android-gcm:0.2"
 		compile ":webxml:1.4.1"
+		compile ":quartz:1.0-RC13"
 		
 		compile ":android-gcm:0.2"
 		

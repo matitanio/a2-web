@@ -99,13 +99,16 @@ class SensorService {
 	
 	private notificarSensoresInactivos(sensores){
 		
+		
 		sensores.each{unSensor ->
+			log.info('notificando sensor inactvo com id[' + unSensor.id +']')
 			notificarSensor(unSensor,[mensaje:"El sensor de ${unSensor.sensor.tipo} de la habitacion ${unSensor.habitacion.edificio.direccion} no esta enviando valores"])
 		}
 	}
 	
 	private actualizarEstadoSensoresActivos(){
 		
+		log.info('restaurando estado sensores activos')
 		SensorHabitacion.withTransaction {
 			SensorHabitacion.executeUpdate("update SensorHabitacion s set s.activo=false where activo=true and instalado=true")
 		}
