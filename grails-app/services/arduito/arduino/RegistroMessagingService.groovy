@@ -16,7 +16,7 @@ class RegistroMessagingService {
 		
 		switch(msg.tipo) {
                 case "registro-medicion":
-					registroService.registrarMedicion(msg.sensorId, msg.valorMedido,msg.fecha)
+					registroService.registrarMedicion(msg.sensorId, msg.valorMedido,msg.resultado,msg.fecha)
 					break
 				case "registro-acceso":
 					registroService.registrarAcceso(msg.habitacion,msg.tarjeta,msg.resultado,msg.fecha)

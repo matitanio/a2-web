@@ -36,6 +36,6 @@ class DispositivoMovil extends Notificable implements Serializable  {
 	}
 }
 
-enum Estado {
+enum Estado implements Serializable {
 	SIN_VERIFICAR,VERIFICANDO,VERIFICADO
 }

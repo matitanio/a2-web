@@ -7,6 +7,7 @@ import arduito.annotations.TienePermisos
 class SensoresApiController {
 
 	def sensorService
+	def registroService
 	
 	@TienePermisos(componente=ComponentesValidables.SENSOR)
 	def sensor(Long id){
@@ -28,6 +29,6 @@ class SensoresApiController {
 	
 	def ultimasAlertas(){
 		
-			
+		render registroService.buscarUltimasNotificaciones(params.pin,params.cantidad) as JSON
 	}
 }

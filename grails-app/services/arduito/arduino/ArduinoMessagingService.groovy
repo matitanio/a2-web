@@ -1,6 +1,7 @@
 package arduito.arduino
 
 import arduito.Habitacion
+import arduito.ResultadoMedicion
 import arduito.Sensor
 import arduito.SensorHabitacion
 
@@ -23,8 +24,12 @@ class ArduinoMessagingService {
 		def sensor = buscarSensor(msg)
 		def valorMedido = msg.valores
 		sensor.registrarMedicion(valorMedido)
-		sensorService.validarMedicion(sensor,valorMedido)
-		sendJMSMessage("registro.queue", [tipo:'registro-medicion',sensorId:sensor.id,valorMedido:sensor.valorActual,fecha:new Date().format(RegistroService.formatoFecha)])
+		ResultadoMedicion resultado = sensorService.validarMedicion(sensor,valorMedido)
+		sendJMSMessage("registro.queue", [tipo:'registro-medicion',
+											sensorId:sensor.id,
+											resultado:resultado.toString(),
+											valorMedido:sensor.valorActual,
+											fecha:new Date().format(RegistroService.formatoFecha)])
 	}
 	
 	private buscarSensor(msg){

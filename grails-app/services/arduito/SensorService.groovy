@@ -19,6 +19,7 @@ class SensorService {
 		}
 		formatearSensores(sensores)
 	}
+	
 
 	private formatearSensores(sensores){
 
@@ -58,26 +59,39 @@ class SensorService {
 	}
 
 	def validarMedicion(sensor,valorMedido){
-
-		validarWarning(sensor,valorMedido as Float)
-		validarRangoMedicion(sensor,valorMedido as Float)
+		
+		ResultadoMedicion resultado
+		
+		resultado = validarWarning(sensor,valorMedido as Float)
+		resultado = validarRangoMedicion(sensor,valorMedido as Float)
+		
+		resultado
 	}
 
 	private validarWarning(sensor,valorMedido){
-
+		
+		ResultadoMedicion resultado = ResultadoMedicion.OK
 		def warning = sensor.warning 
+		
 		if(warning && warning.validar(valorMedido)){
 			def mensaje = [titulo:'Warning en sensor',mensaje:"Se activo el Warning para el sensor: $sensor"]
 			notificarSensor(sensor,mensaje)
+			resultado = ResultadoMedicion.WARNING
 		}
+		
+		resultado
 	}
 
 	private validarRangoMedicion(sensor,valorMedido){
-
+		
+		ResultadoMedicion resultado = ResultadoMedicion.OK
 		if(!sensor.validar(valorMedido)){
 			def mensaje = [titulo:'Alerta en sensor',mensaje:"Se activo el sensor: $sensor"]
 			notificarSensor(sensor,mensaje)
+			resultado = ResultadoMedicion.FUERA_RAGO
 		}
+		
+		resultado
 	}
 	
 	private notificarSensor(sensor,mensaje){
