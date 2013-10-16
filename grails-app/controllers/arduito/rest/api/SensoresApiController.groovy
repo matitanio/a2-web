@@ -29,6 +29,6 @@ class SensoresApiController {
 	
 	def ultimasAlertas(){
 		
-		render registroService.buscarUltimasNotificaciones(params.pin,params.cantidad) as JSON
+		render registroService.buscarUltimasNotificaciones(params.pin) as JSON
 	}
 }

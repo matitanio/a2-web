@@ -36,7 +36,7 @@ class RegistroService {
 		registro.save(flush:true)
 	}
 	
-	def buscarUltimasNotificaciones(pin,cantidad=10) {
+	def buscarUltimasNotificaciones(pin) {
 		
 		def criteria = SensorHabitacion.createCriteria()
 		def collector = [:]
@@ -47,7 +47,7 @@ class RegistroService {
 		
 		def sql = new Sql(sessionFactory.currentSession.connection())
 		
-		def rows = sql.rows( crearSqlUltimasNotificaciones(sensores.collect{it.id}.join(','),cantidad)).each{ row ->
+		def rows = sql.rows( crearSqlUltimasNotificaciones(sensores.collect{it.id}.join(','))).each{ row ->
 			def unaFilaAgrupada = collector.get(row.idSensor)
 			if(!unaFilaAgrupada){
 				unaFilaAgrupada = [warning:0,fueraRango:0]
@@ -72,10 +72,10 @@ class RegistroService {
 		
 	}
 	
-	private crearSqlUltimasNotificaciones(sensores,cantidad){
+	private crearSqlUltimasNotificaciones(sensores){
 		
 		
-		def sql = """select top $cantidad
+		def sql = """select 
 						count(rs.id) cantidad,
 					    sh.id idSensor,
 						rs.resultado_registro resultado,

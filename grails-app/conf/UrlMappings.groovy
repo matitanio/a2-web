@@ -36,7 +36,7 @@ class UrlMappings {
 
 		//URL notificacion de sensores
 
-		"/notificacion/$edificio/$habitacion/$sensor/$numeroSensor/$valores"{
+		"/notificacion/$edificio/$habitacion/$idSensor/$valores"{
 			controller = 'notificacion'
 			action = 'index'
 		}
@@ -52,7 +52,7 @@ class UrlMappings {
 		"/api/$pin/accesos/$action?/$id?"(controller: 'accesosApi')
 		"/api/$pin/edificios/$action?/$id?"(controller: 'edificiosApi')
 		"/api/$pin/sensores/$action?/$id?"(controller: 'sensoresApi')
-		"/api/$pin/alertas/ultimas/$cantidad?"(controller: 'sensoresApi',action:'ultimasAlertas')
+		"/api/$pin/alertas/ultimas"(controller: 'sensoresApi',action:'ultimasAlertas')
 		
 		
 		//URLs proceso de registro del dispositivo movil
