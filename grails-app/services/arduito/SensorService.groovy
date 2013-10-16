@@ -62,8 +62,11 @@ class SensorService {
 		
 		ResultadoMedicion resultado
 		
-		resultado = validarWarning(sensor,valorMedido as Float)
 		resultado = validarRangoMedicion(sensor,valorMedido as Float)
+		//solo evaluo el warning si el resultado del rango es OK, sino lo que pasa es que 
+		//se envia una notificacion por fuera de rango y otra por warning
+		if(resultado == ResultadoMedicion.OK)
+			resultado = validarWarning(sensor,valorMedido as Float)
 		
 		resultado
 	}
