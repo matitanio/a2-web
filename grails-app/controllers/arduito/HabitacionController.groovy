@@ -19,13 +19,13 @@ class HabitacionController {
 	def notificacionService
 	def controlAccesoService
 
-	
+
 	def actulizarAccesos(Long id){
-		
+
 		controlAccesoService.actualizarAccesosHabitacion(id)
 		redirect action:'list'
 	}
-	
+
 	def create(){
 		redirect(action:'nuevaHabitacion')
 	}
@@ -36,11 +36,13 @@ class HabitacionController {
 	}
 
 	def edit(Long id){
-		
-		[habitacion:Habitacion.get(id)]
+
+		redirect(action:'nuevaHabitacion',params:[edit:true,id:id])
 	}
 	def nuevaHabitacionFlow = {
-		onStart{ flow.resumen = false }
+		onStart{
+			return doStep('doInicializar',delegate,[flow:flow])
+		}
 		paso1{
 			on("siguiente") {Paso1Command paso1Command ->
 				return doStep('doPaso1',delegate,[flow:flow,paso1Command:paso1Command])
@@ -101,11 +103,11 @@ class HabitacionController {
 		paso5{
 
 			on('siguiente'){
-				
+
 				def cuenta = Cuenta.get(flow.paso1Command.cuenta)
 				flow.usuariosNotificables = notificacionService.buscarUsuarios(cuenta)
 				flow.dispositivosNotificables = notificacionService.buscarDispositivos(cuenta)
-				
+				buscarNotificablesDeLaCuenta(flow)
 				return doStep('doPaso5',delegate,[flow:flow])
 			}.to('paso6')
 			on('atras').to('paso4')
@@ -131,18 +133,16 @@ class HabitacionController {
 			on('notificaciones'){flow.resumen = true}.to('paso6')
 			on('terminar'){doSave(flow)}.to('finalizar')
 		}
-		finalizar{
-			redirect (action: "list")
-		}
+		finalizar{ redirect (action: "list") }
 	}
-	
+
 	private buscarTodosNotificables(cuenta){
 		def todos = notificacionService.buscarTodos(Cuenta.get(cuenta))
 		todos
 	}
-	
+
 	private doSave(flow){
-		
+
 		def parametros = [:]
 		parametros.cuenta = flow.paso1Command.cuenta
 		parametros.edificio = flow.paso1Command.edificio
@@ -156,13 +156,77 @@ class HabitacionController {
 		parametros.rfid = [contiene:flow.paso1Command.rfid,notificables:flow.rfid.notificables]
 		habitacionService.crear(parametros)
 	}
-	
+
 	private doStep(stepNumber,delegate,parameters){
 
 		def stepClosure = this."$stepNumber"
 		stepClosure.delegate = delegate
 		return stepClosure.call(parameters)
 	}
+
+	private doInicializar = { parameters ->
+
+		def flow = parameters.flow
+
+		if(params.edit){
+			flow.resumen = true
+			def habitacion = Habitacion.get(params.long('id'))
+			crearParametrosPaso1(flow,habitacion)
+			crearParametrosPaso2(flow,habitacion)
+			crearParametrosPaso3(flow,habitacion)
+			crearParametrosPaso4(flow,habitacion)
+			crearParametrosPaso6(flow,habitacion)
+		}else{
+			flow.resumen = false
+		}
+	}
+	private crearParametrosPaso1(flow,habitacion){
+		def paso1Command = new Paso1Command(
+				cuenta:habitacion.edificio.owner.id,
+				edificio:habitacion.edificio.id,
+				numero:habitacion.numero,
+				piso:habitacion.piso,
+				ip:habitacion.ipHabitacion,
+				rfid:habitacion.rfeed?true:false)
+		
+		flow.paso1Command = paso1Command
+	}
+	private crearParametrosPaso2(flow,habitacion){
+		flow.sensores = []
+		
+		habitacion.sensores.each{unSensor ->
+			flow.sensores.add([tipo:unSensor.sensor.id,min:unSensor.valorMinimo,max:unSensor.valorMaximo,
+				warning:[comparador:unSensor.warning?.comparador,valorAlerta:unSensor.warning?.valorWarning],
+				uuid:new Date().time,nombre:unSensor.sensor.tipo,notificables:unSensor.notificables.collect{it.id as String}])
+		}
+		
+	}
+	private crearParametrosPaso3(flow,habitacion){
+		
+		flow.camaras = []
+		
+		habitacion.camaras.each{unaCamara ->
+			def uuid = UUID.randomUUID()
+			flow.camaras << [ip:unaCamara.ip,id:unaCamara.id,uuid:uuid,notificables:unaCamara.notificables.collect{it.id as String}]
+		}
+		
+	}
+	
+	private crearParametrosPaso4(flow,habitacion){
+		flow.imagen=true
+		flow.ubicacion=true
+	}
+	
+	private crearParametrosPaso6(flow,habitacion){
+		
+		buscarNotificablesDeLaCuenta(flow)
+		if(flow.paso1Command.rfid){
+			flow.rfid = [:]
+			flow.rfid.notificables = habitacion.rfeed.notificables.collect{ it.id as String}
+			
+		}
+	}
+
 	private doPaso1 = {parameters->
 
 		parameters.flow.paso1Command = parameters.paso1Command
@@ -186,7 +250,6 @@ class HabitacionController {
 
 		def flow = parameters.flow
 		def paso2Command = parameters.paso2Command
-		println paso2Command.valorMaximo
 		def sensores = flow.sensores
 		if(!sensores){
 			flow.sensores  = []
@@ -194,8 +257,8 @@ class HabitacionController {
 		if(paso2Command.validate()){
 			def sensor = Sensor.get(paso2Command.tipo.toLong())
 			flow.sensores.add([tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,
-						warning:[comparador:paso2Command.comparador,valorAlerta:paso2Command.valorAlerta],
-						uuid:new Date().time,nombre:sensor.tipo,notificables:[]])
+				warning:[comparador:paso2Command.comparador,valorAlerta:paso2Command.valorAlerta],
+				uuid:new Date().time,nombre:sensor.tipo,notificables:[]])
 			flow.paso2Command = null
 			success()
 		}else{
@@ -223,7 +286,7 @@ class HabitacionController {
 		def flow = parameters.flow
 		def camaras = flow.camaras
 		flow.ipError = null
-		
+
 		if(!camaras)
 			flow.camaras = []
 
@@ -239,12 +302,10 @@ class HabitacionController {
 			success()
 		}
 	}
-	
+
 	private ipCamaraDuplicada(ip,camaras){
-		
-		camaras.find{
-			ip == it.ip
-		} != null
+
+		camaras.find{ ip == it.ip } != null
 	}
 
 	private doPaso4 = {parameters ->
@@ -281,6 +342,14 @@ class HabitacionController {
 		}
 	}
 
+	
+	private buscarNotificablesDeLaCuenta(flow){
+		
+		def cuenta = Cuenta.get(flow.paso1Command.cuenta)
+		flow.usuariosNotificables = notificacionService.buscarUsuarios(cuenta)
+		flow.dispositivosNotificables = notificacionService.buscarDispositivos(cuenta)
+	}
+	
 	private doPaso5 = {parameters ->
 		def flow = parameters.flow
 		def cantidadSensoressUbicados = agregarPosicionSensores(flow)
@@ -291,7 +360,7 @@ class HabitacionController {
 	}
 
 	private doPaso6 = { parameters ->
-		
+
 		def flow = parameters.flow
 
 		buscarNotificables(flow.sensores)
@@ -299,9 +368,9 @@ class HabitacionController {
 		flow.rfid.notificables = params.list("dispositivos-rfid")
 		success()
 	}
-	
+
 	private buscarNotificables(listaParaAgregarNotificable){
-		
+
 		listaParaAgregarNotificable.each{
 
 			it.notificables = params.list("dispositivos-${it.uuid}")
@@ -370,43 +439,44 @@ class Paso2Command implements Serializable{
 	Double valorMinimo
 	Double valorAlerta
 	String comparador
+	Long id 
 
 	static constraints = {
 		tipo nullable:false
+		id nullable:true
 		valorMaximo nullable:false,validator:{val,obj ->
-			
+
 			if(val<obj.valorMinimo)
 				return 'maximo.menor.minimo'
 		}
 		valorMinimo nullable:false,blank:false,validator:{val,obj ->
-			
+
 			if(val>obj.valorMaximo)
 				return 'minimo.mayor.maximo'
 		}
 		valorAlerta nullable:true,validator:{val,obj ->
-			
+
 			def resultado = null
 			if(val){
 				if(val < obj.valorMinimo){
-				
+
 					resultado = 'alerta.menor.minimo'
 				}
 				if(val > obj.valorMaximo){
 					resultado = 'alerta.mayor.maximo'
 				}
 			}
-				
+
 			resultado
 		}
 		comparador validator:{val,obj ->
-				if(val != '-1'){
-					if(!obj.valorAlerta)
-						return 'warning.sin.valor'
-				}else{
-					if(obj.valorAlerta)
-						return 'warning.con.valor.sin.comparador'
-					
-				}
+			if(val != '-1'){
+				if(!obj.valorAlerta)
+					return 'warning.sin.valor'
+			}else{
+				if(obj.valorAlerta)
+					return 'warning.con.valor.sin.comparador'
+			}
 		}
 	}
 }
