@@ -80,6 +80,9 @@ class HabitacionController {
 					success()
 				}
 			}.to('paso3')
+			on('editarSensor'){
+				return doStep('doEditarSensor',delegate,[flow:flow,uuid:params.uuid])
+			}.to('paso2')
 			on('atras').to('paso1')
 			on('resumen').to('paso7')
 		}
@@ -263,7 +266,7 @@ class HabitacionController {
 		if(parameters.paso1Command.validate()){
 			def sensoresValores = [:]
 			Sensor.list().collect{
-				sensoresValores.put(it.id, [valorMaximo:it.valorMaximo,valorMinimo:it.valorMinimo])
+				sensoresValores.put(it.id, [valorMaximo:it.valorMaximo,valorMinimo:it.valorMinimo,unidades:it.unidades])
 			}
 			if(parameters.flow.paso1Command){
 				parameters.flow.rfid = [notificables:[]]
@@ -285,19 +288,58 @@ class HabitacionController {
 			flow.sensores  = []
 		}
 		if(paso2Command.validate()){
-			def sensor = Sensor.get(paso2Command.tipo.toLong())
-			flow.sensores.add([tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,
-				warning:[comparador:paso2Command.comparador,valorAlerta:paso2Command.valorAlerta],
-				uuid:new Date().time,nombre:sensor.tipo,notificables:[]])
+			agregarSensor(flow,paso2Command)
+			
 			flow.paso2Command = null
 			success()
 		}else{
 			flow.paso2Command = paso2Command
-			println flow.paso2Command.valorMaximo
 			error()
 		}
 	}
+	
+	private agregarSensor(flow,paso2Command){
+		
+		def sensor = Sensor.get(paso2Command.tipo.toLong())
+		//estoy editando valores
+		if(paso2Command.uuid){
+			def sensorHabitacion = flow.sensores.find{
+				it.uuid.toString() == paso2Command.uuid.toString()
+			}
+			sensorHabitacion.min = paso2Command.valorMinimo
+			sensorHabitacion.max = paso2Command.valorMaximo
+			sensorHabitacion.warning = [comparador:paso2Command.comparador,valorAlerta:paso2Command.valorAlerta]
+		}else{
+		
+		flow.sensores.add([tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,
+			warning:[comparador:paso2Command.comparador,valorAlerta:paso2Command.valorAlerta],
+			uuid:new Date().time,nombre:sensor.tipo,notificables:[]])
+		}
+	}
+	
+	private doEditarSensor = { parametros ->
+		
+		def flow = parametros.flow
+		def uuid = parametros.uuid
 
+		def sensor = flow.sensores.find{
+			it.uuid.toString() == uuid.toString()
+		}
+		
+		flow.paso2Command = new Paso2Command(tipo:sensor.tipo,
+											valorMaximo:sensor.max,
+											valorMinimo:sensor.min,
+											valorAlerta:sensor.warning?.valorAlerta,
+											comparador:sensor.warning?.comparador,
+											id:sensor.id,
+											uuid:uuid)
+		
+		
+		
+		success()
+		
+	}
+	
 	private doEliminarSensor = {parameters ->
 
 		def flow = parameters.flow
@@ -312,6 +354,7 @@ class HabitacionController {
 		}
 
 		flow.sensores.remove(index)
+		flow.paso2Command = null
 		return success()
 	}
 
@@ -473,11 +516,13 @@ class Paso2Command implements Serializable{
 	Double valorMinimo
 	Double valorAlerta
 	String comparador
-	Long id 
+	Long id
+	String uuid 
 
 	static constraints = {
 		tipo nullable:false
 		id nullable:true
+		uuid nullable:true
 		valorMaximo nullable:false,validator:{val,obj ->
 
 			if(val<obj.valorMinimo)
