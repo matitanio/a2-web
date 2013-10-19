@@ -88,6 +88,12 @@
 													</td>
 												</tr>
 												<tr>
+													<td>Id Habitacion</td>
+													<td>
+														${habitacionInstance.id}
+													</td>
+												</tr>
+												<tr>
 													<td>Piso</td>
 													<td>
 														${habitacionInstance.piso}
@@ -109,6 +115,7 @@
 												<tr>
 													<th>Tipo</th>
 													<th>Id Notificacion</th>
+													<th>Url notificacion</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -119,6 +126,9 @@
 														</td>
 														<td>
 															${unSensor.id}
+														</td>
+														<td>
+															a2-web/notificacion/${habitacionInstance.edificio.id}/${habitacionInstance.id}/${unSensor.id}/
 														</td>
 													</tr>
 												</g:each>

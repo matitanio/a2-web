@@ -39,8 +39,8 @@ class HabitacionService {
 
 		sensores.each{unSensor ->
 			def sensorHabitacion = new SensorHabitacion()
-			sensorHabitacion.coordenadaX = unSensor.ubicacion.split(':')[1] as Float
-			sensorHabitacion.coordenadaY = unSensor.ubicacion.split(':')[0] as Float
+			sensorHabitacion.coordenadaX = unSensor.ubicacion?unSensor.ubicacion.split(':')[1] as Float:0
+			sensorHabitacion.coordenadaY = unSensor.ubicacion?unSensor.ubicacion.split(':')[0] as Float:0
 			sensorHabitacion.numeroSensor = 0
 			sensorHabitacion.sensor = Sensor.get(unSensor.tipo as Long)
 			sensorHabitacion.valorMaximo = unSensor.max as Float
@@ -98,7 +98,7 @@ class HabitacionService {
 		eliminarSensores(habitacion,parametros.sensoresEliminados)
 		parametros.sensores = removerSesoresNoModificados(parametros.sensores)
 		
-		eliminarSensores(habitacion,parametros.camarasEliminados)
+		eliminarCamaras(habitacion,parametros.camarasEliminados)
 		parametros.camaras = removerCamarasNoModificados(parametros.camaras)
 		parametros.rfid.contiene = false
 		
@@ -111,7 +111,9 @@ class HabitacionService {
 		
 		sensoresEliminados.each{unSensorId ->
 			
-			habitacion.removeFromSensores(SensorHabitacion.get(unSensorId as Long))
+			def unSensor = SensorHabitacion.get(unSensorId as Long)
+			habitacion.removeFromSensores(unSensor)
+			unSensor.delete()
 		}
 	}
 	

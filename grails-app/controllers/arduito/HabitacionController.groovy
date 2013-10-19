@@ -22,7 +22,16 @@ class HabitacionController {
 
 	def actulizarAccesos(Long id){
 
-		controlAccesoService.actualizarAccesosHabitacion(id)
+		def mensaje
+		try{
+			controlAccesoService.actualizarAccesosHabitacion(id)
+			mensaje = 'Los Accesos se actualizaron correctamente'
+		}catch(Exception e){
+		
+			 mensaje = 'Hubo un error al tratar de actualizar los accesos'
+		}
+		
+		flash.message = mensaje
 		redirect action:'list'
 	}
 
@@ -50,6 +59,10 @@ class HabitacionController {
 			on('resumen'){Paso1Command paso1Command ->
 				return doStep('doPaso1',delegate,[flow:flow,paso1Command:paso1Command])
 			}.to('paso7')
+			on('guardar'){
+				return doStep('doPaso1',delegate,[flow:flow,paso1Command:paso1Command])
+				doGuardar(flow)
+			}.to('finalizar')
 		}
 		paso2{
 
