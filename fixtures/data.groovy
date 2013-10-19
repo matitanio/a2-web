@@ -84,7 +84,7 @@ fixture{
 	tarjetaAcceso2(TarjetaAcceso,acceso:'2222')
 	rfeed(LectorRfeed,tarjetasConAcceso:[tarjetaAcceso1,tarjetaAcceso2],notificables:[dispositivoMovil1,dispositivoMovil2])
 	
-	habitacion(Habitacion,piso:'1',numero:'1',urlPlano:'aa',ipHabitacion:'192.168.1.103',edificio:edificio,
+	habitacion(Habitacion,piso:'1',numero:'1',urlPlano:'aa',ipHabitacion:'192.168.1.108',edificio:edificio,
 				rfeed:rfeed)
 	
 	habitacion2(Habitacion,piso:'1',numero:'2',urlPlano:'aa',ipHabitacion:'192.168.0.2',edificio:edificio)
@@ -99,6 +99,7 @@ fixture{
 	sensorTemperatura(Sensor,tipo:'temperatura',unidades:'grados',descripcion:'sensor que mide temperatura',valorMaximo:'40',valorMinimo:'10')
 	sensorHumedad(Sensor,tipo:'humedad',unidades:'%',descripcion:'sensor que mide humedad en ctro computos',valorMaximo:'70',valorMinimo:'50')
 	sensorGas(Sensor,tipo:'gas',unidades:'ppm',descripcion:'sensor para saber si hay gas en lugar trabajo',valorMaximo:'100',valorMinimo:'0')
+	sensorPolvo(Sensor,tipo:'polvo',unidades:'ug/m3',descripcion:'sensor para medir la calidad del aire',valorMaximo:'110',valorMinimo:'0')
 	
 
 	
@@ -113,6 +114,10 @@ fixture{
 	sensorHabitacion(SensorHabitacion,sensor:sensorTemperatura,numeroSensor:'1',
 		valorActual:20,valorMinimo:10,valorMaximo:20,coordenadaX:120,coordenadaY:130,habitacion:habitacion,
 		warning:new Warning(valorWarning:15,comparador:ComparadoresWarning.GT),notificables:[dispositivoMovil1,dispositivoMovil2],instalado:true)
+	
+	sensorHabitacion(SensorHabitacion,sensor:sensorPolvo,numeroSensor:'1',
+		valorActual:20,valorMinimo:0,valorMaximo:110,coordenadaX:120,coordenadaY:130,habitacion:habitacion,
+		warning:new Warning(valorWarning:70,comparador:ComparadoresWarning.GT),notificables:[dispositivoMovil2],instalado:true)
 	
 	//sensores habitacion2
 	sensorHabitacion3(SensorHabitacion,sensor:sensorTemperatura,numeroSensor:'1',
