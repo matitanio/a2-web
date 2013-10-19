@@ -96,7 +96,9 @@ class HabitacionService {
 		def habitacion = Habitacion.get(parametros.id as Long)
 		
 		eliminarSensores(habitacion,parametros.sensoresEliminados)
+		actualizarSensoresModificados(habitacion,parametros.sensores)
 		parametros.sensores = removerSesoresNoModificados(parametros.sensores)
+		
 		
 		eliminarCamaras(habitacion,parametros.camarasEliminados)
 		parametros.camaras = removerCamarasNoModificados(parametros.camaras)
@@ -104,6 +106,35 @@ class HabitacionService {
 		
 		
 		guardar(habitacion,parametros)
+		
+	}
+	
+	
+	private actualizarSensoresModificados(habitacion,sensores){
+		
+		def sensoresAEditar = sensores.findAll{unSensor ->
+			unSensor.id
+		}
+		
+		def sensoresHabitacion = habitacion.sensores
+		
+		sensoresHabitacion.each{ sensorViejo ->
+			 
+			def unNuevoSensor = sensoresAEditar.find{ sensorNuevo ->
+				sensorNuevo.id == sensorViejo.id
+			}
+			
+			if(unNuevoSensor){
+				sensorViejo.coordenadaX = unNuevoSensor.ubicacion?unNuevoSensor.ubicacion.split(':')[1] as Float:0
+				sensorViejo.coordenadaY = unNuevoSensor.ubicacion?unNuevoSensor.ubicacion.split(':')[0] as Float:0
+				sensorViejo.numeroSensor = 0
+				sensorViejo.sensor = Sensor.get(unNuevoSensor.tipo as Long)
+				sensorViejo.valorMaximo = unNuevoSensor.max as Float
+				sensorViejo.valorMinimo = unNuevoSensor.min as Float
+				agregarWarning(sensorViejo,unNuevoSensor)
+//				agregarNotificables(sensorViejo,unNuevoSensor.notificables)
+			}
+		}
 		
 	}
 	

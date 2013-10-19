@@ -43,7 +43,7 @@
 				<div class="draggable" style='position:relative; top:${unSensor.ubicacion?unSensor.ubicacion.split(':')[0]:-1}px; left:${unSensor.ubicacion?unSensor.ubicacion.split(':')[1]:-1}px; width: 10px; height: 10px;'>
 					<strong>.</strong>${unSensor.nombre}
 					<span style="position:absolute; display:none; width: 100px; height: auto; background:white">min:${unSensor.min} - max:${unSensor.max}</span>
-					<g:hiddenField name="${unSensor.uuid}" value="${ubicacion?unSensor.ubicacion:'-1:-1'}"/>
+					<g:hiddenField name="${unSensor.uuid}" value="${ubicacion?unSensor.ubicacion:'-1:-1'}"/> 
 				</div>
 				</g:each>
 

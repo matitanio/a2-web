@@ -59,10 +59,9 @@ class HabitacionController {
 			on('resumen'){Paso1Command paso1Command ->
 				return doStep('doPaso1',delegate,[flow:flow,paso1Command:paso1Command])
 			}.to('paso7')
-			on('guardar'){
+			on('guardar'){Paso1Command paso1Command ->
 				return doStep('doPaso1',delegate,[flow:flow,paso1Command:paso1Command])
-				doGuardar(flow)
-			}.to('finalizar')
+			}.to('guardar')
 		}
 		paso2{
 
@@ -85,6 +84,7 @@ class HabitacionController {
 			}.to('paso2')
 			on('atras').to('paso1')
 			on('resumen').to('paso7')
+			on('guardar').to('guardar')
 		}
 		paso3{
 
@@ -121,10 +121,6 @@ class HabitacionController {
 		paso5{
 
 			on('siguiente'){
-
-				def cuenta = Cuenta.get(flow.paso1Command.cuenta)
-				flow.usuariosNotificables = notificacionService.buscarUsuarios(cuenta)
-				flow.dispositivosNotificables = notificacionService.buscarDispositivos(cuenta)
 				buscarNotificablesDeLaCuenta(flow)
 				return doStep('doPaso5',delegate,[flow:flow])
 			}.to('paso6')
@@ -132,6 +128,7 @@ class HabitacionController {
 			on('resumen'){
 				return doStep('doPaso5',delegate,[flow:flow])
 			}.to('paso7')
+			on('guardar'){return doStep('doPaso5',delegate,[flow:flow])}.to('guardar')
 		}
 		paso6{
 			on('siguiente'){
@@ -141,6 +138,7 @@ class HabitacionController {
 			on('atras'){
 				return doStep('doPaso6',delegate,[flow:flow])
 			}.to('paso5')
+			on('guardar'){return doStep('doPaso6',delegate,[flow:flow])}.to('guardar')
 		}
 		paso7{
 			on('atras'){flow.resumen = true}.to('paso6')
@@ -151,6 +149,13 @@ class HabitacionController {
 			on('notificaciones'){flow.resumen = true}.to('paso6')
 			on('terminar'){doSave(flow)}.to('finalizar')
 			on('guardar'){doGuardar(flow)}.to('finalizar')
+		}
+		guardar{
+			action{
+				doGuardar(flow)
+				finalizar()
+			}
+			on('finalizar').to('finalizar')
 		}
 		finalizar{ redirect (action: "list") }
 	}
@@ -202,6 +207,7 @@ class HabitacionController {
 		if(params.edit){
 			flow.resumen = true
 			flow.edit = true
+			flow.ubicacion = true
 			def habitacion = Habitacion.get(params.long('id'))
 			flow.habitacionId = habitacion.id
 			crearParametrosPaso1(flow,habitacion)
@@ -229,6 +235,7 @@ class HabitacionController {
 		flow.sensoresEliminados = []
 		habitacion.sensores.each{unSensor ->
 			flow.sensores.add([tipo:unSensor.sensor.id,min:unSensor.valorMinimo,max:unSensor.valorMaximo,
+				ubicacion:"${unSensor.coordenadaX}:${unSensor.coordenadaY}".toString(),
 				warning:[comparador:unSensor.warning?.comparador,valorAlerta:unSensor.warning?.valorWarning],
 				uuid:new Date().time,nombre:unSensor.sensor.tipo,notificables:unSensor.notificables.collect{it.id as String},id:unSensor.id])
 		}
