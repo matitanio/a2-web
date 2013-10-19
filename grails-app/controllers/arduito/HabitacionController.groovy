@@ -79,6 +79,8 @@ class HabitacionController {
 			on('eliminarCamara'){
 				def camara = flow.camaras.find{
 					it.ip == params.ip
+					if(it.id)
+						flow.camarasEliminados = it.id
 				}
 				flow.camaras.remove(camara)
 			}.to('paso3')
@@ -132,6 +134,7 @@ class HabitacionController {
 			on('plano'){flow.resumen = true}.to('paso5')
 			on('notificaciones'){flow.resumen = true}.to('paso6')
 			on('terminar'){doSave(flow)}.to('finalizar')
+			on('guardar'){doGuardar(flow)}.to('finalizar')
 		}
 		finalizar{ redirect (action: "list") }
 	}
@@ -143,20 +146,32 @@ class HabitacionController {
 
 	private doSave(flow){
 
+		def parametros = crearParametrosCreacion(flow)
+		habitacionService.crear(parametros)
+	}
+	private doGuardar(flow){
+		
+		def parametros = crearParametrosCreacion(flow)
+		parametros.sensoresEliminados = flow.sensoresEliminados
+		parametros.camarasEliminados = flow.camarasEliminados
+		parametros.id = flow.habitacionId
+		habitacionService.editar(parametros)
+	}
+	
+	private crearParametrosCreacion(flow){
 		def parametros = [:]
 		parametros.cuenta = flow.paso1Command.cuenta
 		parametros.edificio = flow.paso1Command.edificio
 		parametros.ip = flow.paso1Command.ip
 		parametros.piso = flow.paso1Command.piso
 		parametros.numero = flow.paso1Command.numero
-		parametros.rfid = flow.paso1Command.rfid
 		parametros.sensores = flow.sensores
 		parametros.camaras = flow.camaras
 		parametros.plano = flow.urlPlanoRelativa
 		parametros.rfid = [contiene:flow.paso1Command.rfid,notificables:flow.rfid.notificables]
-		habitacionService.crear(parametros)
+		
+		parametros
 	}
-
 	private doStep(stepNumber,delegate,parameters){
 
 		def stepClosure = this."$stepNumber"
@@ -170,7 +185,9 @@ class HabitacionController {
 
 		if(params.edit){
 			flow.resumen = true
+			flow.edit = true
 			def habitacion = Habitacion.get(params.long('id'))
+			flow.habitacionId = habitacion.id
 			crearParametrosPaso1(flow,habitacion)
 			crearParametrosPaso2(flow,habitacion)
 			crearParametrosPaso3(flow,habitacion)
@@ -193,18 +210,18 @@ class HabitacionController {
 	}
 	private crearParametrosPaso2(flow,habitacion){
 		flow.sensores = []
-		
+		flow.sensoresEliminados = []
 		habitacion.sensores.each{unSensor ->
 			flow.sensores.add([tipo:unSensor.sensor.id,min:unSensor.valorMinimo,max:unSensor.valorMaximo,
 				warning:[comparador:unSensor.warning?.comparador,valorAlerta:unSensor.warning?.valorWarning],
-				uuid:new Date().time,nombre:unSensor.sensor.tipo,notificables:unSensor.notificables.collect{it.id as String}])
+				uuid:new Date().time,nombre:unSensor.sensor.tipo,notificables:unSensor.notificables.collect{it.id as String},id:unSensor.id])
 		}
 		
 	}
 	private crearParametrosPaso3(flow,habitacion){
 		
 		flow.camaras = []
-		
+		flow.camarasEliminados = []
 		habitacion.camaras.each{unaCamara ->
 			def uuid = UUID.randomUUID()
 			flow.camaras << [ip:unaCamara.ip,id:unaCamara.id,uuid:uuid,notificables:unaCamara.notificables.collect{it.id as String}]
@@ -273,8 +290,12 @@ class HabitacionController {
 		def flow = parameters.flow
 		def index = 0
 		def sensor = flow.sensores.eachWithIndex{it,i ->
-			if(it.uuid.toString() == params.uuid)
+			if(it.uuid.toString() == params.uuid){
 				index = i
+				if(it.id){
+					flow.sensoresEliminados << it.id
+				}
+			}
 		}
 
 		flow.sensores.remove(index)

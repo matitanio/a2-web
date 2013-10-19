@@ -19,6 +19,7 @@ class Habitacion implements Serializable {
 //		ipHabitacion validator: {
 //			InetAddressValidator.isValid(it)
 //		}
+		urlPlano nullable:true
 		sensores nullable:true
 		camaras nullable:true
 		rfeed nullable:true

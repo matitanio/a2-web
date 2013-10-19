@@ -11,10 +11,16 @@ class HabitacionService {
 
 	static transactional = false
 
-	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	
 	def crear(parametros) {
 
 		def habitacion = new Habitacion()
+		guardar(habitacion,parametros)
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRES_NEW)
+	private guardar(habitacion,parametros){
+		
 		habitacion.ipHabitacion = parametros.ip
 		habitacion.numero = parametros.numero
 		habitacion.piso = parametros.piso
@@ -83,5 +89,58 @@ class HabitacionService {
 			habitacion.rfeed = new LectorRfeed()
 			agregarNotificables(habitacion.rfeed ,parametros.rfid.notificables)
 		}
+	}
+	
+	def editar(parametros){
+		
+		def habitacion = Habitacion.get(parametros.id as Long)
+		
+		eliminarSensores(habitacion,parametros.sensoresEliminados)
+		parametros.sensores = removerSesoresNoModificados(parametros.sensores)
+		
+		eliminarSensores(habitacion,parametros.camarasEliminados)
+		parametros.camaras = removerCamarasNoModificados(parametros.camaras)
+		parametros.rfid.contiene = false
+		
+		
+		guardar(habitacion,parametros)
+		
+	}
+	
+	private eliminarSensores(habitacion,sensoresEliminados){
+		
+		sensoresEliminados.each{unSensorId ->
+			
+			habitacion.removeFromSensores(SensorHabitacion.get(unSensorId as Long))
+		}
+	}
+	
+	private removerSesoresNoModificados(todosLosSensores){
+		
+		removerComponentesNoEliminadosHabitacion(todosLosSensores)
+	}
+	
+	
+	private eliminarCamaras(habitacion,todosLasCamras){
+		
+		todosLasCamras.each{unaCamaraId ->
+			
+			habitacion.removeFromCamaras(CamaraIp.get(unaCamaraId as Long))
+		}
+	}
+	
+	private removerCamarasNoModificados(todosLasCamras){
+		
+		removerComponentesNoEliminadosHabitacion(todosLasCamras)
+	}
+	
+	
+	private removerComponentesNoEliminadosHabitacion(componentes){
+		
+		def componentesNuevos = componentes.findAll{unComponente ->
+			!unComponente.id
+		}
+		
+		componentesNuevos
 	}
 }
