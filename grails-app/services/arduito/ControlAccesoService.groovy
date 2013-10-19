@@ -33,7 +33,9 @@ class ControlAccesoService {
 		
 		def resultado = "http://${habitacion.ipHabitacion}/accesos/${tarjetasFormateadas}".toURL().text
 		
-		assert resultado == 'OK'
+		
+		def respuestaParseada = new XmlParser().parseText(resultado)
+		assert respuestaParseada.respuesta.text() == 'OK'
 		
 	}
 }
