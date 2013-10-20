@@ -39,16 +39,21 @@ class HabitacionService {
 
 		sensores.each{unSensor ->
 			def sensorHabitacion = new SensorHabitacion()
-			sensorHabitacion.coordenadaX = unSensor.ubicacion?unSensor.ubicacion.split(':')[1] as Float:0
-			sensorHabitacion.coordenadaY = unSensor.ubicacion?unSensor.ubicacion.split(':')[0] as Float:0
-			sensorHabitacion.numeroSensor = 0
-			sensorHabitacion.sensor = Sensor.get(unSensor.tipo as Long)
-			sensorHabitacion.valorMaximo = unSensor.max as Float
-			sensorHabitacion.valorMinimo = unSensor.min as Float
-			agregarWarning(sensorHabitacion,unSensor)
-			agregarNotificables(sensorHabitacion,unSensor.notificables)
+			mergeSensorhabitacion(sensorHabitacion,unSensor)
 			habitacion.addToSensores(sensorHabitacion)
 		}
+	}
+	
+	private mergeSensorhabitacion(sensorHabitacion,unSensor){
+		
+		sensorHabitacion.coordenadaX = unSensor.ubicacion?unSensor.ubicacion.split(':')[1] as Float:0
+		sensorHabitacion.coordenadaY = unSensor.ubicacion?unSensor.ubicacion.split(':')[0] as Float:0
+		sensorHabitacion.numeroSensor = 0
+		sensorHabitacion.sensor = Sensor.get(unSensor.tipo as Long)
+		sensorHabitacion.valorMaximo = unSensor.max as Float
+		sensorHabitacion.valorMinimo = unSensor.min as Float
+		agregarWarning(sensorHabitacion,unSensor)
+		agregarNotificables(sensorHabitacion,unSensor.notificables)
 	}
 
 	private agregarNotificables(elNotificable,notificables){
@@ -98,18 +103,38 @@ class HabitacionService {
 		eliminarSensores(habitacion,parametros.sensoresEliminados)
 		actualizarSensoresModificados(habitacion,parametros.sensores)
 		parametros.sensores = removerSesoresNoModificados(parametros.sensores)
-		
-		
-		eliminarCamaras(habitacion,parametros.camarasEliminados)
-		parametros.camaras = removerCamarasNoModificados(parametros.camaras)
+		eliminarCamaras(habitacion)
+		editarRfid(habitacion,parametros)
 		parametros.rfid.contiene = false
-		
-		
 		guardar(habitacion,parametros)
 		
 	}
 	
-	
+	private editarRfid(habitacion,parametros){
+		
+		def rfid = parametros.rfid
+		
+		//la habitacion no tenia rfid y se lo estamos agregando
+		if(rfid.contiene && !habitacion.rfeed){
+			agregarRfid(habitacion,parametros)
+		}else if(!rfid.contiene && habitacion.rfeed){//la habitacion tenia rgid y se lo estamos sacando
+			
+			def lectorRfid = habitacion.rfeed
+			habitacion.rfeed = null
+			LectorRfeed.withTransaction {
+				lectorRfid.delete(flush:true)
+			}
+		}else if(rfid.contiene && habitacion.rfeed){//la habitacion tenia rfid y se esta modificando
+			
+			def lectorRfid = habitacion.rfeed
+			lectorRfid.notificables.removeAll(lectorRfid.notificables)
+			agregarNotificables(habitacion.rfeed ,parametros.rfid.notificables)
+		}
+		
+		Habitacion.withTransaction {
+			habitacion.save(flush:true)
+		}
+	}
 	private actualizarSensoresModificados(habitacion,sensores){
 		
 		def sensoresAEditar = sensores.findAll{unSensor ->
@@ -125,17 +150,16 @@ class HabitacionService {
 			}
 			
 			if(unNuevoSensor){
-				sensorViejo.coordenadaX = unNuevoSensor.ubicacion?unNuevoSensor.ubicacion.split(':')[1] as Float:0
-				sensorViejo.coordenadaY = unNuevoSensor.ubicacion?unNuevoSensor.ubicacion.split(':')[0] as Float:0
-				sensorViejo.numeroSensor = 0
-				sensorViejo.sensor = Sensor.get(unNuevoSensor.tipo as Long)
-				sensorViejo.valorMaximo = unNuevoSensor.max as Float
-				sensorViejo.valorMinimo = unNuevoSensor.min as Float
-				agregarWarning(sensorViejo,unNuevoSensor)
-//				agregarNotificables(sensorViejo,unNuevoSensor.notificables)
+				removerNotificables(sensorViejo)
+				mergeSensorhabitacion(sensorViejo,unNuevoSensor)
 			}
 		}
 		
+	}
+	
+	private removerNotificables(sensorViejo){
+	
+		sensorViejo.notificables.removeAll(sensorViejo.notificables)	
 	}
 	
 	private eliminarSensores(habitacion,sensoresEliminados){
@@ -154,17 +178,9 @@ class HabitacionService {
 	}
 	
 	
-	private eliminarCamaras(habitacion,todosLasCamras){
+	private eliminarCamaras(habitacion){
 		
-		todosLasCamras.each{unaCamaraId ->
-			
-			habitacion.removeFromCamaras(CamaraIp.get(unaCamaraId as Long))
-		}
-	}
-	
-	private removerCamarasNoModificados(todosLasCamras){
-		
-		removerComponentesNoEliminadosHabitacion(todosLasCamras)
+		habitacion.camaras.removeAll(habitacion.camaras)
 	}
 	
 	

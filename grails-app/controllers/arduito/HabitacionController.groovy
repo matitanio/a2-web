@@ -203,7 +203,7 @@ class HabitacionController {
 	private doInicializar = { parameters ->
 
 		def flow = parameters.flow
-
+		flow.rfid = [notificables:[]]
 		if(params.edit){
 			flow.resumen = true
 			flow.edit = true
@@ -235,7 +235,7 @@ class HabitacionController {
 		flow.sensoresEliminados = []
 		habitacion.sensores.each{unSensor ->
 			flow.sensores.add([tipo:unSensor.sensor.id,min:unSensor.valorMinimo,max:unSensor.valorMaximo,
-				ubicacion:"${unSensor.coordenadaX}:${unSensor.coordenadaY}".toString(),
+				ubicacion:"${unSensor.coordenadaY}:${unSensor.coordenadaX}".toString(),
 				warning:[comparador:unSensor.warning?.comparador,valorAlerta:unSensor.warning?.valorWarning],
 				uuid:new Date().time,nombre:unSensor.sensor.tipo,notificables:unSensor.notificables.collect{it.id as String},id:unSensor.id])
 		}
@@ -262,7 +262,8 @@ class HabitacionController {
 		buscarNotificablesDeLaCuenta(flow)
 		if(flow.paso1Command.rfid){
 			flow.rfid = [:]
-			flow.rfid.notificables = habitacion.rfeed.notificables.collect{ it.id as String}
+			def  n = habitacion.rfeed.notificables.collect{ it.id as String}
+			flow.rfid.notificables = n
 			
 		}
 	}
@@ -274,9 +275,6 @@ class HabitacionController {
 			def sensoresValores = [:]
 			Sensor.list().collect{
 				sensoresValores.put(it.id, [valorMaximo:it.valorMaximo,valorMinimo:it.valorMinimo,unidades:it.unidades])
-			}
-			if(parameters.flow.paso1Command){
-				parameters.flow.rfid = [notificables:[]]
 			}
 			parameters.flow.sensoresValores = sensoresValores
 			return success()
@@ -449,7 +447,13 @@ class HabitacionController {
 
 		buscarNotificables(flow.sensores)
 		buscarNotificables(flow.camaras)
-		flow.rfid.notificables = params.list("dispositivos-rfid")
+		def notificablesRfid = params.list("dispositivos-rfid")
+		if(notificablesRfid){
+			flow.rfid = [notificables:[]]
+			flow.rfid.notificables = notificablesRfid
+		}
+		
+		 
 		success()
 	}
 
