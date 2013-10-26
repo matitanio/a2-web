@@ -11,10 +11,10 @@ This menu is used to show function that can be triggered on the content (an obje
 
 		<g:set var="entityName" value="${message(code: params.controller+'.label', default: params.controller.substring(0,1).toUpperCase() + params.controller.substring(1).toLowerCase())}" />
 		
-		<li class="${ params.action == "list" ? 'active' : '' }">
+		<li class="${ params.action == "list" ? 'active' : '' }" id="btn-listado">
 			<g:link action="list"><i class="icon-th-list"></i> Listado</g:link>
 		</li>
-		<li class="${ params.action == "create" ? 'active' : '' }">
+		<li class="${ params.action == "create" ? 'active' : '' }" id="btn-nuevo">
 			<g:link action="create"><i class="icon-plus"></i>  Nuevo</g:link>
 		</li>
 		

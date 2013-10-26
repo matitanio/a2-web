@@ -5,6 +5,7 @@ import grails.plugins.springsecurity.Secured
 import java.awt.image.BufferedImage
 
 import javax.imageio.ImageIO
+import javax.media.j3d.View;
 
 import org.codehaus.groovy.grails.validation.routines.InetAddressValidator
 import org.imgscalr.Scalr
@@ -537,6 +538,43 @@ class HabitacionController {
 			
 			
 		redirect action:'list'
+	}
+	
+	def editarAccesos(Long id){
+		
+		render view:'tarjetas',model:[habitacion:Habitacion.get(id),error:params.error!=null?params.error:false]
+	}
+	
+	def nuevaTarjeta(Long id,String acceso){
+		
+		def mensaje
+		def tarjeta = new TarjetaAcceso(acceso:acceso)
+		tarjeta.save()
+		def error = false
+		if(!tarjeta.hasErrors()){
+			def habitacion = Habitacion.get(id)
+			habitacion.rfeed.addToTarjetasConAcceso(tarjeta)
+			habitacion.save()
+			mensaje='Tarjeta agregada con exito'
+		}else{
+			error = true
+			mensaje='No Fue posible agregar la tarjeta'
+		}
+		
+		flash.message = mensaje
+		println error
+		redirect action:'editarAccesos',params:[id:id,error:error]
+	}
+	
+	def eliminarTarjeta(Long id,Long tarjetaId){
+		
+		def tarjeta = TarjetaAcceso.get(tarjetaId)
+		def habitacion = Habitacion.get(id)
+		habitacion.rfeed.removeFromTarjetasConAcceso(tarjeta)
+		tarjeta.delete()
+		habitacion.save()
+		
+		redirect action:'editarAccesos',params:[id:id]
 	}
 }
 

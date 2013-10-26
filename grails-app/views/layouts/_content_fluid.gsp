@@ -17,7 +17,7 @@
 
 			<!-- print system messages (infos, warnings, etc) - not validation errors -->
 			<g:if test="${flash.message}">
-				<div class="alert alert-info">${flash.message}</div>
+				<div class="alert alert-info" id="mensaje-generico">${flash.message}</div>
 			</g:if>
 
 			<!-- Show page's content -->

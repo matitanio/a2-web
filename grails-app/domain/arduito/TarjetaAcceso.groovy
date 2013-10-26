@@ -26,6 +26,7 @@ class TarjetaAcceso implements Serializable{
     }
     
 	static constraints = {
+		acceso nullable:false,unique:true,blank:false
     }
 	
 	/*
