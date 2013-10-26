@@ -36,6 +36,7 @@
 						<th>Estado Actual</th>
 						<th>Editar</th>
 						<th>Actualizar Accesos</th>
+						<th>Activar</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -192,6 +193,9 @@
 								</div></td>
 							<td><g:link role="button" class="btn btn-primary btn-small" action="edit"  id="${habitacionInstance.id}">Editar</g:link></td>
 							<td><g:link role="button" class="btn btn-primary btn-small" action="actulizarAccesos"  id="${habitacionInstance.id}">Actualizar Accesos</g:link></td>
+							<td>
+								<g:link role="button" class="btn btn-primary btn-small" action="cambiarEstado" params="[id:habitacionInstance.id,estado:habitacionInstance.activa]">${habitacionInstance.activa?'Desactivar':'Activar'}</g:link>
+							</td>
 						</tr>
 					</g:each>
 				</tbody>

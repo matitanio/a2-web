@@ -12,6 +12,7 @@ class Habitacion implements Serializable {
 	String numero
 	String urlPlano
 	String ipHabitacion
+	Boolean activa = false
 	
 	
 	static constraints = {
@@ -26,5 +27,25 @@ class Habitacion implements Serializable {
 		
 	}
 	
+	def activar(){
+		
+		this.activa = true
+		cambiarEstadoSensores(true)
+		this.save()
+	}
+	
+	
+	def desActivar(){
+		
+		this.activa = false
+		cambiarEstadoSensores(false)
+		this.save()
+	}
+	
+	private cambiarEstadoSensores(estado){
+		
+		SensorHabitacion.executeUpdate("update SensorHabitacion sh set sh.instalado=:instalado where sh.habitacion=:habitacion",
+										[instalado:estado,habitacion:this])
+	}
 
 }

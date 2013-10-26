@@ -49,13 +49,13 @@
 	
 		<ul class="breadcrumb">
 		<g:form>
-		  <li class="active"><a href="#">Inicio</a>
-		  <li><a href="#">Sensores</a></li>
-		  <li><a href="#">Camaras</a></li>
-		  <li><a href="#">Plano</a></li>
-		  <li><a href="#">Hubicacion</a></li>
-		  <li><g:link  event="sensores">Notificaciones</g:link></li>
-		  <li><a href="#">Resumen</a></li>
+		  <li class="active"><g:link event="jump" params="[to:'paso1']">Inicio</g:link></li>
+		  <li><g:link event="jump" params="[to:'paso2']">Sensores</g:link></li>
+		  <li><g:link event="jump" params="[to:'paso3']">Camaras</g:link></li>
+		  <li><g:link event="jump" params="[to:'paso4']">Plano</g:link></li>
+		  <li><g:link event="jump" params="[to:'paso5']">Ubicacion</g:link></li>
+		  <li><g:link  event="jump" params="[to:'paso6']">Notificaciones</g:link></li>
+		  <li><g:link  event="jump" params="[to:'paso7']">Resumen</g:link></li>
 		</g:form>
 		</ul>
 		</div>						

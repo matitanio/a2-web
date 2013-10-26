@@ -65,13 +65,13 @@
 		<div class="control-group fieldcontain ${hasErrors(bean: paso2Command, field: 'valorAlerta', 'error')}" required>
 			<label for="cuenta" class="control-label"><g:message code="usuario.cuenta.label" default="Valor Alerta" /></label>
 			<div class="controls">
-				<g:textField name="valorAlerta" id="valorAlerta" value="${paso2Command?paso2Command?.valorAlerta.toString().replace('.',','):''}"/><span class='unidades'></span>
+				<g:textField name="valorAlerta" id="valorAlerta" value="${(paso2Command&&paso2Command.valorAlerta)?paso2Command?.valorAlerta.toString().replace('.',','):''}"/><span class='unidades'></span>
 			</div>
 			<span class="help-inline" >
 				<g:renderErrors bean="${paso2Command}" field="valorAlerta" as="list" />
 			</span>
 		</div>
-		<g:submitButton class="btn btn-primary" name="agregarSensor" value="Agregar" id="agregar"/>
+		<g:submitButton class="btn btn-primary" name="agregarSensor" value="${paso2Command?.id?'Editar':'Agregar'}" id="agregar"/>
 	</div>
 	
 	<div class="span4">
@@ -98,8 +98,15 @@
 						<td>${unSensor.nombre}</td>
 						<td>${unSensor.min + '-' +unSensor.max}</td>
 						<td>
-							<g:link event="eliminarSensor" params="[uuid:unSensor.uuid]"><i class="icon-remove"></i></g:link>
+							<g:if test="${unSensor.id}">
+								<g:link event="cambiarEstadoSensor" params="[id:unSensor.id,estado:unSensor.estado]"><i class="${unSensor.estado?'icon-ok-sign':'icon-minus-sign'}"></i></g:link>
+							</g:if>
+							<g:else>
+								<i class="icon-remove-sign"></i>
+							</g:else>
 							<g:link event="editarSensor" params="[uuid:unSensor.uuid]"><i class="icon-edit"></i></g:link>
+							<g:link event="eliminarSensor" params="[uuid:unSensor.uuid]"><i class="icon-remove"></i></g:link>
+							
 						</td>
 					</tr>
 				</g:each>

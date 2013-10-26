@@ -62,6 +62,7 @@ class HabitacionController {
 			on('guardar'){Paso1Command paso1Command ->
 				return doStep('doPaso1',delegate,[flow:flow,paso1Command:paso1Command])
 			}.to('guardar')
+			on('jump').to{params.to}
 		}
 		paso2{
 
@@ -82,9 +83,14 @@ class HabitacionController {
 			on('editarSensor'){
 				return doStep('doEditarSensor',delegate,[flow:flow,uuid:params.uuid])
 			}.to('paso2')
+			on('cambiarEstadoSensor'){
+				def sensor = flow.sensores.find{it.id == params.long('id')} 
+				sensor.estado = !params.boolean('estado')
+			}.to('paso2')
 			on('atras').to('paso1')
 			on('resumen').to('paso7')
 			on('guardar').to('guardar')
+			on('jump').to{params.to}
 		}
 		paso3{
 
@@ -93,12 +99,9 @@ class HabitacionController {
 			}.to('paso3')
 
 			on('eliminarCamara'){
-				def camara = flow.camaras.find{
-					it.ip == params.ip
-					if(it.id)
-						flow.camarasEliminados = it.id
-				}
-				flow.camaras.remove(camara)
+				
+				doEliminarCamara(flow)
+				
 			}.to('paso3')
 			on('siguiente'){
 				if(params.ip.replaceAll(" ", "") != ""){
@@ -107,6 +110,8 @@ class HabitacionController {
 			}.to('paso4')
 			on('atras').to('paso2')
 			on('resumen').to('paso7')
+			on('guardar').to('guardar')
+			on('jump').to{params.to}
 		}
 		paso4{
 
@@ -116,6 +121,8 @@ class HabitacionController {
 			}.to('paso5')
 			on('atras').to('paso3')
 			on('resumen').to('paso7')
+			on('guardar').to('guardar')
+			on('jump').to{params.to}
 		}
 
 		paso5{
@@ -129,6 +136,7 @@ class HabitacionController {
 				return doStep('doPaso5',delegate,[flow:flow])
 			}.to('paso7')
 			on('guardar'){return doStep('doPaso5',delegate,[flow:flow])}.to('guardar')
+			on('jump').to{params.to}
 		}
 		paso6{
 			on('siguiente'){
@@ -139,6 +147,7 @@ class HabitacionController {
 				return doStep('doPaso6',delegate,[flow:flow])
 			}.to('paso5')
 			on('guardar'){return doStep('doPaso6',delegate,[flow:flow])}.to('guardar')
+			on('jump').to{params.to}
 		}
 		paso7{
 			on('atras'){flow.resumen = true}.to('paso6')
@@ -149,6 +158,7 @@ class HabitacionController {
 			on('notificaciones'){flow.resumen = true}.to('paso6')
 			on('terminar'){doSave(flow)}.to('finalizar')
 			on('guardar'){doGuardar(flow)}.to('finalizar')
+			on('jump').to{params.to}
 		}
 		guardar{
 			action{
@@ -159,7 +169,20 @@ class HabitacionController {
 		}
 		finalizar{ redirect (action: "list") }
 	}
-
+	
+	private doEliminarCamara(flow){
+		
+		def index = 0
+		flow.camaras.eachWithIndex{it,i ->
+			if(it.ip == params.ip){
+				index = i
+				if(it.id)
+					flow.camarasEliminados = it.id
+			}
+		}
+		flow.camaras.remove(index)
+		
+	}
 	private buscarTodosNotificables(cuenta){
 		def todos = notificacionService.buscarTodos(Cuenta.get(cuenta))
 		todos
@@ -237,7 +260,8 @@ class HabitacionController {
 			flow.sensores.add([tipo:unSensor.sensor.id,min:unSensor.valorMinimo,max:unSensor.valorMaximo,
 				ubicacion:"${unSensor.coordenadaY}:${unSensor.coordenadaX}".toString(),
 				warning:[comparador:unSensor.warning?.comparador,valorAlerta:unSensor.warning?.valorWarning],
-				uuid:new Date().time,nombre:unSensor.sensor.tipo,notificables:unSensor.notificables.collect{it.id as String},id:unSensor.id])
+				uuid:new Date().time,nombre:unSensor.sensor.tipo,notificables:unSensor.notificables.collect{it.id as String},id:unSensor.id,
+				estado:unSensor.instalado])
 		}
 		
 	}
@@ -247,7 +271,9 @@ class HabitacionController {
 		flow.camarasEliminados = []
 		habitacion.camaras.each{unaCamara ->
 			def uuid = UUID.randomUUID()
-			flow.camaras << [ip:unaCamara.ip,id:unaCamara.id,uuid:uuid,notificables:unaCamara.notificables.collect{it.id as String}]
+			flow.camaras << [ip:unaCamara.ip,id:unaCamara.id,uuid:uuid,
+							notificables:unaCamara.notificables.collect{it.id as String},
+							ubicacion:"${unaCamara.coordenadaY}:${unaCamara.coordenadaX}"]
 		}
 		
 	}
@@ -318,7 +344,7 @@ class HabitacionController {
 		
 		flow.sensores.add([tipo:paso2Command.tipo,min:paso2Command.valorMinimo,max:paso2Command.valorMaximo,
 			warning:[comparador:paso2Command.comparador,valorAlerta:paso2Command.valorAlerta],
-			uuid:new Date().time,nombre:sensor.tipo,notificables:[]])
+			uuid:new Date().time,nombre:sensor.tipo,notificables:[],estado:false])
 		}
 	}
 	
@@ -499,6 +525,19 @@ class HabitacionController {
 
 		render template:'edificios',model:[edificios:edificios]
 	}
+	
+	def cambiarEstado(){
+		
+		def habitacion = Habitacion.get(params.long('id'))
+		
+		if(params.boolean('estado'))
+			habitacion.desActivar()
+		else
+			habitacion.activar()
+			
+			
+		redirect action:'list'
+	}
 }
 
 class Paso1Command implements Serializable{
@@ -569,4 +608,6 @@ class Paso2Command implements Serializable{
 			}
 		}
 	}
+	
+	
 }

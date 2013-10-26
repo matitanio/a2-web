@@ -52,6 +52,7 @@ class HabitacionService {
 		sensorHabitacion.sensor = Sensor.get(unSensor.tipo as Long)
 		sensorHabitacion.valorMaximo = unSensor.max as Float
 		sensorHabitacion.valorMinimo = unSensor.min as Float
+		sensorHabitacion.instalado = unSensor.estado
 		agregarWarning(sensorHabitacion,unSensor)
 		agregarNotificables(sensorHabitacion,unSensor.notificables)
 	}
@@ -82,7 +83,9 @@ class HabitacionService {
 
 	private agregarCamara(habitacion,unaCamara){
 
-		def camara = new CamaraIp(ip:unaCamara.ip)
+		def x = unaCamara.ubicacion?unaCamara.ubicacion.split(':')[1] as Float:0
+		def y = unaCamara.ubicacion?unaCamara.ubicacion.split(':')[0] as Float:0
+		def camara = new CamaraIp(ip:unaCamara.ip,coordenadaX:x,coordenadaY:y)
 		agregarNotificables(camara,unaCamara.notificables)
 		habitacion.addToCamaras(camara)
 	}
@@ -180,7 +183,14 @@ class HabitacionService {
 	
 	private eliminarCamaras(habitacion){
 		
+		def camaras = habitacion.camaras.collect {it.id}
 		habitacion.camaras.removeAll(habitacion.camaras)
+		
+		camaras.each {id ->
+			CamaraIp.withTransaction {
+				CamaraIp.get(id as Long).delete(flush:true)
+			}
+		}
 	}
 	
 	
